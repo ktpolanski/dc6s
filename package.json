@@ -1,14 +1,15 @@
 {
-  "name": "kol-js-starter",
+  "name": "dc6s",
   "version": "1.0.0",
-  "description": "Example package for KoLmafia TypeScript scripts.",
-  "main": "KoLmafia/scripts/kol-js-starter/main-script-name.js",
+  "description": "DC6 CS script",
+  "main": "KoLmafia/scripts/dc6s/dc6s.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn run build:types && yarn run build:js",
     "build:types": "tsc",
     "build:js": "webpack",
     "lint": "eslint src && prettier --check .",
+    "lint:fix": "eslint src --fix && prettier --check --write .",
     "watch": "webpack --watch --progress"
   },
   "devDependencies": {
@@ -23,7 +24,7 @@
     "babel-loader": "^8.2.2",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-libram": "^0.1.9",
+    "eslint-plugin-libram": "^0.2.9",
     "prettier": "^2.3.2",
     "typescript": "^4.4.2",
     "webpack": "^5.51.1",
@@ -34,19 +35,16 @@
     "kolmafia": ">=1.2.0",
     "libram": ">=0.3.0"
   },
-  "author": "Captain Scotch",
+  "author": "DanceCommander6",
   "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/docrostov/kol-js-starter.git"
-  },
+  "repository": "git+https://github.com/ktpolanski/dc6s",
   "keywords": [
     "KoLMafia",
     "JS",
     "TS"
   ],
   "bugs": {
-    "url": "https://github.com/docrostov/kol-js-starter/issues"
+    "url": "https://github.com/ktpolanski/dc6s/issues"
   },
-  "homepage": "https://github.com/docrostov/kol-js-starter#readme"
+  "homepage": "https://github.com/ktpolanski/dc6s"
 }
