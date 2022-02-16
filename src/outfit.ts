@@ -3,6 +3,7 @@ import {
 	equip,
 	Item,
 	Slot,
+	toSlot,
 } from "kolmafia";
 import {
 	$item,
@@ -22,16 +23,24 @@ function dressUp(outfit: Map<Slot, Item[]>) : void {
 	}
 }
 
-export function uniform(changes: [Slot, Item][] = []): void {
+export function uniform(changes: (Item | [Slot, Item])[] = []): void {
 	let outfit = new Map<Slot, Item[]>([
 		[$slot`hat`, $items`crown of thrones`],
 		[$slot`pants`, $items`pantsgiving, stinky cheese diaper`]
 	]);
 	if (changes.length !== 0) {
-		for (const [overrideSlot, overrideItem] of changes) {
-			// We're doing a definite assignment assertion
+		for (const override of changes) {
+			// We're doing a definite assignment assertion in the unshift
 			// As otherwise this whines that what if this is undefined
-			outfit.get(overrideSlot)!.unshift(overrideItem);
+			if (Array.isArray(override)) {
+				const overrideSlot = override[0];
+				const overrideItem = override[1];
+				outfit.get(overrideSlot)!.unshift(overrideItem);
+			} else {
+				const overrideSlot = toSlot(override);
+				const overrideItem = override;
+				outfit.get(overrideSlot)!.unshift(overrideItem);
+			}
 		}
 	}
 	dressUp(outfit);
