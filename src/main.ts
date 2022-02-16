@@ -1,8 +1,23 @@
-import { $item, $items, $skill, $slot } from "libram";
-import { saberCheese } from "./lib";
+import { 
+	useFamiliar
+} from "kolmafia";
+import {
+	$familiar,
+	$item,
+	$items,
+	$location,
+	$monster,
+	$skill,
+	$slot
+} from "libram";
+import {
+	foldIfNotHave,
+	mapMacro,
+	saberCheese
+} from "./lib";
 import Macro from "./combat";
 import SynthesisPlanner from "./synth";
-import { uniform } from "./outfit";
+import { outfit, outfitEarly, outfitCoilWire } from "./outfit";
 
 // if (get("_bittycar")) print("hi");
 // const newmacro = Macro.freeRun().toString(); print(`${newmacro}`);
@@ -20,10 +35,17 @@ import { uniform } from "./outfit";
 
 new SynthesisPlanner().plan();
 
-uniform();
-uniform([[$slot`hat`, $item`daylight shavings helmet`], [$slot`pants`, $item`stinky cheese diaper`]]);
-uniform();
-uniform($items`daylight shavings helmet, stinky cheese diaper`);
+outfitEarly();
+outfitCoilWire();
+
+//foldIfNotHave($item`stinky cheese eye`);
+//outfit();
+//foldIfNotHave($item`stinky cheese diaper`);
+//outfit([[$slot`hat`, $item`crown of thrones`], [$slot`pants`, $item`stinky cheese diaper`]]);
+//foldIfNotHave($item`stinky cheese diaper`);
+//outfit();
+//foldIfNotHave($item`stinky cheese diaper`);
+//outfit($items`crown of thrones, pantsgiving`);
 
 // Reminiscing is not CCS hell, all is ok
 // Macro.kill().setAutoAttack();
