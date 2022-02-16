@@ -1,4 +1,4 @@
-import { $skill } from "libram";
+import { $item, $skill, $slot } from "libram";
 import { saberCheese } from "./lib";
 import Macro from "./combat";
 import SynthesisPlanner from "./synth";
@@ -21,6 +21,7 @@ import { uniform } from "./outfit";
 new SynthesisPlanner().plan();
 
 uniform();
+uniform([[$slot`hat`, $item`daylight shavings helmet`], [$slot`pants`, $item`stinky cheese diaper`]]);
 
 // Reminiscing is not CCS hell, all is ok
 // Macro.kill().setAutoAttack();
