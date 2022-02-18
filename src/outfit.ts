@@ -59,11 +59,12 @@ function applyChanges(outfit: Map<Slot, Item[]>, changes: (Item | [Slot, Item])[
 }
 
 // The pre-coil outfit where stats are tiny, so go for flat boosts
+// Also used later for non-scaling, low-yield fights like the snojo
 export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
 	setRetroCape("heck", "thrill");
 	let outfit = new Map<Slot, Item[]>([
 		[$slot`hat`, $items`daylight shavings helmet`],
-		[$slot`back`, $items`unwrapped knock-off retro superhero cape`],
+		[$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
 		[$slot`shirt`, $items`fresh coat of paint`],
 		[$slot`weapon`, $items`fourth of may cosplay saber`],
 		[$slot`offhand`, $items`weeping willow wand`],
@@ -98,7 +99,7 @@ export function outfitCoilWire(): void {
 export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 	setRetroCape("heck", "thrill");
 	let outfit = new Map<Slot, Item[]>([
-		[$slot`hat`, $items`daylight shavings helmet`],
+		[$slot`hat`, $items`astral chapeau, daylight shavings helmet`],
 		[$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
 		[$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
 		[$slot`weapon`, $items`fourth of may cosplay saber`],

@@ -28,6 +28,19 @@ export default class Macro extends StrictMacro {
   static kill(): Macro {
     return new Macro().kill();
   }
+  
+  // Protopack ghosts want to be shot and trapped
+  // Which is a bit scary with its vision of heavy hits
+  ghost(): Macro {
+    return this.delevel().trySkill($skill`entangling noodles`)
+      .trySkill($skill`shoot ghost`)
+      .trySkill($skill`shoot ghost`)
+      .trySkill($skill`shoot ghost`)
+      .trySkill($skill`trap ghost`);
+  }
+  static ghost(): Macro {
+    return new Macro().ghost();
+  }
 
   // Save KGB and Snokebomb for mother slime as those work against her
   freeRun(): Macro {

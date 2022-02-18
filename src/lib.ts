@@ -1,8 +1,10 @@
 import {
   adv1,
   cliExecute,
+  Effect,
   equip,
   handlingChoice,
+  haveEffect,
   Item,
   Location,
   Monster,
@@ -45,7 +47,12 @@ export function mapMacro(location: Location, monster: Monster, macro: Macro): vo
   if (!get("mappingMonsters")) useSkill($skill`Map the Monsters`);
   // Just in case there's a sabering in the macro
   setChoice(1387, 3);
-  visitUrl(toUrl(location));
+  // Sometimes there might be an introductory NC
+  // In that case, hit the place again and it should be fine
+  const mapPage = visitUrl(toUrl(location));
+  if (!mapPage.includes("Leading Yourself Right to Them")) {
+  	visitUrl(toUrl(location));
+  }
   runChoice(1, `heyscriptswhatsupwinkwink=${monster.id}`);
   runCombat(macro.toString());
   // Once again, in case of saber
@@ -100,4 +107,26 @@ export function setRetroCape(hero:string, mode:string): void {
   if ((get("retroCapeSuperhero") !== hero) || (get("retroCapeWashingInstructions") !== mode)) {
     cliExecute(`retrocape ${hero} ${mode}`);
   }
+}
+
+// Use an item if you have it
+export function useIfHave(item:Item): void {
+  if (have(item)) use(1, item);
+}
+
+// Buy and use item; named bu after common chat macro
+export function bu(item:Item): void {
+  if (!have(item)) buy(1, item);
+  use(1, item);
+}
+
+// Get a provided list of buffs
+export function getBuffs(buffs:Effect[]): void {
+	for (const buff of buffs) {
+		// If the buff is not there, get it
+		// the .default thing is a CLI-compatible way to do so
+		if (haveEffect(buff) === 0) {
+			cliExecute(buff.default);
+		}
+	}
 }
