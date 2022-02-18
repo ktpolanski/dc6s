@@ -1,11 +1,11 @@
 import { Item, itemAmount, retrieveItem, useSkill, visitUrl } from "kolmafia";
-import { $item, $skill, get, set } from "libram";
+import { $item, $items, $skill, get, set } from "libram";
 import { canCastLibrams } from "./lib";
 
 export default class SynthesisPlanner {
   // Prepare a sorted array of mod0 candies, as we'd rather eat pecan than sprouts
   // We always have sprouts at our disposal
-  mod0: Item[] = [$item`peppermint sprout`, $item`peppermint sprout`, $item`peppermint sprout`];
+  mod0: Item[] = $items`peppermint sprout, peppermint sprout, peppermint sprout`;
 
   // Acquire the complex candy to work with
   getCandy() {
@@ -53,43 +53,31 @@ export default class SynthesisPlanner {
     this.addPecans();
 
     // So these two outcomes are really common in the plans
-    set("_dc6s_myst_candy", [$item`Chubby and Plump bar`, $item`bag of many confections`]); // 2+4
+    set("_dc6s_myst_candy", $items`Chubby and Plump bar, bag of many confections`); // 2+4
     set("_dc6s_item_candy", [this.mod0.shift(), $item`peppermint twist`]); // 0+1
     // But what if this ate a good this.mod0.shift() and then gets overwritten?
     // In 3 barks, mod0 is 100% peppermint sprouts so it doesn't matter
-    // Pecan yahtzee does not use mod0 in its plan, adding insult to injury
 
     // The first three plans (3 barks, 2 fudge, 1 bark) are all lit
     if (itemAmount($item`Crimbo peppermint bark`) >= 3) {
       set("_dc6s_exp_candy", [this.mod0.shift(), $item`Crimbo peppermint bark`]); // 0+3
       // Common myst
-      set("_dc6s_item_candy", [$item`Crimbo peppermint bark`, $item`Crimbo peppermint bark`]); // 3+3
-      return;
-    }
-    if (itemAmount($item`Crimbo fudge`) >= 2) {
-      set("_dc6s_exp_candy", [$item`Crimbo fudge`, $item`Crimbo fudge`]); // 4+4
+      set("_dc6s_item_candy", $items`Crimbo peppermint bark, Crimbo peppermint bark`); // 3+3
+    } else if (itemAmount($item`Crimbo fudge`) >= 2) {
+      set("_dc6s_exp_candy", $items`Crimbo fudge, Crimbo fudge`); // 4+4
       // Common myst and item
-      return;
-    }
-    if (itemAmount($item`Crimbo peppermint bark`) >= 1) {
+    } else if (itemAmount($item`Crimbo peppermint bark`) >= 1) {
       set("_dc6s_exp_candy", [this.mod0.shift(), $item`Crimbo peppermint bark`]); // 0+3
       // Common myst and item
-      return;
-    }
-    // 1 fudge is still workable, just needs the LOV chocolate or a candy heart
-    if (itemAmount($item`Crimbo fudge`) === 1) {
+    } else if (itemAmount($item`Crimbo fudge`) === 1) {
+      // 1 fudge is still workable, just needs the LOV chocolate or a candy heart
       set("_dc6s_exp_candy", [$item`Crimbo fudge`, $item`bag of many confections`]); // 4+4
       set("_dc6s_myst_candy", this.solveTrickyMyst()); // 0+1
       // Common item
-      return;
-    }
-    // Pecan yahtzee is the opposite of lit. We'd need more complex candy
-    // But as the item test is cappable sans item synth, just do that instead
-    if (itemAmount($item`Crimbo candied pecan`) >= 3) {
-      set("_dc6s_exp_candy", [$item`peppermint twist`, $item`peppermint patty`]); // 1+2
-      // Common myst
-      set("_dc6s_item_candy", ""); // sadness
-      return;
+    } else if (itemAmount($item`Crimbo candied pecan`) >= 3) {
+      // Pecan yahtzee is the opposite of lit. We'll need to get a sugar summon
+      set("_dc6s_exp_candy", [this.mod0.shift(), $item`sugar shield`]); // 0+3
+      // Common myst and item
     }
   }
 }

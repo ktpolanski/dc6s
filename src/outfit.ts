@@ -1,20 +1,50 @@
 import {
 	canEquip,
 	equip,
+	equippedItem,
 	Item,
 	print,
 	Slot,
 	toSlot,
+	useFamiliar,
 } from "kolmafia";
 import {
+	$familiar,
 	$item,
 	$items,
 	$slot,
+	get,
 	have,
 } from "libram";
 import {
 	setRetroCape
 } from "./lib";
+
+// Familiars are kind of like outfits and lib is getting crowded
+export function useDefaultFamiliar(): void {
+	// Need to prioritise garbage fire and shorty to get famweight drops
+	// So that sprinkle dog can be 140lb in time for his moment
+	if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+		useFamiliar($familiar`garbage fire`);
+		equip($item`miniature crystal ball`);
+	} else if (!have($item`short stack of pancakes`) && (haveEffect($effect`shortly stacked`) === 0)) {
+		useFamiliar($familiar`shorter-order cook`);
+		equip($item`miniature crystal ball`);
+	} else if (get("camelSpit") < 100) {
+		// The camel takes up most of the turns in the middle of the run
+		useFamiliar($familiar`melodramedary`);
+		equip($item`dromedary drinking helmet`);
+	} else if (equippedItem($slot`offhand`) !== $item`familiar scrapbook`) {
+		// We're in the NEP and fishing for kramcos
+		// Time to bust out lefty with the scrapbook
+		useFamiliar($familiar`left-hand man`);
+		equip($slot`familiar`, $item`familiar scrapbook`);
+	} else {
+		// We shouldn't end up here. Default to Melf just in case?
+		useFamiliar($familiar`machine elf`);
+		equip($item`miniature crystal ball`);
+	}
+}
 
 // Outfits are defined as maps (dictionaries)
 // Where the keys are slots and the values are an array of items
