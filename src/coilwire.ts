@@ -5,6 +5,7 @@ import {
 	create,
 	myLevel,
 	mySpleenUse,
+	runChoice,
 	unequip,
 	useFamiliar,
 	visitUrl
@@ -123,12 +124,15 @@ if (!get("_borrowedTimeUsed")) {
 // Unlock the early quest zones, for protopack and sabering purposes
 if (get("questM23Meatsmith") === "unstarted" {
 	visitUrl(`shop.php?whichshop=$meatsmith&action=talk`);
+	runChoice(1);
 }
 if (get("questM24Doc") === "unstarted" {
 	visitUrl(`shop.php?whichshop=$doc&action=talk`);
+	runChoice(1);
 }
 if (get("questM25Armorer") === "unstarted" {
 	visitUrl(`shop.php?whichshop=$armory&action=talk`);
+	runChoice(1);
 }
 
 // Pre-coil fights are quite minimal on buffs
