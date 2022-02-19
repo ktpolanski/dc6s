@@ -20,32 +20,6 @@ import {
 	setRetroCape
 } from "./lib";
 
-// Familiars are kind of like outfits and lib is getting crowded
-export function useDefaultFamiliar(): void {
-	// Need to prioritise garbage fire and shorty to get famweight drops
-	// So that sprinkle dog can be 140lb in time for his moment
-	if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
-		useFamiliar($familiar`garbage fire`);
-		equip($item`miniature crystal ball`);
-	} else if (!have($item`short stack of pancakes`) && (haveEffect($effect`shortly stacked`) === 0)) {
-		useFamiliar($familiar`shorter-order cook`);
-		equip($item`miniature crystal ball`);
-	} else if (get("camelSpit") < 100) {
-		// The camel takes up most of the turns in the middle of the run
-		useFamiliar($familiar`melodramedary`);
-		equip($item`dromedary drinking helmet`);
-	} else if (equippedItem($slot`offhand`) !== $item`familiar scrapbook`) {
-		// We're in the NEP and fishing for kramcos
-		// Time to bust out lefty with the scrapbook
-		useFamiliar($familiar`left-hand man`);
-		equip($slot`familiar`, $item`familiar scrapbook`);
-	} else {
-		// We shouldn't end up here. Default to Melf just in case?
-		useFamiliar($familiar`machine elf`);
-		equip($item`miniature crystal ball`);
-	}
-}
-
 // Outfits are defined as maps (dictionaries)
 // Where the keys are slots and the values are an array of items
 // The items are sorted in descending order of desirability
@@ -98,7 +72,7 @@ export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
 		[$slot`shirt`, $items`fresh coat of paint`],
 		[$slot`weapon`, $items`fourth of may cosplay saber`],
 		[$slot`offhand`, $items`weeping willow wand`],
-		[$slot`pants`, $items`tinsel tights, pantogram pants`],
+		[$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
 		[$slot`acc1`, $items`retrospecs`],
 		[$slot`acc2`, $items`eight days a week pill keeper`],
 		[$slot`acc3`, $items`kremlin's greatest briefcase`]
@@ -134,7 +108,7 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 		[$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
 		[$slot`weapon`, $items`fourth of may cosplay saber`],
 		[$slot`offhand`, $items`familiar scrapbook`],
-		[$slot`pants`, $items`tinsel tights, pantogram pants`],
+		[$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
 		[$slot`acc1`, $items`retrospecs`],
 		[$slot`acc2`, $items`battle broom, eight days a week pill keeper`],
 		[$slot`acc3`, $items`your cowboy boots`]

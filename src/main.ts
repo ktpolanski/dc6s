@@ -2,6 +2,7 @@ import {
 	useFamiliar
 } from "kolmafia";
 import {
+	$effects,
 	$familiar,
 	$item,
 	$items,
@@ -12,6 +13,7 @@ import {
 } from "libram";
 import {
 	foldIfNotHave,
+	getBuffs,
 	mapMacro,
 	saberCheese
 } from "./lib";
@@ -33,10 +35,12 @@ import { outfit, outfitEarly, outfitCoilWire } from "./outfit";
 //  Macro.trySkill($skill`Become a Cloud of Mist`).trySkill($skill`Fire Extinguisher: Foam Yourself`)
 //);
 
-new SynthesisPlanner().plan();
+//new SynthesisPlanner().plan();
 
-outfitEarly();
-outfitCoilWire();
+getBuffs($effects`inscrutable gaze, feeling excited`);
+
+//outfitEarly();
+//outfitCoilWire();
 
 //foldIfNotHave($item`stinky cheese eye`);
 //outfit();

@@ -3,14 +3,17 @@ import {
 	buy,
 	cliExecute,
 	create,
+	equip,
+	equippedItem,
 	myLevel,
 	mySpleenUse,
 	runChoice,
-	unequip,
+	use,
 	useFamiliar,
 	visitUrl
 } from "kolmafia";
 import {
+	$effect,
 	$effects,
 	$familiar,
 	$item,
@@ -29,8 +32,10 @@ import {
 	adventureMacro,
 	bu,
 	foldIfNotHave,
+	getBuffs,
 	mapMacro,
 	saberCheese,
+	useDefaultFamiliar,
 	useIfHave
 } from "./lib";
 import Macro from "./combat";
@@ -74,7 +79,7 @@ if (!get("_saberMod")) {
 // Buy a willow wand from the lathe
 if (!have($item`weeping willow wand`)) {
 	visitUrl("shop.php?whichshop=lathe");
-	if (availableAmount($item`flimsy hardwood scraps`) > 0) {
+	if (have($item`flimsy hardwood scraps`)) {
 		create(1, $item`weeping willow wand`);
 	}
 }
@@ -122,15 +127,15 @@ if (!get("_borrowedTimeUsed")) {
 }
 
 // Unlock the early quest zones, for protopack and sabering purposes
-if (get("questM23Meatsmith") === "unstarted" {
+if (get("questM23Meatsmith") === "unstarted") {
 	visitUrl(`shop.php?whichshop=$meatsmith&action=talk`);
 	runChoice(1);
 }
-if (get("questM24Doc") === "unstarted" {
+if (get("questM24Doc") === "unstarted") {
 	visitUrl(`shop.php?whichshop=$doc&action=talk`);
 	runChoice(1);
 }
-if (get("questM25Armorer") === "unstarted" {
+if (get("questM25Armorer") === "unstarted") {
 	visitUrl(`shop.php?whichshop=$armory&action=talk`);
 	runChoice(1);
 }
@@ -160,7 +165,7 @@ if (!have($item`bag of many confections`)) {
 	outfitEarly($items`protonic accelerator pack, Kramco Sausage-o-Matic™`);
 	adventureMacro($location`noob cave`, Macro.kill());
 	// Take the bag off
-	unequip($slot`familiar`);
+	equip($slot`familiar`, $item`none`);
 }
 
 // Hit up the protopack ghost

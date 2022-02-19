@@ -1,8 +1,10 @@
 import {
   adv1,
+  buy,
   cliExecute,
   Effect,
   equip,
+  equippedItem,
   handlingChoice,
   haveEffect,
   Item,
@@ -12,17 +14,55 @@ import {
   runChoice,
   runCombat,
   toUrl,
+  use,
   useFamiliar,
   useSkill,
   visitUrl,
 } from "kolmafia";
-import { $familiar, $item, $location, $skill, $slot, Clan, get, have, PropertiesManager } from "libram";
+import {
+  $effect,
+  $familiar,
+  $item,
+  $location,
+  $skill,
+  $slot,
+  Clan,
+  get,
+  have,
+  PropertiesManager
+} from "libram";
 import Macro from "./combat";
 
 // This thing allows controlling choice options. Neat!
 export const PropertyManager = new PropertiesManager();
 export function setChoice(adv: number, choice: number | string): void {
   PropertyManager.setChoices({ [adv]: choice });
+}
+
+// Pick what familiar to use
+export function useDefaultFamiliar(): void {
+	// Need to prioritise garbage fire and shorty to get famweight drops
+	// So that sprinkle dog can be 140lb in time for his moment
+	if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+		useFamiliar($familiar`garbage fire`);
+		equip($item`miniature crystal ball`);
+	} else if (!have($item`short stack of pancakes`) && (haveEffect($effect`shortly stacked`) === 0)) {
+		useFamiliar($familiar`shorter-order cook`);
+		equip($item`miniature crystal ball`);
+	} else if (get("camelSpit") < 100) {
+		// The camel takes up most of the turns in the middle of the run
+		useFamiliar($familiar`melodramedary`);
+		equip($item`dromedary drinking helmet`);
+	} else if (equippedItem($slot`offhand`) !== $item`familiar scrapbook`) {
+		// We're in the NEP and fishing for kramcos
+		// Time to bust out lefty with the scrapbook
+		useFamiliar($familiar`left-hand man`);
+		equip($slot`familiar`, $item`familiar scrapbook`);
+	} else {
+		// We shouldn't end up here. Default to Melf just in case?
+		useFamiliar($familiar`machine elf`);
+		equip($item`miniature crystal ball`);
+	}
 }
 
 // Add auto-attack to the passed macro and hit up the specified location once
