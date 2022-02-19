@@ -92,7 +92,7 @@ export function outfitCoilWire(): void {
 		[$slot`offhand`, $items`abracandalabra`],
 		[$slot`pants`, $items`cargo cultist shorts`],
 		[$slot`acc1`, $items`retrospecs`],
-		[$slot`acc2`, $items`eight days a week pill keeper`],
+		[$slot`acc2`, $items`gold detective badge`],
 		[$slot`acc3`, $items`kremlin's greatest briefcase`]
 	]);
 	// TODO: this feels like it wants to use the familiar?
@@ -114,5 +114,23 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 		[$slot`acc3`, $items`your cowboy boots`]
 	]);
 	applyChanges(outfit, changes);
+	dressUp(outfit);
+}
+
+// This adds some item drop in less stat-relevant slots to try to get pearls
+// At this point the locket is unused, and as such in +25% item form
+export function outfitOyster(): void {
+	setRetroCape("heck", "thrill");
+	let outfit = new Map<Slot, Item[]>([
+		[$slot`hat`, $items`wad of used tape, iunion crown`],
+		[$slot`back`, $items`lov epaulettes, vampyric cloake`],
+		[$slot`shirt`, $items`fresh coat of paint`],
+		[$slot`weapon`, $items`fourth of may cosplay saber`],
+		[$slot`offhand`, $items`familiar scrapbook`],
+		[$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
+		[$slot`acc1`, $items`combat lover's locket'`],
+		[$slot`acc2`, $items`gold detective badge`],
+		[$slot`acc3`, $items`your cowboy boots`]
+	]);
 	dressUp(outfit);
 }

@@ -4,7 +4,6 @@ import {
 	cliExecute,
 	create,
 	equip,
-	equippedItem,
 	myLevel,
 	mySpleenUse,
 	runChoice,
@@ -13,7 +12,6 @@ import {
 	visitUrl
 } from "kolmafia";
 import {
-	$effect,
 	$effects,
 	$familiar,
 	$item,
@@ -31,6 +29,8 @@ import {
 import {
 	adventureMacro,
 	bu,
+	bustGhost,
+	castLibrams,
 	foldIfNotHave,
 	getBuffs,
 	mapMacro,
@@ -140,7 +140,7 @@ if (get("questM25Armorer") === "unstarted") {
 	runChoice(1);
 }
 
-// Pre-coil fights are quite minimal on buffs
+// Pre-coil fights are quite minimal on buffs, not enough mana to go ham
 getBuffs($effects`inscrutable gaze, feeling excited`);
 
 // Go saber a skeleton real quick
@@ -168,15 +168,10 @@ if (!have($item`bag of many confections`)) {
 	equip($slot`familiar`, $item`none`);
 }
 
-// Hit up the protopack ghost
-const ghostLocation = get("ghostLocation");
-if (ghostLocation) {
-	useDefaultFamiliar();
-	foldIfNotHave($item`tinsel tights`);
-	outfitEarly($items`protonic accelerator pack`);
-	adventureMacro(ghostLocation, Macro.ghost());
-}
+// We got a ghost to bust
+bustGhost();
 
 // Okay, that's it for the early stuff! Put on the outfit and go coil some wire!
 // The outfit maximises MP so as much of it is available after the test as possible
 outfitCoilWire();
+castLibrams();

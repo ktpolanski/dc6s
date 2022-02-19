@@ -1,4 +1,6 @@
 import { 
+	runCombat,
+	use,
 	useFamiliar
 } from "kolmafia";
 import {
@@ -38,6 +40,7 @@ import { outfit, outfitEarly, outfitCoilWire } from "./outfit";
 //new SynthesisPlanner().plan();
 
 getBuffs($effects`inscrutable gaze, feeling excited`);
+outfitEarly($items`protonic accelerator pack, Kramco Sausage-o-Matic™`);
 
 //outfitEarly();
 //outfitCoilWire();

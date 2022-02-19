@@ -8,6 +8,7 @@ import {
   handlingChoice,
   haveEffect,
   Item,
+  itemAmount,
   Location,
   Monster,
   myMp,
@@ -112,6 +113,18 @@ export function globMacro(macro: Macro, choice = 1): void {
   runChoice(-1);
 }
 
+// Hit up the protopack ghost
+export function bustGhost(): void {
+  const ghostLocation = get("ghostLocation");
+  if (ghostLocation) {
+    useDefaultFamiliar();
+    foldIfNotHave($item`tinsel tights`);
+    outfitEarly($items`protonic accelerator pack`);
+    // No need to worry about entry noncombats
+    // As protopack ghosts override them in priority
+    adventureMacro(ghostLocation, Macro.ghost());
+  }
+}
 // Get the Inner Elf buff by going into combat with momma slime
 export function ensureInnerElf(): void {
   useFamiliar($familiar`Machine Elf`);
@@ -132,6 +145,31 @@ export function canCastLibrams(): boolean {
   const summonNumber = 1 + get("libramSummons");
   const cost = 1 + (summonNumber * (summonNumber - 1)) / 2;
   return myMp() >= cost;
+}
+
+// Helper function to check if we've made enough bricko bricks yet
+function brickoBrickCheck(): boolean {
+  // We only fight oysters, so each fight that happened is eight bricks less we need
+  const brickTarget = 24 - 8*get("_brickoFights");
+  return (itemAmount($item`bricko brick`) < brickTarget);
+}
+
+// Burn mana working toward libram goals
+export function castLibrams(): void {
+  // Keep casting while possible
+  while (canCastLibrams()) {
+    if (!have($item`green candy heart`) && (haveEffect($effect`heart of green`) === 0)) {
+      // Fish for a green candy heart
+      useSkill(1, $skill`summon candy hearts`);
+    } else if ((get("_brickoEyeSummons") < 3) || brickoBrickCheck()) {
+      // Get building pieces for three oysters
+      useSkill(1, $skill`summon brickos`)
+    } else {
+      // If we're here, we've ran out of goals
+      // Add more? Resolutions?
+      break;
+    }
+  }
 }
 
 // fold() won't work if you have the exact item equipped
