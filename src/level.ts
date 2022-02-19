@@ -32,7 +32,7 @@ function fightOysters(): void {
 			useDefaultFamiliar();
 			foldIfNotHave($item`tinsel tights`);
 			// Garbo doesn't currently use otoscope, and it caps the pearls
-			outfitML($item`lil' doctor bag'`);
+			outfitML($items`lil' doctor bag'`);
 			// The autoattack should go off here
 			Macro.kill($skill`otoscope`).setAutoAttack();
 			use(1, $item`bricko oyster`); runCombat(Macro.kill($skill`otoscope`).toString());
