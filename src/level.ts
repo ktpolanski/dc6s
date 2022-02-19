@@ -1,6 +1,7 @@
 import {
 	autosell,
 	itemAmount,
+	runCombat,
 	totalFreeRests,
 	use,
 	visitUrl
@@ -11,13 +12,15 @@ import {
 } from "libram";
 import {
 	castLibrams,
+	foldIfNotHave,
 	useDefaultFamiliar
 } from "./lib"
 import {
 	outfit,
 	outfitOyster
 } from "./outfit"
-
+import Macro from "./combat";
+import SynthesisPlanner from "./synth";
 
 // Make and fight as many bricko oysters as possible
 function fightOysters(): void {

@@ -19,11 +19,13 @@ import {
   useFamiliar,
   useSkill,
   visitUrl,
+  wait
 } from "kolmafia";
 import {
   $effect,
   $familiar,
   $item,
+  $items,
   $location,
   $skill,
   $slot,
@@ -32,6 +34,9 @@ import {
   have,
   PropertiesManager
 } from "libram";
+import {
+  outfitEarly
+} from "./outfit"
 import Macro from "./combat";
 
 // This thing allows controlling choice options. Neat!
@@ -92,12 +97,14 @@ export function mapMacro(location: Location, monster: Monster, macro: Macro): vo
   // In that case, hit the place again and it should be fine
   const mapPage = visitUrl(toUrl(location));
   if (!mapPage.includes("Leading Yourself Right to Them")) {
+  	// Just in case
+  	wait(1);
   	visitUrl(toUrl(location));
   }
   runChoice(1, `heyscriptswhatsupwinkwink=${monster.id}`);
   runCombat(macro.toString());
   // Once again, in case of saber
-  if (handlingChoice()) runChoice(-1);
+  if (handlingChoice()) runChoice(3);
 }
 
 // As does god lobster

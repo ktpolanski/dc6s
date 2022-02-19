@@ -7,6 +7,7 @@ import {
 	myLevel,
 	mySpleenUse,
 	runChoice,
+	toInt,
 	use,
 	useFamiliar,
 	visitUrl
@@ -148,8 +149,9 @@ if (!have($item`orange`)) {
 	useFamiliar($familiar`crimbo shrub`);
 	// Decorate Crimbo Shrub with LED Mandala, Jack-O-Lantern Lights, Popcorn Strands, and Big Red-Wrapped Presents
 	if (!get("_shrubDecorated")) {
-		visitUrl(`inv_use.php?which=99&whichitem=$7958`);
-		visitUrl(`choice.php?whichchoice=999&option=1&topper=2&lights=5&garland=3&gift=2`);
+		const decorations = toInt($item`box of old Crimbo decorations`);
+		visitUrl(`inv_use.php?pwd=&which=99&whichitem=${decorations}`);
+		visitUrl(`choice.php?whichchoice=999&pwd=&option=1&topper=2&lights=5&garland=3&gift=2`);
 	}
 	foldIfNotHave($item`tinsel tights`);
 	outfitEarly();

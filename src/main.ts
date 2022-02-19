@@ -1,7 +1,9 @@
 import { 
 	runCombat,
+	toInt,
 	use,
-	useFamiliar
+	useFamiliar,
+	visitUrl
 } from "kolmafia";
 import {
 	$effects,
@@ -11,7 +13,10 @@ import {
 	$location,
 	$monster,
 	$skill,
-	$slot
+	$slot,
+	get,
+	have,
+	set
 } from "libram";
 import {
 	foldIfNotHave,
@@ -21,7 +26,11 @@ import {
 } from "./lib";
 import Macro from "./combat";
 import SynthesisPlanner from "./synth";
-import { outfit, outfitEarly, outfitCoilWire } from "./outfit";
+import {
+	outfit,
+	outfitEarly,
+	outfitCoilWire
+} from "./outfit";
 
 // if (get("_bittycar")) print("hi");
 // const newmacro = Macro.freeRun().toString(); print(`${newmacro}`);
