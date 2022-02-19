@@ -1,4 +1,4 @@
-import { myFamiliar } from "kolmafia";
+import { myFamiliar, Skill } from "kolmafia";
 import { $effect, $familiar, $item, $skill, have, StrictMacro } from "libram";
 
 export default class Macro extends StrictMacro {
@@ -21,12 +21,19 @@ export default class Macro extends StrictMacro {
   }
 
   // The default mode of operation is to do the two above
+  // Maybe add an extra skill in there
   // And then smack with a stick because saber is a thing
-  kill(): Macro {
-    return this.delevel().value().attack().repeat();
+  kill(skill:Skill = $skill`none`): Macro {
+    if (skill !== $skill`none`) {
+      // We got given a skill, work it into the macro
+      return this.delevel().value().trySkill(skill).attack().repeat();
+    } else {
+      // No skill just basic kill
+      return this.delevel().value().attack().repeat();
+    }
   }
-  static kill(): Macro {
-    return new Macro().kill();
+  static kill(skill:Skill = $skill`none`): Macro {
+    return new Macro().kill(skill);
   }
   
   // Protopack ghosts want to be shot and trapped

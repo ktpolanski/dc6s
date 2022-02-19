@@ -63,7 +63,6 @@ function applyChanges(outfit: Map<Slot, Item[]>, changes: (Item | [Slot, Item])[
 }
 
 // The pre-coil outfit where stats are tiny, so go for flat boosts
-// Also used later for non-scaling, low-yield fights like the snojo
 export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
 	setRetroCape("heck", "thrill");
 	let outfit = new Map<Slot, Item[]>([
@@ -71,7 +70,7 @@ export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
 		[$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
 		[$slot`shirt`, $items`fresh coat of paint`],
 		[$slot`weapon`, $items`fourth of may cosplay saber`],
-		[$slot`offhand`, $items`weeping willow wand`],
+		[$slot`offhand`, $items`weeping willow wand, familiar scrapbook`],
 		[$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
 		[$slot`acc1`, $items`retrospecs`],
 		[$slot`acc2`, $items`eight days a week pill keeper`],
@@ -117,20 +116,23 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 	dressUp(outfit);
 }
 
-// This adds some item drop in less stat-relevant slots to try to get pearls
-// At this point the locket is unused, and as such in +25% item form
-export function outfitOyster(): void {
+// Putting on some ML to fight non-scaling stuff like snojo
+export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
 	setRetroCape("heck", "thrill");
+	// The ML forms are only used here, so no helper functions
+	if (have($item`Sneaky Pete's leather jacket`)) use(1, $item`Sneaky Pete's leather jacket`);
+	if (get("backupCameraMode") !== "ml") cliExecute("backupcamera ml");
 	let outfit = new Map<Slot, Item[]>([
-		[$slot`hat`, $items`wad of used tape, iunion crown`],
-		[$slot`back`, $items`lov epaulettes, vampyric cloake`],
-		[$slot`shirt`, $items`fresh coat of paint`],
+		[$slot`hat`, $items`daylight shavings helmet`],
+		[$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
+		[$slot`shirt`, $items`Sneaky Pete's leather jacket (collar popped), fresh coat of paint`],
 		[$slot`weapon`, $items`fourth of may cosplay saber`],
-		[$slot`offhand`, $items`familiar scrapbook`],
+		[$slot`offhand`, $items`weeping willow wand, familiar scrapbook`],
 		[$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
-		[$slot`acc1`, $items`combat lover's locket'`],
-		[$slot`acc2`, $items`gold detective badge`],
-		[$slot`acc3`, $items`your cowboy boots`]
+		[$slot`acc1`, $items`retrospecs`],
+		[$slot`acc2`, $items`battle broom, eight days a week pill keeper`],
+		[$slot`acc3`, $items`backup camera`]
 	]);
+	applyChanges(outfit, changes);
 	dressUp(outfit);
 }

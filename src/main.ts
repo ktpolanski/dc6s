@@ -1,4 +1,5 @@
 import { 
+	print,
 	runCombat,
 	toInt,
 	use,
@@ -48,8 +49,8 @@ import {
 
 //new SynthesisPlanner().plan();
 
-getBuffs($effects`inscrutable gaze, feeling excited`);
-outfitEarly($items`protonic accelerator pack, Kramco Sausage-o-Matic™`);
+print(Macro.kill().toString());
+print(Macro.kill($skill`otoscope`).toString());
 
 //outfitEarly();
 //outfitCoilWire();

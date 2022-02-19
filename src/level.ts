@@ -17,7 +17,7 @@ import {
 } from "./lib"
 import {
 	outfit,
-	outfitOyster
+	outfitML
 } from "./outfit"
 import Macro from "./combat";
 import SynthesisPlanner from "./synth";
@@ -30,11 +30,12 @@ function fightOysters(): void {
 			//Create the oyster
 			use(8, $item`bricko brick`);
 			useDefaultFamiliar();
-			foldIfNotHave($item`wad of used tape`);
-			outfitOyster();
+			foldIfNotHave($item`tinsel tights`);
+			// Garbo doesn't currently use otoscope, and it caps the pearls
+			outfitML($item`lil' doctor bag'`);
 			// The autoattack should go off here
-			Macro.kill().setAutoAttack();
-			use(1, $item`bricko oyster`); runCombat(Macro.kill().toString());
+			Macro.kill($skill`otoscope`).setAutoAttack();
+			use(1, $item`bricko oyster`); runCombat(Macro.kill($skill`otoscope`).toString());
 			// Flip the pearl, if possible
 			autosell(1, $item`bricko pearl`);
 		}

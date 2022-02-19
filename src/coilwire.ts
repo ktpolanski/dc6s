@@ -153,7 +153,6 @@ if (!have($item`orange`)) {
 		visitUrl(`inv_use.php?pwd=&which=99&whichitem=${decorations}`);
 		visitUrl(`choice.php?whichchoice=999&pwd=&option=1&topper=2&lights=5&garland=3&gift=2`);
 	}
-	foldIfNotHave($item`tinsel tights`);
 	outfitEarly();
 	mapMacro($location`the skeleton store`, $monster`novelty tropical skeleton`, Macro.trySkill($skill`open a big red present`).trySkill($skill`Use the Force`));
 	// This leaves behind the mapping preference set. unset it if it all worked out
