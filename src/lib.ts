@@ -141,7 +141,7 @@ export function ensureInnerElf(): void {
 }
 
 // Check if you have enough mana to cast a libram summon
-export function canCastLibrams(): boolean {
+function canCastLibrams(): boolean {
   const summonNumber = 1 + get("libramSummons");
   const cost = 1 + (summonNumber * (summonNumber - 1)) / 2;
   return myMp() >= cost;
