@@ -1,55 +1,55 @@
 import {
-	autosell,
-	itemAmount,
-	runCombat,
-	totalFreeRests,
-	use,
-	visitUrl
+    autosell,
+    itemAmount,
+    runCombat,
+    totalFreeRests,
+    use,
+    visitUrl
 } from "kolmafia";
 import {
-	$item,
-	$items,
-	$skill,
-	get
+    $item,
+    $items,
+    $skill,
+    get
 } from "libram";
 import {
-	castLibrams,
-	foldIfNotHave,
-	useDefaultFamiliar
+    castLibrams,
+    foldIfNotHave,
+    useDefaultFamiliar
 } from "./lib"
 import {
-	outfit,
-	outfitML
+    outfit,
+    outfitML
 } from "./outfit"
 import Macro from "./combat";
 import SynthesisPlanner from "./synth";
 
 // Make and fight as many bricko oysters as possible
 function fightOysters(): void {
-	if (get("_brickoFights") < 3) {
-		// Do we have oyster ingredients?
-		while ((itemAmount($item`bricko eye brick`)>0) && (itemAmount($item`bricko brick`)>7)) {
-			//Create the oyster
-			use(8, $item`bricko brick`);
-			useDefaultFamiliar();
-			foldIfNotHave($item`tinsel tights`);
-			// Garbo doesn't currently use otoscope, and it caps the pearls
-			outfitML($items`lil' doctor bag'`);
-			// The autoattack should go off here
-			Macro.kill($skill`otoscope`).setAutoAttack();
-			use(1, $item`bricko oyster`); runCombat(Macro.kill($skill`otoscope`).toString());
-			// Flip the pearl, if possible
-			autosell(1, $item`bricko pearl`);
-		}
-	}
+    if (get("_brickoFights") < 3) {
+        // Do we have oyster ingredients?
+        while ((itemAmount($item`bricko eye brick`)>0) && (itemAmount($item`bricko brick`)>7)) {
+            //Create the oyster
+            use(8, $item`bricko brick`);
+            useDefaultFamiliar();
+            foldIfNotHave($item`tinsel tights`);
+            // Garbo doesn't currently use otoscope, and it caps the pearls
+            outfitML($items`lil' doctor bag'`);
+            // The autoattack should go off here
+            Macro.kill($skill`otoscope`).setAutoAttack();
+            use(1, $item`bricko oyster`); runCombat(Macro.kill($skill`otoscope`).toString());
+            // Flip the pearl, if possible
+            autosell(1, $item`bricko pearl`);
+        }
+    }
 }
 
 // Rest in the chateau, making and fighting oysters as quickly as we have them
 while (totalFreeRests() > get("timesRested")) {
-	// Fish for a green candy heart, then for brickos
-	castLibrams();
-	// Build and fight all the oysters you can
-	fightOysters();
-	// Finally, a chateau rest!
-	visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
+    // Fish for a green candy heart, then for brickos
+    castLibrams();
+    // Build and fight all the oysters you can
+    fightOysters();
+    // Finally, a chateau rest!
+    visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
 }

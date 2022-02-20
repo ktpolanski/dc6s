@@ -1,4 +1,4 @@
-import { Item, itemAmount, retrieveItem, useSkill, visitUrl } from "kolmafia";
+import { Item, itemAmount, retrieveItem, toItem, useSkill, visitUrl } from "kolmafia";
 import { $item, $items, $skill, get, set } from "libram";
 import { canCastLibrams } from "./lib";
 
@@ -80,4 +80,11 @@ export default class SynthesisPlanner {
             // Common myst and item
         }
     }
+}
+
+export function retrieveSynth(buff:string): Item[] {
+    // Get the candy pair out of the appropriate preference
+    // And turn it back into an array of items with the use of a .map
+    // (think R's lapply, performing a given operation on each array element)
+    return get(`_dc6s_${buff}_candy`).split(",").map(x => toItem(x));
 }
