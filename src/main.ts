@@ -1,44 +1,44 @@
 import { 
-	print,
-	runCombat,
-	toInt,
-	use,
-	useFamiliar,
-	visitUrl
+    print,
+    runCombat,
+    toInt,
+    use,
+    useFamiliar,
+    visitUrl
 } from "kolmafia";
 import {
-	$effects,
-	$familiar,
-	$item,
-	$items,
-	$location,
-	$monster,
-	$skill,
-	$slot,
-	get,
-	have,
-	set
+    $effects,
+    $familiar,
+    $item,
+    $items,
+    $location,
+    $monster,
+    $skill,
+    $slot,
+    get,
+    have,
+    set
 } from "libram";
 import {
-	foldIfNotHave,
-	getBuffs,
-	mapMacro,
-	saberCheese
+    foldIfNotHave,
+    getBuffs,
+    mapMacro,
+    saberCheese
 } from "./lib";
 import Macro from "./combat";
 import SynthesisPlanner from "./synth";
 import {
-	outfit,
-	outfitEarly,
-	outfitCoilWire
+    outfit,
+    outfitEarly,
+    outfitCoilWire
 } from "./outfit";
 
 // if (get("_bittycar")) print("hi");
 // const newmacro = Macro.freeRun().toString(); print(`${newmacro}`);
 
 // adventureMacro(
-//	$location`The Dire Warren`,
-//	Macro.freeRun()
+//  $location`The Dire Warren`,
+//  Macro.freeRun()
 // );
 // mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.freeRun());
 // globMacro(Macro.kill());
