@@ -1,11 +1,13 @@
 import {
 	canEquip,
+	cliExecute,
 	equip,
 	equippedItem,
 	Item,
 	print,
 	Slot,
 	toSlot,
+	use,
 	useFamiliar,
 } from "kolmafia";
 import {

@@ -8,6 +8,8 @@ import {
 } from "kolmafia";
 import {
 	$item,
+	$items,
+	$skill,
 	get
 } from "libram";
 import {

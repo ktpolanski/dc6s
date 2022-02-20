@@ -89,31 +89,23 @@ export function saberCheese(macro: Macro, location: Location = $location`The Dir
 
 // Maps are weird and require their own macro
 export function mapMacro(location: Location, monster: Monster, macro: Macro): void {
-  // No autoattack this time, to make diagnosing things easier
-  setAutoAttack(0);
+  macro.setAutoAttack();
   // TODO: make this better
   if (!get("mappingMonsters")) useSkill($skill`Map the Monsters`);
   // Just in case there's a sabering in the macro
   setChoice(1387, 3);
-  // Carefully visit the URL and see what's up
-  let mapPage = visitUrl(toUrl(location));
-  if (!mapPage.includes("You're fighting")) {
-    // At least we're not in combat
-    if (!mapPage.includes("Leading Yourself Right to Them")) {
-      // Intro NC? Try again in a second (literally)
+  // Sometimes there might be an introductory NC
+  // In that case, hit the place again and it should be fine
+  const mapPage = visitUrl(toUrl(location));
+  if (!mapPage.includes("Leading Yourself Right to Them")) {
+      // Just in case
       wait(1);
-      mapPage = visitUrl(toUrl(location));
-    }
-    if (mapPage.includes("Leading Yourself Right to Them") {
-      // Oof, we're in. Do the thing.
-      runChoice(1, `heyscriptswhatsupwinkwink=${monster.id}`);
-      runCombat(macro.toString());
-      // Once again, in case of saber
-      if (handlingChoice()) runChoice(-1);
-      return;
+      visitUrl(toUrl(location));
   }
-  // If any of the above blew up, abort!
-  throw "Something went wrong trying to map"
+  runChoice(1, `heyscriptswhatsupwinkwink=${monster.id}`);
+  runCombat(macro.toString());
+  // Once again, in case of saber
+  if (handlingChoice()) runChoice(3);
 }
 
 // As does god lobster
