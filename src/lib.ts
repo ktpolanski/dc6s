@@ -98,14 +98,12 @@ export function mapMacro(location: Location, monster: Monster, macro: Macro): vo
   // In that case, hit the place again and it should be fine
   const mapPage = visitUrl(toUrl(location));
   if (!mapPage.includes("Leading Yourself Right to Them")) {
-      // Just in case
-      wait(1);
       visitUrl(toUrl(location));
   }
   runChoice(1, `heyscriptswhatsupwinkwink=${monster.id}`);
   runCombat(macro.toString());
   // Once again, in case of saber
-  if (handlingChoice()) runChoice(3);
+  if (handlingChoice()) runChoice(-1);
 }
 
 // As does god lobster
