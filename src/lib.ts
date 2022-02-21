@@ -7,6 +7,7 @@ import {
     equip,
     equippedItem,
     Familiar,
+    familiarEquipment,
     handlingChoice,
     Item,
     itemAmount,
@@ -220,7 +221,7 @@ export function getBuffs(buffs:Effect[]): void {
 
 // Get the given familiar its equipment
 export function familiarJacks(fam:Familiar): void {
-    if (!have($item`box of familiar jacks`) && !have()) {
+    if (!have($item`box of familiar jacks`) && !have(familiarEquipment(fam))) {
         useFamiliar(fam);
         create(1, $item`box of familiar jacks`);
         use(1, $item`box of familiar jacks`);

@@ -40,7 +40,6 @@ import {
     useIfHave
 } from "./lib";
 import Macro from "./combat";
-import SynthesisPlanner from "./synth";
 import {
     outfit,
     outfitEarly,

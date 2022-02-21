@@ -1,12 +1,15 @@
 import {
+    adv1,
     autosell,
     cliExecute,
+    create,
     itemAmount,
     runCombat,
     totalFreeRests,
     use,
+    useFamiliar,
     useSkill,
-    visitUrl
+    visitUrl,
 } from "kolmafia";
 import {
     $effect,
@@ -14,10 +17,11 @@ import {
     $familiar,
     $item,
     $items,
+    $location,
     $skill,
     Clan,
     get,
-    have
+    have,
 } from "libram";
 import {
     adventureMacro,
@@ -28,17 +32,17 @@ import {
     getBuffs,
     setChoice,
     useDefaultFamiliar,
-    useIfHave
+    useIfHave,
 } from "./lib"
 import {
     outfit,
-    outfitML
+    outfitML,
 } from "./outfit"
 import Macro from "./combat";
 import {
     performSynth,
     retrieveSynth,
-    SynthesisPlanner
+    SynthesisPlanner,
 } from "./synth";
 
 // Make and fight as many bricko oysters as possible
