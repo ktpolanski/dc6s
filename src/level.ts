@@ -36,6 +36,7 @@ import {
 } from "./outfit"
 import Macro from "./combat";
 import {
+    performSynth,
     retrieveSynth,
     SynthesisPlanner
 } from "./synth";
@@ -61,7 +62,7 @@ function fightOysters(): void {
 }
 
 // Set up a bunch of buffs to pump mysticality prior to levelling
-function buffUp: void {
+function buffUp(): void {
     // Park synth predictions into preferences
     new SynthesisPlanner().plan();
     // This may require a tome summon to complete
@@ -144,7 +145,7 @@ function buffUp: void {
     }
     if (!have($effect`holiday yoked`)) {
         // Use a reflex hammer to get out
-        outfit($item`lil' doctor bag`);
+        outfit($items`lil' doctor bag`);
         useFamiliar($familiar`ghost of crimbo carols`);
         // Noob Cave has a construct, and just a construct - how fortunate for us!
         adventureMacro($location`noob cave`, Macro.freeRun());
@@ -155,7 +156,7 @@ function buffUp: void {
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     use(1, $item`a ten-percent bonus`);
-    cliExecute("bastille myst brogues myst");
+    cliExecute("bastille myst brogues");
 }
 
 // Rest in the chateau, making and fighting oysters as quickly as we have them
