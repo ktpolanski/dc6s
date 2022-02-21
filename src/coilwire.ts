@@ -84,13 +84,13 @@ if (!have($item`weeping willow wand`)) {
     }
 }
 
-// Pick up cowboy boots and a detective badge
+// Pick up cowboy boots and a detective badge, solve some cases
 if (!have($item`your cowboy boots`)) {
     visitUrl("place.php?whichplace=town_right&action=townright_ltt");
     runChoice(5);
 }
 if (!have($item`gold detective badge`)) {
-    visitUrl("place.php?whichplace=town_wrong&action=townwrong_precinct");
+    cliExecute("detective solver");
 }
 
 // Get access to the bird, set up the horse
