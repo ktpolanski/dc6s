@@ -160,7 +160,7 @@ if (!have($item`orange`)) {
     }
     outfitEarly();
     mapMacro($location`the skeleton store`, $monster`novelty tropical skeleton`, Macro.trySkill($skill`open a big red present`).trySkill($skill`Use the Force`));
-    // This leaves behind the mapping preference set. unset it if it all worked out
+    // This leaves behind the mapping preference set. Unset it if it all worked out
     if (get("mappingMonsters") && have($item`orange`)) set("mappingMonsters", false);
 }
 

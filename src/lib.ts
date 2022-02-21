@@ -2,11 +2,12 @@ import {
     adv1,
     buy,
     cliExecute,
+    create,
     Effect,
     equip,
     equippedItem,
+    Familiar,
     handlingChoice,
-    haveEffect,
     Item,
     itemAmount,
     Location,
@@ -53,7 +54,7 @@ export function useDefaultFamiliar(): void {
 	if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
 		useFamiliar($familiar`garbage fire`);
 		equip($item`miniature crystal ball`);
-	} else if (!have($item`short stack of pancakes`) && (haveEffect($effect`shortly stacked`) === 0)) {
+	} else if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`)) {
 		useFamiliar($familiar`shorter-order cook`);
 		equip($item`miniature crystal ball`);
 	} else if (get("camelSpit") < 100) {
@@ -124,6 +125,8 @@ export function bustGhost(): void {
     const ghostLocation = get("ghostLocation");
     if (ghostLocation) {
         useDefaultFamiliar();
+        // A bit concerned about ML, as the ghosts hit hard if you let them
+        // So just keep it low ML to avoid stun resistance
         foldIfNotHave($item`tinsel tights`);
         outfitEarly($items`protonic accelerator pack`);
         // No need to worry about entry noncombats
@@ -135,9 +138,9 @@ export function bustGhost(): void {
 export function ensureInnerElf(): void {
     useFamiliar($familiar`Machine Elf`);
     Clan.join("Beldungeon");
-    // TODO: make this less shit
-    equip($slot`acc2`, $item`Kremlin's Greatest Briefcase`);
-    equip($slot`acc1`, $item`Eight Days a Week Pill Keeper`);
+    // The early outfit features both the KGB, which works for a free run here
+    // And the pill keeper, which will absorb the initial meatshot
+    outfitEarly();
     setChoice(326, 1);
     // Only some free banishers work here because of reasons
     adventureMacro(
@@ -164,7 +167,7 @@ function brickoBrickCheck(): boolean {
 export function castLibrams(): void {
     // Keep casting while possible
     while (canCastLibrams()) {
-        if (!have($item`green candy heart`) && (haveEffect($effect`heart of green`) === 0)) {
+        if (!have($item`green candy heart`) && !have($effect`heart of green`)) {
             // Fish for a green candy heart
             useSkill(1, $skill`summon candy hearts`);
         } else if ((get("_brickoEyeSummons") < 3) || brickoBrickCheck()) {
@@ -209,8 +212,17 @@ export function getBuffs(buffs:Effect[]): void {
 	for (const buff of buffs) {
 		// If the buff is not there, get it
 		// the .default thing is a CLI-compatible way to do so
-		if (haveEffect(buff) === 0) {
+		if (!have(buff)) {
 			cliExecute(buff.default);
 		}
 	}
+}
+
+// Get the given familiar its equipment
+export function familiarJacks(fam:Familiar): void {
+    if (!have($item`box of familiar jacks`) && !have()) {
+        useFamiliar(fam);
+        create(1, $item`box of familiar jacks`);
+        use(1, $item`box of familiar jacks`);
+    }
 }

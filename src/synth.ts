@@ -1,8 +1,8 @@
-import { Item, itemAmount, retrieveItem, toItem, useSkill, visitUrl } from "kolmafia";
+import { Item, itemAmount, retrieveItem, sweetSynthesis, toItem, useSkill, visitUrl } from "kolmafia";
 import { $item, $items, $skill, get, set } from "libram";
 import { canCastLibrams } from "./lib";
 
-export default class SynthesisPlanner {
+export class SynthesisPlanner {
     // Prepare a sorted array of mod0 candies, as we'd rather eat pecan than sprouts
     // We always have sprouts at our disposal
     mod0: Item[] = $items`peppermint sprout, peppermint sprout, peppermint sprout`;
@@ -85,6 +85,18 @@ export default class SynthesisPlanner {
 export function retrieveSynth(buff:string): Item[] {
     // Get the candy pair out of the appropriate preference
     // And turn it back into an array of items with the use of a .map
-    // (think R's lapply, performing a given operation on each array element)
+    // (think python's list comprehension in terms of outcome)
     return get(`_dc6s_${buff}_candy`).split(",").map(x => toItem(x));
+}
+
+// Actually perform the synthesis
+export function performSynth(buff:string): void {
+    const candies = retrieveSynth(buff);
+    for (const candy of candies) {
+        // We should have a candy that crafts into this easily
+        // So do the crafting if need be
+        if (!retrieveItem(candy)) throw "Something went wrong with synthesis";
+    }
+    // Okay, here we go...
+    sweetSynthesis(candies[0], candies[1]);
 }
