@@ -5,6 +5,7 @@ import {
     create,
     itemAmount,
     runCombat,
+    setAutoAttack,
     totalFreeRests,
     use,
     useFamiliar,
@@ -142,6 +143,7 @@ function buffUp(): void {
             // Advance the clock to make gingercity go quicker
             setChoice(1215, 1);
             // If this fails horrifically, something went wrong
+            setAutoAttack(0);
             adv1($location`gingerbread civic center`);
         }
         // Get the buff (by casting noodles) and get bowlo counting down for its 9+11 NEP appearance later

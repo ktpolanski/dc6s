@@ -1,4 +1,4 @@
-import { useFamiliar } from "kolmafia";
+import { adv1, setAutoAttack, useFamiliar } from "kolmafia";
 import { $effect, $familiar, $location, $skill, get, have, set } from "libram";
 import { adventureMacro, saberCheese, setChoice } from "./lib";
 import Macro from "./combat";
@@ -12,7 +12,9 @@ if (!have($effect`Meteor Showered`) && get("_meteorShowerUses") < 5) {
         if (get("miniAdvClass") === 0) {
             // Get the mini-adventurer to become a sauceror for subsequent buffing
             setChoice(768, 4);
-            adventureMacro($location`The Dire Warren`, Macro.freeRun());
+            // This should fail horribly if something goes wrong
+            setAutoAttack(0);
+            adv1($location`the dire warren`);
             // The noncombat just zooms by too fast and the class change doesn't get picked up
             set("miniAdvClass", 4);
         }
