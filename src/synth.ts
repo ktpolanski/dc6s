@@ -1,5 +1,5 @@
 import { Item, itemAmount, retrieveItem, sweetSynthesis, toItem, useSkill, visitUrl } from "kolmafia";
-import { $item, $items, $skill, get, set } from "libram";
+import { $item, $items, $skill, get, have, set } from "libram";
 import { canCastLibrams } from "./lib";
 
 export class SynthesisPlanner {
@@ -31,19 +31,19 @@ export class SynthesisPlanner {
         // We're trying to find a pink or orange candy heart
         while (
             canCastLibrams() &&
-            itemAmount($item`orange candy heart`) === 0 &&
-            itemAmount($item`pink candy heart`) === 0
+            !have($item`orange candy heart`) &&
+            !have($item`pink candy heart`)
         ) {
             useSkill(1, $skill`Summon Candy Heart`);
         }
         // Did we find it?
-        if (itemAmount($item`orange candy heart`) > 0) {
+        if (have($item`orange candy heart`)) {
             return [$item`orange candy heart`, this.mod0.shift()];
-        } else if (itemAmount($item`pink candy heart`) > 0) {
-            return [$item`pink candy heart`, $item`peppermint twist`];
+        } else if (have($item`pink candy heart`)) {
+            return $items`pink candy heart, peppermint twist`;
         } else {
             // We have failed. But we can just default to the LOV chocolate
-            return [$item`LOV Extraterrestrial Chocolate`, $item`peppermint twist`];
+            return $items`LOV Extraterrestrial Chocolate, peppermint twist`;
         }
     }
 

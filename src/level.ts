@@ -158,7 +158,7 @@ function buffUp(): void {
     }
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs($effects`fidoxene, billiards belligerence, puzzle champ`);
-    getBuffs($effects`leash of linguini, empathy of the newt, blood bond`);
+    getBuffs($effects`leash of linguini, empathy, blood bond`);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     use(1, $item`a ten-percent bonus`);
