@@ -270,7 +270,7 @@ function beatStuffUp(): void {
             // Any non-gentrifier will get us our desired 55 sprinkles
             adventureMacro($location`gingerbread upscale retail district`, 
                 Macro.if_($monster`gingerbread gentrifier`, Macro.trySkill($skill`macrometeorite`))
-                    .setup.freeKill()
+                    .setup().freeKill()
             );
         }
         // Rip banderways in search of the NC, where we'll buy latte
@@ -320,7 +320,7 @@ function beatStuffUp(): void {
         outfit();
         // Chuck our second bowlo here for 7
         adventureMacro($location`the deep machine tunnels`,
-            Macro.trySkill($skill`bowl sideways`).kill()s
+            Macro.trySkill($skill`bowl sideways`).kill()
         );
     }
     // Sort out the rest of the witchess royalty while we wait for bowlo to return
@@ -329,7 +329,6 @@ function beatStuffUp(): void {
         useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
-        // The witchess royalty don't allow for combat finesse
         Macro.attack().repeat().setAutoAttack();
         Witchess.fightPiece($monster`witchess king`);
     }
@@ -339,7 +338,6 @@ function beatStuffUp(): void {
         useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
-        // The witchess royalty don't allow for combat finesse
         Macro.attack().repeat().setAutoAttack();
         Witchess.fightPiece($monster`witchess queen`);
     }
@@ -350,6 +348,7 @@ function beatStuffUp(): void {
     //  3. do a 9+11 bowlo for as many turns of bowlo stats as possible
     //  4. get inner elf as soon as level 13 (technically may already have it)
     //  5. once 2-4 align, rip Feel Prides
+    // This is handled via the various called functions
     if (freeKillsLeft() > 0) {
         // Screw quests (skip), screw NCs (fight)
         setChoice(1322, 2);
