@@ -3,6 +3,7 @@ import {
     autosell,
     cliExecute,
     create,
+    drink,
     equip,
     itemAmount,
     familiarWeight,
@@ -188,7 +189,7 @@ function beatStuffUp(): void {
         if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`)) {
             useFamiliar($familiar`shorter-order cook`);
             equip($item`miniature crystal ball`);
-		} else useDefaultFamiliar();
+        } else useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit($items`protonic accelerator pack`);
         // The autoattack macro will work fine
@@ -255,7 +256,7 @@ function beatStuffUp(): void {
     if (!have($item`gingerbread spice latte`) && !have($effect`whole latte love`)) {
         // Pop a bunch of acquired familiar weight support
         getBuffs($effects`shortly stacked, heart of green`);
-        // Get some sprinkles with prinkle dog
+        // Get some sprinkles with sprinkle dog
         if (!have($item`sprinkles`)) {
             useFamiliar($familiar`chocolate lab`);
             equip($item`miniature crystal ball`);
@@ -381,5 +382,10 @@ function beatStuffUp(): void {
             adventureMacro($location`the neverending party`, Macro.NEP().freeKill());
         }
     }
-    // And so ends levelling. Onward to tests!
+    // And so ends levelling. Celebrate with a drink, and onward to tests!
+    useIfHave($item`astral six-pack`);
+    if (itemAmount($item`astral pilsner`) == 6)
+        getBuffs($effects`the ode to booze`);
+        drink(3, $item`astral pilsner`);
+    }
 }
