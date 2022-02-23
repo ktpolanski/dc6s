@@ -21,6 +21,7 @@ import {
 } from "libram";
 import {
     foldIfNotHave,
+    freeKillsLeft,
     getBuffs,
     mapMacro,
     saberCheese
@@ -42,14 +43,15 @@ import {
 // );
 // mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.freeRun());
 // globMacro(Macro.kill());
-// ensureInnerElf();
+// getInnerElf();
 //saberCheese(
 //  Macro.trySkill($skill`Become a Cloud of Mist`).trySkill($skill`Fire Extinguisher: Foam Yourself`)
 //);
 
 //new SynthesisPlanner().plan();
 
-print(Macro.kill().toString());
+print(freeKillsLeft().toString());
+print(Macro.geyser().toString());
 print(Macro.kill($skill`otoscope`).toString());
 
 //outfitEarly();

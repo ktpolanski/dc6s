@@ -13,6 +13,7 @@ import {
     itemAmount,
     Location,
     Monster,
+    myLevel,
     myMp,
     runChoice,
     runCombat,
@@ -22,10 +23,10 @@ import {
     useFamiliar,
     useSkill,
     visitUrl,
-    wait
 } from "kolmafia";
 import {
     $effect,
+    $effects,
     $familiar,
     $item,
     $items,
@@ -35,10 +36,11 @@ import {
     Clan,
     get,
     have,
-    PropertiesManager
+    PropertiesManager,
 } from "libram";
 import {
-    outfitEarly
+    outfit,
+    outfitEarly,
 } from "./outfit"
 import Macro from "./combat";
 
@@ -46,6 +48,17 @@ import Macro from "./combat";
 export const PropertyManager = new PropertiesManager();
 export function setChoice(adv: number, choice: number | string): void {
     PropertyManager.setChoices({ [adv]: choice });
+}
+
+// Get a provided list of buffs
+export function getBuffs(buffs:Effect[]): void {
+	for (const buff of buffs) {
+		// If the buff is not there, get it
+		// the .default thing is a CLI-compatible way to do so
+		if (!have(buff)) {
+			cliExecute(buff.default);
+		}
+	}
 }
 
 // Pick what familiar to use
@@ -82,7 +95,7 @@ export function adventureMacro(location: Location, macro: Macro): void {
 }
 
 // Saber is a very straightforward and logical item
-export function saberCheese(macro: Macro, location: Location = $location`The Dire Warren`): void {
+export function saberCheese(macro: Macro, location = $location`The Dire Warren`): void {
     // Saber for items
     setChoice(1387, 3);
     adventureMacro(location, macro.skill($skill`Use the Force`));
@@ -109,10 +122,11 @@ export function mapMacro(location: Location, monster: Monster, macro: Macro): vo
 }
 
 // As does god lobster
-export function globMacro(macro: Macro, choice = 1): void {
+export function globMacro(macro: Macro, choice = 3): void {
     macro.setAutoAttack();
     useFamiliar($familiar`God Lobster`);
     // Set up the choice adventure as specified on input
+    // Default to 3, which is stats
     setChoice(1310, choice);
     visitUrl("main.php?fightgodlobster=1");
     runCombat(macro.toString());
@@ -128,26 +142,45 @@ export function bustGhost(): void {
         useDefaultFamiliar();
         // A bit concerned about ML, as the ghosts hit hard if you let them
         // So just keep it low ML to avoid stun resistance
+        // Add in the willow wand and scrapbook as we don't need saber to kill
         foldIfNotHave($item`tinsel tights`);
-        outfitEarly($items`protonic accelerator pack`);
+        outfitEarly($items`protonic accelerator pack, weeping willow wand, familiar scrapbook`);
         // No need to worry about entry noncombats
         // As protopack ghosts override them in priority
         adventureMacro(ghostLocation, Macro.ghost());
     }
 }
+
+// Do banderways in Gingerbread City
+export function gingerbreadBanderway(location:Location): void {
+    // We need Ode to banderway
+    getBuffs($effects`the ode to booze`);
+    useFamiliar($familiar`frumious bandersnatch`);
+    equip($item`miniature crystal ball`);
+    foldIfNotHave($item`tinsel tights`);
+    // This is an easy opportunity to get some scraps
+    // As bander provides one start of combat and one on skill use
+    outfitFamWeight($items`familiar scrapbook`);
+    adventureMacro(location, Macro.trySkill($skill`micrometeorite`).freeRun());
+}
+
 // Get the Inner Elf buff by going into combat with momma slime
-export function ensureInnerElf(): void {
-    useFamiliar($familiar`Machine Elf`);
-    Clan.join("Beldungeon");
-    // The early outfit features both the KGB, which works for a free run here
-    // And the pill keeper, which will absorb the initial meatshot
-    outfitEarly();
-    setChoice(326, 1);
-    // Only some free banishers work here because of reasons
-    adventureMacro(
-        $location`The Slime Tube`,
-        Macro.trySkill($skill`KGB tranquilizer dart`).trySkill($skill`Snokebomb`)
-    );
+export function getInnerElf(): void {
+    // This only works once level 13
+    if ((myLevel() >= 13) && !have($effect`inner elf`)) {
+        useFamiliar($familiar`Machine Elf`);
+        Clan.join("Beldungeon");
+        // Put on the KGB and make sure Blood Bubble is live to not get melted
+        outfit($items`kremlin's greatest briefcase`);
+        getBuffs($effects`blood bubble`);
+        setChoice(326, 1);
+        // Only some free banishers work here because of reasons
+        adventureMacro(
+            $location`The Slime Tube`,
+            Macro.trySkill($skill`KGB tranquilizer dart`).trySkill($skill`Snokebomb`)
+        );
+        Clan.join("Alliance from Heck");
+    }
 }
 
 // Check if you have enough mana to cast a libram summon
@@ -208,17 +241,6 @@ export function bu(item:Item): void {
     use(1, item);
 }
 
-// Get a provided list of buffs
-export function getBuffs(buffs:Effect[]): void {
-	for (const buff of buffs) {
-		// If the buff is not there, get it
-		// the .default thing is a CLI-compatible way to do so
-		if (!have(buff)) {
-			cliExecute(buff.default);
-		}
-	}
-}
-
 // Get the given familiar its equipment
 export function familiarJacks(fam:Familiar): void {
     if (!have($item`box of familiar jacks`) && !have(familiarEquipment(fam))) {
@@ -226,4 +248,16 @@ export function familiarJacks(fam:Familiar): void {
         create(1, $item`box of familiar jacks`);
         use(1, $item`box of familiar jacks`);
     }
+}
+
+// How many free kills do we have left?
+export function freeKillsLeft(): number {
+    // X-rays and shattering punches just count up to 3 in preferences
+    const xrays = 3 - get("_chestXRayUsed");
+    const punches = 3 - get("_shatteringPunchUsed");
+    // These are essentially one-line if/else things
+    // Storing 0 if the preference is true and 1 if false
+    const mobhit = get("_gingerbreadMobHitUsed") ? 0 : 1;
+    const missile = get("_missileLauncherUsed") ? 0 : 1;
+    return (xrays + punches + mobhit + missile);
 }

@@ -157,7 +157,8 @@ if (!have($item`orange`)) {
         visitUrl(`inv_use.php?pwd=&which=99&whichitem=${decorations}`);
         visitUrl(`choice.php?whichchoice=999&pwd=&option=1&topper=2&lights=5&garland=3&gift=2`);
     }
-    outfitEarly();
+    // Put on the scrapbook to get a scrap off the shrub doing stuff
+    outfitEarly($items`familiar scrapbook`);
     mapMacro($location`the skeleton store`, $monster`novelty tropical skeleton`, Macro.trySkill($skill`open a big red present`).trySkill($skill`Use the Force`));
     // This leaves behind the mapping preference set. Unset it if it all worked out
     if (get("mappingMonsters") && have($item`orange`)) set("mappingMonsters", false);
@@ -169,7 +170,7 @@ if (!have($item`bag of many confections`)) {
     foldIfNotHave($item`tinsel tights`);
     outfitEarly($items`protonic accelerator pack, Kramco Sausage-o-Matic™`);
     adventureMacro($location`noob cave`, Macro.kill());
-    // Take the bag off
+    // Take the bag of many confections off
     equip($slot`familiar`, $item`none`);
 }
 

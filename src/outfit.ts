@@ -1,6 +1,7 @@
 import {
     canEquip,
     cliExecute,
+    create,
     equip,
     equippedItem,
     Item,
@@ -119,22 +120,41 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 }
 
 // Putting on some ML to fight non-scaling stuff like snojo
-// Use with the saucegeyser macro!
+// Use with the .geyser() macro!
 export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     // The ML forms are only used here, so no helper functions
-    if (have($item`Sneaky Pete's leather jacket`)) use(1, $item`Sneaky Pete's leather jacket`);
     if (get("backupCameraMode") !== "ml") cliExecute("backupcamera ml");
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`daylight shavings helmet`],
         [$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`Sneaky Pete's leather jacket (collar popped), fresh coat of paint`],
+        [$slot`shirt`, $items`fresh coat of paint`],
         [$slot`weapon`, $items`weeping willow wand, fourth of may cosplay saber`],
         [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
-        [$slot`acc1`, $items`retrospecs`],
+        [$slot`acc1`, $items`hewn moon-rune spoon`],
         [$slot`acc2`, $items`battle broom, eight days a week pill keeper`],
         [$slot`acc3`, $items`backup camera`]
+    ]);
+    applyChanges(outfit, changes);
+    dressUp(outfit);
+}
+
+// Familiar weight stuff, useful both in run and for the test
+export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
+    setRetroCape("heck", "thrill");
+    // Fold the burning newspaper into the crane if need be
+    if (have($item`burning newspaper`)) create(1, $item`burning paper crane`);
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`daylight shavings helmet`],
+        [$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
+        [$slot`shirt`, $items`makeshift garbage shirtfresh coat of paint`],
+        [$slot`weapon`, $items`fourth of may cosplay saber`],
+        [$slot`offhand`, $items`burning paper crane, familiar scrapbook`],
+        [$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`brutal brogues`],
+        [$slot`acc2`, $items`hewn moon-rune spoon`],
+        [$slot`acc3`, $items`beach comb`]
     ]);
     applyChanges(outfit, changes);
     dressUp(outfit);
