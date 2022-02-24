@@ -37,10 +37,11 @@ import {
     get,
     have,
     PropertiesManager,
+    Witchess,
 } from "libram";
 import {
     outfit,
-    outfitEarly,
+    outfitGhost,
 } from "./outfit"
 import Macro from "./combat";
 
@@ -62,19 +63,22 @@ export function getBuffs(buffs:Effect[]): void {
 }
 
 // Pick what familiar to use
-export function useDefaultFamiliar(): void {
+export function useDefaultFamiliar(canAttack=true): void {
 	// Need to prioritise garbage fire and shorty to get famweight drops
 	// So that sprinkle dog can be 140lb in time for his moment
 	if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
 		useFamiliar($familiar`garbage fire`);
 		equip($item`miniature crystal ball`);
-	} else if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`)) {
+	} else if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`) && canAttack) {
+		// Check the attack clause just in case, e.g. for ninja free kill
 		useFamiliar($familiar`shorter-order cook`);
 		equip($item`miniature crystal ball`);
 	} else if (get("camelSpit") < 100) {
 		// The camel takes up most of the turns in the middle of the run
 		useFamiliar($familiar`melodramedary`);
 		equip($item`dromedary drinking helmet`);
+		// Seeing how this buddy is around the longest, add mumming trunk myst gains
+		if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
 	} else if (equippedItem($slot`offhand`) !== $item`familiar scrapbook`) {
 		// We're in the NEP and fishing for kramcos
 		// Time to bust out lefty with the scrapbook
@@ -139,12 +143,12 @@ export function globMacro(macro: Macro, choice = 3): void {
 export function bustGhost(): void {
     const ghostLocation = get("ghostLocation");
     if (ghostLocation) {
-        useDefaultFamiliar();
+        // Busting involves the ghost not getting munched by the familiar
+        useDefaultFamiliar(canAttack=false);
         // A bit concerned about ML, as the ghosts hit hard if you let them
         // So just keep it low ML to avoid stun resistance
-        // Add in the willow wand and scrapbook as we don't need saber to kill
         foldIfNotHave($item`tinsel tights`);
-        outfitEarly($items`protonic accelerator pack, weeping willow wand, familiar scrapbook`);
+        outfitGhost();
         // No need to worry about entry noncombats
         // As protopack ghosts override them in priority
         adventureMacro(ghostLocation, Macro.ghost());
@@ -181,6 +185,18 @@ export function getInnerElf(): void {
         );
         Clan.join("Alliance from Heck");
     }
+}
+
+// Fight a piece of Witchess royalty
+export function fightWitchessRoyalty(royalty:Monster): void {
+    // On the off-chance we're level 13 already
+    getInnerElf();
+    useDefaultFamiliar();
+    foldIfNotHave($item`makeshift garbage shirt`);
+    outfit();
+    // Witchess royalty allows for no combat finesse
+    Macro.attack().repeat().setAutoAttack();
+    Witchess.fightPiece($monster`witchess king`);
 }
 
 // Check if you have enough mana to cast a libram summon

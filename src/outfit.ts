@@ -83,6 +83,26 @@ export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
     dressUp(outfit);
 }
 
+// Ghosts care not for your stats, but also don't want a lot of ML
+// (so that they stay put during Shoot Ghost)
+// So just add all the +stat gain stuff that's on offer... which is not a lot
+// Fine to skip saber as the ghost will get busted
+export function outfitGhost(): void {
+    setRetroCape("heck", "thrill");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`daylight shavings helmet`],
+        [$slot`back`, $items`protonic accelerator pack`],
+        [$slot`shirt`, $items`fresh coat of paint`],
+        [$slot`weapon`, $items`weeping willow wand`],
+        [$slot`offhand`, $items`familiar scrapbook`],
+        [$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`hewn moon-rune spoon`],
+        [$slot`acc2`, $items`eight days a week pill keeper`],
+        [$slot`acc3`, $items`kremlin's greatest briefcase`]
+    ]);
+    dressUp(outfit);
+}
+
 // The coil outfit aims to maximise MP for subsequent buffing kickstarting
 export function outfitCoilWire(): void {
     setRetroCape("heck", "thrill");
@@ -97,8 +117,9 @@ export function outfitCoilWire(): void {
         [$slot`acc2`, $items`gold detective badge`],
         [$slot`acc3`, $items`kremlin's greatest briefcase`]
     ]);
-    // TODO: this feels like it wants to use the familiar?
     dressUp(outfit);
+    useFamiliar($familiar`disembodied hand`);
+    equip($slot`familiar`, $item`industrial fire extinguisher`);
 }
 
 // The default levelling outfit

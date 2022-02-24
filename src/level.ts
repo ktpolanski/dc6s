@@ -29,7 +29,6 @@ import {
     get,
     have,
     TunnelOfLove,
-    Witchess,
 } from "libram";
 import {
     adventureMacro,
@@ -37,6 +36,7 @@ import {
     bustGhost,
     castLibrams,
     familiarJacks,
+    fightWitchessRoyalty,
     foldIfNotHave,
     freeKillsLeft,
     getBuffs,
@@ -82,9 +82,6 @@ function fightOysters(): void {
 function buffUp(): void {
     // Park synth predictions into preferences
     new SynthesisPlanner().plan();
-    // This may require a tome summon to complete
-    // But we're definitely getting the camel equip
-    familiarJacks($familiar`melodramedary`);
     // Get the exp synth buff online
     if (!have($effect`synthesis: learning`)) {
         // If we need to use a tome summon on synth, it's sugar shield for exp
@@ -100,14 +97,6 @@ function buffUp(): void {
     if (!have($effect`synthesis: smart`)) {
         // If this needs the LOV chocolate then we have to hold for a bit
         if (retrieveSynth("myst").indexOf($item`lov extraterrestrial chocolate`) == -1) performSynth("myst");
-    }
-    // While we're on the topic of tome summons, hopefully get a cracker
-    if (get("tomeSummons") < 3) {
-        familiarJacks($familiar`exotic parrot`);
-    } else {
-        // Curse you pecan yahtzee! Settle for +10lb equipment
-        useFamiliar($familiar`baby bugged bugbear`);
-        visitUrl("arena.php");
     }
     // Cloud-talk is annoying, get it like so
     if (!have($effect`That's Just Cloud-Talk, Man`)) {
@@ -174,6 +163,16 @@ function buffUp(): void {
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs($effects`fidoxene, billiards belligerence, puzzle champ`);
     getBuffs($effects`leash of linguini, empathy, blood bond`);
+    // We're definitely getting the camel equip
+    familiarJacks($familiar`melodramedary`);
+    // While we're on the topic of tome summons, hopefully get a cracker
+    if (get("tomeSummons") < 3) {
+        familiarJacks($familiar`exotic parrot`);
+    } else {
+        // Curse you pecan yahtzee! Settle for +10lb equipment
+        useFamiliar($familiar`baby bugged bugbear`);
+        visitUrl("arena.php");
+    }
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     use(1, $item`a ten-percent bonus`);
@@ -201,7 +200,10 @@ function beatStuffUp(): void {
     bustGhost();
     // Do LOV
     if (!get("_loveTunnelUsed")) {
-        useDefaultFamiliar();
+        // There's a full MP restore in there, use what we have now
+        castLibrams();
+        // Attack familiars screw up elixir drops
+        useDefaultFamiliar(canAttack=false);
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         // Set up one massive macro to sort out all of the monsters
@@ -237,7 +239,8 @@ function beatStuffUp(): void {
     }
     // Go hit the ninja on the head
     if (!have($item`li'l ninja costume`)) {
-        useDefaultFamiliar();
+        // Can't have the ninja falling over before the free kill happens
+        useDefaultFamiliar(canAttack=false);
         foldIfNotHave($item`tinsel tights`);
         // Doc bag for x-ray
         outfitML($items`lil' doctor bag`);
@@ -296,23 +299,17 @@ function beatStuffUp(): void {
         adventureMacro($location`gingerbread upscale retail district`, Macro.tryItem($item`gingerbread cigarette`));
     }
     // Beat up the witch as brooms are good for me
-    if (!have($item`battle broom`)) {
-        useDefaultFamiliar();
-        foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
-        // The witchess royalty don't allow for combat finesse
-        Macro.attack().repeat().setAutoAttack();
-        Witchess.fightPiece($monster`witchess witch`);
-    }
+    if (!have($item`battle broom`)) fightWitchessRoyalty($monster`witchess witch`);
     // God Lobster time
     while (get("_godLobsterFights") < 3) {
+        // Somewhere around here we might as well start checking Inner Elf eligibility
+        getInnerElf();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         globMacro(Macro.kill());
     }
     // DMT time
     while (get("_machineTunnelsAdv") < 5) {
-        // Somewhere around here we might as well start checking Inner Elf eligibility
         getInnerElf();
         useFamiliar($familiar`machine elf`);
         equip($item`miniature crystal ball`);
@@ -324,23 +321,9 @@ function beatStuffUp(): void {
         );
     }
     // Sort out the rest of the witchess royalty while we wait for bowlo to return
-    if (!have($item`dented scepter`)) {
-        getInnerElf();
-        useDefaultFamiliar();
-        foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
-        Macro.attack().repeat().setAutoAttack();
-        Witchess.fightPiece($monster`witchess king`);
-    }
     // The queen is the best stats of them all, so kill her twice
-    while (get("_witchessFights") < 5) {
-        getInnerElf();
-        useDefaultFamiliar();
-        foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
-        Macro.attack().repeat().setAutoAttack();
-        Witchess.fightPiece($monster`witchess queen`);
-    }
+    if (!have($item`dented scepter`)) fightWitchessRoyalty($monster`witchess king`);
+    while (get("_witchessFights") < 5) fightWitchessRoyalty($monster`witchess queen`);
     // At this point it's time to venture into the NEP
     // This has a bit of faff to it:
     //  1. run kramco to catch as many gobbos as possible

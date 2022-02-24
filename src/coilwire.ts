@@ -36,7 +36,6 @@ import {
     getBuffs,
     mapMacro,
     saberCheese,
-    useDefaultFamiliar,
     useIfHave
 } from "./lib";
 import Macro from "./combat";
@@ -53,7 +52,7 @@ useIfHave($item`pork elf goodies sack`);
 autosell(5, $item`baconstone`);
 autosell(5, $item`hamethyst`);
 
-// Loot the piggy bank
+// Loot the chateau desk
 if (!get("_chateauDeskHarvested")) {
     visitUrl("place.php?whichplace=chateau&action=chateau_desk1");
 }
