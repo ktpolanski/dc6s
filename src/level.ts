@@ -183,12 +183,9 @@ function buffUp(): void {
 function beatStuffUp(): void {
     // Pick up Greek fire for a nice stat buff in all the upcoming fights
     if (!have($effect`Sweetbreads Flambé`) && !have($item`greek fire`)) {
-        // Manually override the familiar to shorty to get the drop prior to sprinkle dog
-        // And this fight is fine for an attacking familiar
-        if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`)) {
-            useFamiliar($familiar`shorter-order cook`);
-            equip($item`miniature crystal ball`);
-        } else useDefaultFamiliar();
+        // This will put on the shorty for the first time in run
+        // As a lot of the early stuff is no-attack
+        useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit($items`protonic accelerator pack`);
         // The autoattack macro will work fine

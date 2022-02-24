@@ -66,12 +66,12 @@ export function getBuffs(buffs:Effect[]): void {
 export function useDefaultFamiliar(canAttack=true): void {
 	// Need to prioritise garbage fire and shorty to get famweight drops
 	// So that sprinkle dog can be 140lb in time for his moment
-	if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
-		useFamiliar($familiar`garbage fire`);
-		equip($item`miniature crystal ball`);
-	} else if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`) && canAttack) {
+	if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`) && canAttack) {
 		// Check the attack clause just in case, e.g. for ninja free kill
 		useFamiliar($familiar`shorter-order cook`);
+		equip($item`miniature crystal ball`);
+	} else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+		useFamiliar($familiar`garbage fire`);
 		equip($item`miniature crystal ball`);
 	} else if (get("camelSpit") < 100) {
 		// The camel takes up most of the turns in the middle of the run
