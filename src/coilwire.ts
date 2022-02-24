@@ -159,6 +159,7 @@ if (!have($item`orange`)) {
     // Put on the scrapbook to get a scrap off the shrub doing stuff
     outfitEarly($items`familiar scrapbook`);
     mapMacro($location`the skeleton store`, $monster`novelty tropical skeleton`, Macro.trySkill($skill`open a big red present`).trySkill($skill`Use the Force`));
+    heal();
     // This leaves behind the mapping preference set. Unset it if it all worked out
     if (get("mappingMonsters") && have($item`orange`)) set("mappingMonsters", false);
 }
@@ -169,6 +170,7 @@ if (!have($item`bag of many confections`)) {
     foldIfNotHave($item`tinsel tights`);
     outfitEarly($items`protonic accelerator pack, Kramco Sausage-o-Matic™`);
     adventureMacro($location`noob cave`, Macro.kill());
+    heal();
     // Take the bag of many confections off
     equip($slot`familiar`, $item`none`);
 }

@@ -62,6 +62,11 @@ export function getBuffs(buffs:Effect[]): void {
 	}
 }
 
+// Cast Cannelloni Cocoon if at below 50% health
+export function heal(): void {
+    if (myHp() < 0.5*myMaxhp()) useSkill(1, $skill`cannelloni cocoon`);
+}
+
 // Pick what familiar to use
 export function useDefaultFamiliar(canAttack=true): void {
 	// Need to prioritise garbage fire and shorty to get famweight drops
@@ -152,6 +157,7 @@ export function bustGhost(): void {
         // No need to worry about entry noncombats
         // As protopack ghosts override them in priority
         adventureMacro(ghostLocation, Macro.ghost());
+        heal();
     }
 }
 
@@ -166,6 +172,7 @@ export function gingerbreadBanderway(location:Location): void {
     // As bander provides one start of combat and one on skill use
     outfitFamWeight($items`familiar scrapbook`);
     adventureMacro(location, Macro.trySkill($skill`micrometeorite`).freeRun());
+    heal();
 }
 
 // Get the Inner Elf buff by going into combat with momma slime
@@ -183,6 +190,7 @@ export function getInnerElf(): void {
             $location`The Slime Tube`,
             Macro.trySkill($skill`KGB tranquilizer dart`).trySkill($skill`Snokebomb`)
         );
+        heal();
         Clan.join("Alliance from Heck");
     }
 }
@@ -197,6 +205,7 @@ export function fightWitchessRoyalty(royalty:Monster): void {
     // Witchess royalty allows for no combat finesse
     Macro.attack().repeat().setAutoAttack();
     Witchess.fightPiece($monster`witchess king`);
+    heal();
 }
 
 // Check if you have enough mana to cast a libram summon

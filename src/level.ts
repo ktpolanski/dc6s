@@ -41,6 +41,7 @@ import {
     freeKillsLeft,
     getBuffs,
     getInnerElf,
+    heal,
     mapMacro,
     setChoice,
     useDefaultFamiliar,
@@ -58,32 +59,12 @@ import {
     SynthesisPlanner,
 } from "./synth";
 
-// Make and fight as many bricko oysters as possible
-function fightOysters(): void {
-    if (get("_brickoFights") < 3) {
-        // Do we have oyster ingredients?
-        while ((itemAmount($item`bricko eye brick`)>0) && (itemAmount($item`bricko brick`)>7)) {
-            //Create the oyster
-            use(8, $item`bricko brick`);
-            useDefaultFamiliar();
-            foldIfNotHave($item`tinsel tights`);
-            // Garbo doesn't currently use otoscope, and this caps the pearls
-            outfitML($items`lil' doctor bag'`);
-            // Don't forget the geyser because of no saber in the ML outfit
-            Macro.geyser($skill`otoscope`).setAutoAttack();
-            use(1, $item`bricko oyster`); runCombat(Macro.geyser($skill`otoscope`).toString());
-            // Flip the pearls
-            autosell(1, $item`bricko pearl`);
-        }
-    }
-}
-
 // Set up a bunch of buffs to pump mysticality prior to levelling
 function buffUp(): void {
-    // Park synth predictions into preferences
-    new SynthesisPlanner().plan();
-    // Get the exp synth buff online
+    // Get the exp synth buff online, as this one is 100% happening now
     if (!have($effect`synthesis: learning`)) {
+        // Park synth predictions into preferences
+        new SynthesisPlanner().plan();
         // If we need to use a tome summon on synth, it's sugar shield for exp
         // (this indexOf thing returns -1 if the item is not in the list)
         if (retrieveSynth("exp").indexOf($item`sugar shield`) > -1) {
@@ -151,6 +132,7 @@ function buffUp(): void {
         }
         // Get the buff (by casting noodles) and get bowlo counting down for its 9+11 NEP appearance later
         adventureMacro($location`gingerbread civic center`, Macro.trySkill($skill`entangling noodles`).trySkill($skill`bowl a curveball`));
+        heal();
     }
     if (!have($effect`holiday yoked`)) {
         useFamiliar($familiar`ghost of crimbo carols`);
@@ -159,6 +141,7 @@ function buffUp(): void {
         outfit($items`lil' doctor bag`);
         // Noob Cave has a construct, and just a construct - how fortunate for us!
         adventureMacro($location`noob cave`, Macro.freeRun());
+        heal();
     }
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs($effects`fidoxene, billiards belligerence, puzzle champ`);
@@ -184,13 +167,14 @@ function beatStuffUp(): void {
     // Pick up Greek fire for a nice stat buff in all the upcoming fights
     if (!have($effect`Sweetbreads Flambé`) && !have($item`greek fire`)) {
         // This will put on the shorty for the first time in run
-        // As a lot of the early stuff is no-attack
+        // As a lot of the early stuff is no-attack or one-shots
         useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit($items`protonic accelerator pack`);
         // The autoattack macro will work fine
         Macro.kill().setAutoAttack();
         Witchess.fightPiece($monster`witchess rook`);
+        heal();
         useIfHave($item`greek fire`);
     }
     // Bust a ghost
@@ -214,6 +198,7 @@ function beatStuffUp(): void {
             "Open Heart Surgery",
             "LOV Extraterrestrial Chocolate"
         );
+        heal();
         // At this point we should have a burning newspaper
         // Sort out delayed myst synth if it needs the chocolate
         if (!have($effect`synthesis: smart`)) performSynth("myst");
@@ -228,6 +213,7 @@ function beatStuffUp(): void {
             outfitML();
             // Don't forget to geyser - the ML outfit lacks the saber
             adventureMacro($location`The X-32-F Combat Training Snowman`, Macro.geyser());
+            heal();
         }
         // The snowman can apply various weird debuffs
         // The easiest way out is to just do a quick soak afterward
@@ -242,13 +228,30 @@ function beatStuffUp(): void {
         // Doc bag for x-ray
         outfitML($items`lil' doctor bag`);
         mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.setup().freeKill());
+        heal();
     }
     // Rest in the chateau, making and fighting oysters as quickly as we have them
     while (totalFreeRests() > get("timesRested")) {
         // Fish for a green candy heart, then for brickos
         castLibrams();
-        // Build and fight all the oysters you can
-        fightOysters();
+        // Build and fight all the oysters you can, up to three total
+        if (get("_brickoFights") < 3) {
+            // Do we have oyster ingredients?
+            while (have($item`bricko eye brick`) && (itemAmount($item`bricko brick`)>7)) {
+                //Create the oyster
+                use(8, $item`bricko brick`);
+                useDefaultFamiliar();
+                foldIfNotHave($item`tinsel tights`);
+                // Garbo doesn't currently use otoscope, and this caps the pearls
+                outfitML($items`lil' doctor bag'`);
+                // Don't forget the geyser because of no saber in the ML outfit
+                Macro.geyser($skill`otoscope`).setAutoAttack();
+                use(1, $item`bricko oyster`); runCombat(Macro.geyser($skill`otoscope`).toString());
+                heal();
+                // Flip the pearls
+                autosell(1, $item`bricko pearl`);
+            }
+        }
         // Finally, a chateau rest!
         visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
     }
@@ -272,6 +275,7 @@ function beatStuffUp(): void {
                 Macro.if_($monster`gingerbread gentrifier`, Macro.trySkill($skill`macrometeorite`))
                     .setup().freeKill()
             );
+            heal();
         }
         // Rip banderways in search of the NC, where we'll buy latte
         setChoice(1208, 3);
@@ -294,6 +298,7 @@ function beatStuffUp(): void {
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good
         adventureMacro($location`gingerbread upscale retail district`, Macro.tryItem($item`gingerbread cigarette`));
+        heal();
     }
     // Beat up the witch as brooms are good for me
     if (!have($item`battle broom`)) fightWitchessRoyalty($monster`witchess witch`);
@@ -304,6 +309,7 @@ function beatStuffUp(): void {
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         globMacro(Macro.kill());
+        heal();
     }
     // DMT time
     while (get("_machineTunnelsAdv") < 5) {
@@ -316,6 +322,7 @@ function beatStuffUp(): void {
         adventureMacro($location`the deep machine tunnels`,
             Macro.trySkill($skill`bowl sideways`).kill()
         );
+        heal();
     }
     // Sort out the rest of the witchess royalty while we wait for bowlo to return
     // The queen is the best stats of them all, so kill her twice
@@ -341,6 +348,7 @@ function beatStuffUp(): void {
             outfit($items`Kramco Sausage-o-Matic™`);
             // Special bit of logic to handle bowlo and Feel Pride in .NEP()
             adventureMacro($location`the neverending party`, Macro.NEP().kill());
+            heal();
         }
         // On to the X-rays
         while (get("_chestXRayUsed") < 3) {
@@ -350,6 +358,7 @@ function beatStuffUp(): void {
             outfit($items`Kramco Sausage-o-Matic™, lil' doctor bag`);
             // No time for value finesse, lefty might kill the mob
             adventureMacro($location`the neverending party`, Macro.NEP().freeKill());
+            heal();
         }
         // Prepare the missile launcher
         if (!AsdonMartin.fillWithInventoryTo(100)) throw "Breadcar refuses to charge to 100!"
@@ -359,6 +368,7 @@ function beatStuffUp(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             outfit($items`Kramco Sausage-o-Matic™`);
             adventureMacro($location`the neverending party`, Macro.NEP().freeKill());
+            heal();
         }
     }
     // And so ends levelling. Celebrate with a drink, and onward to tests!
