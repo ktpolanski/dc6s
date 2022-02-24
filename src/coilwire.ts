@@ -4,7 +4,9 @@ import {
     cliExecute,
     create,
     equip,
+    myHp,
     myLevel,
+    myMaxhp,
     mySpleenUse,
     runChoice,
     toInt,
@@ -146,6 +148,8 @@ if (get("questM25Armorer") === "unstarted") {
 
 // Pre-coil fights are quite minimal on buffs, not enough mana to go ham
 getBuffs($effects`inscrutable gaze, feeling excited`);
+// Do a quick soak to heal up as early mana is scarce
+if (myHp() < 0.5*myMaxhp()) cliExecute("hottub");
 
 // Go saber a skeleton real quick
 if (!have($item`orange`)) {
