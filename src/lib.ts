@@ -14,6 +14,8 @@ import {
     Location,
     Monster,
     myLevel,
+    myHp,
+    myMaxhp,
     myMp,
     runChoice,
     runCombat,
@@ -41,6 +43,7 @@ import {
 } from "libram";
 import {
     outfit,
+    outfitFamWeight,
     outfitGhost,
 } from "./outfit"
 import Macro from "./combat";
@@ -149,7 +152,7 @@ export function bustGhost(): void {
     const ghostLocation = get("ghostLocation");
     if (ghostLocation) {
         // Busting involves the ghost not getting munched by the familiar
-        useDefaultFamiliar(canAttack=false);
+        useDefaultFamiliar(false);
         // A bit concerned about ML, as the ghosts hit hard if you let them
         // So just keep it low ML to avoid stun resistance
         foldIfNotHave($item`tinsel tights`);
@@ -204,7 +207,7 @@ export function fightWitchessRoyalty(royalty:Monster): void {
     outfit();
     // Witchess royalty allows for no combat finesse
     Macro.attack().repeat().setAutoAttack();
-    Witchess.fightPiece($monster`witchess king`);
+    Witchess.fightPiece(royalty);
     heal();
 }
 

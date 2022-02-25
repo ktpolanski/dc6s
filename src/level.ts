@@ -25,10 +25,12 @@ import {
     $location,
     $monster,
     $skill,
+    AsdonMartin,
     Clan,
     get,
     have,
     TunnelOfLove,
+    Witchess,
 } from "libram";
 import {
     adventureMacro,
@@ -41,6 +43,8 @@ import {
     freeKillsLeft,
     getBuffs,
     getInnerElf,
+    gingerbreadBanderway,
+    globMacro,
     heal,
     mapMacro,
     setChoice,
@@ -184,7 +188,7 @@ function beatStuffUp(): void {
         // There's a full MP restore in there, use what we have now
         castLibrams();
         // Attack familiars screw up elixir drops
-        useDefaultFamiliar(canAttack=false);
+        useDefaultFamiliar(false);
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         // Set up one massive macro to sort out all of the monsters
@@ -223,7 +227,7 @@ function beatStuffUp(): void {
     // Go hit the ninja on the head
     if (!have($item`li'l ninja costume`)) {
         // Can't have the ninja falling over before the free kill happens
-        useDefaultFamiliar(canAttack=false);
+        useDefaultFamiliar(false);
         foldIfNotHave($item`tinsel tights`);
         // Doc bag for x-ray
         outfitML($items`lil' doctor bag`);
@@ -373,7 +377,7 @@ function beatStuffUp(): void {
     }
     // And so ends levelling. Celebrate with a drink, and onward to tests!
     useIfHave($item`astral six-pack`);
-    if (itemAmount($item`astral pilsner`) == 6)
+    if (itemAmount($item`astral pilsner`) == 6) {
         getBuffs($effects`the ode to booze`);
         drink(3, $item`astral pilsner`);
     }
