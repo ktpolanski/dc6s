@@ -26,7 +26,6 @@ import {
     $slot,
     get,
     have,
-    Pantogram,
     set,
     SongBoom
 } from "libram";
@@ -58,16 +57,6 @@ autosell(5, $item`hamethyst`);
 // Loot the chateau desk
 if (!get("_chateauDeskHarvested")) {
     visitUrl("place.php?whichplace=chateau&action=chateau_desk1");
-}
-// Configure a pantogram
-if (!have($item`pantogram pants`)) {
-    Pantogram.makePants(
-        "Mysticality",
-        "Hot Resistance: 2",
-        "Maximum MP: 20",
-        "Combat Rate: -5",
-        "Spell Damage Percent: 20"
-    );
 }
 // Set up boombox and saber
 SongBoom.setSong("Total Eclipse of Your Meat");

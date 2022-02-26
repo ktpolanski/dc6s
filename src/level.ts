@@ -1,6 +1,7 @@
 import {
     adv1,
     autosell,
+    buy,
     cliExecute,
     create,
     drink,
@@ -104,9 +105,9 @@ getBuffs($effects`inscrutable gaze, thaumodynamic`);
 // Blood Bubble is quite useful, frees up the pill keeper slot
 getBuffs($effects`blood bubble`);
 // +myst stuff! Quite a lot of it!
-getBuffs($effects`uncucumbered, big, favored by lyle, starry-eyed, feeling excited`);
-getBuffs($effects`glittering eyelashes, Confidence of the Votive, broad-spectrum vaccine`);
-getBuffs($effects`song of bravado, total protonic reversal, mystically oiled`);
+getBuffs($effects`uncucumbered, favored by lyle, starry-eyed, feeling excited, song of bravado`);
+getBuffs($effects`glittering eyelashes, big, Confidence of the Votive, broad-spectrum vaccine`);
+getBuffs($effects`total protonic reversal, mystically oiled,  Stevedave's Shanty of Superiority`);
 // The glove needs to be on to do its stat buff
 if (!have($effect`triple-sized`)) {
     outfit($items`powerful glove`);
@@ -141,11 +142,17 @@ if (!have($effect`holiday yoked`)) {
     adventureMacro($location`noob cave`, Macro.freeRun());
     heal();
 }
+// Set up the hatter buff
+if (!have($effect`you can really taste the dormouse`)) {
+    // Get the drink me potion, and the magical hat
+    visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
+    if (!have($item`sombrero-mounted sparkler`)) buy(1, $item`sombrero-mounted sparkler`);
+}
 // Pump up familiar weight now that there's no accidental KO danger
-getBuffs($effects`fidoxene, billiards belligerence, puzzle champ`);
-getBuffs($effects`leash of linguini, empathy, blood bond`);
+getBuffs($effects`fidoxene, billiards belligerence, puzzle champ, blood bond`);
+getBuffs($effects`leash of linguini, empathy, you can really taste the dormouse`);
 // Add a bit of ML
-getBuffs($effects`drescher's annoying noise, Stevedave's Shanty of Superiority`);
+getBuffs($effects`drescher's annoying noise`);
 // Alright, we're out of prep to do. Rip the early stat items and go hit things!
 outfit();
 use(1, $item`a ten-percent bonus`);

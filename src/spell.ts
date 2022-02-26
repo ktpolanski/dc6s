@@ -34,12 +34,10 @@ getBuffs($effects`simmering`);
 // Acquire some constituent pieces
 if (!have($effect`sigils of yeg`)) cliExecute("cargo 177");
 if (!have($effect`pisces in the skyces`)) useSkill(1, $skill`summon alice's army cards`);
-if (!have($effect`full bottle in front of me`)) visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
 // Now that that's done, other stuff! A LOT of it!
 getBuffs($effects`spirit of garlic, Jackasses' Symphony of Destruction, Arched Eyebrow of the Archmage`);
-getBuffs($effects`carol of the hells, mental a-cue-ity, full bottle in front of me, the magic of lov`);
+getBuffs($effects`carol of the hells, mental a-cue-ity, song of sauce, the magic of lov`);
 getBuffs($effects`sigils of yeg, concentration, baconstoned, pisces in the skyces, grumpy and ornery`);
-getBuffs($effects`song of sauce`);
 // Traditionally Inner Elf
 getInnerElf();
 // Two birds with one stone - meteor shower and mini-adventurer buff
