@@ -65,24 +65,22 @@ import {
 
 // Set up a bunch of buffs to pump mysticality prior to levelling
 function buffUp(): void {
-    // Get the exp synth buff online, as this one is 100% happening now
+    // We're about to start casting stuff. Let's reduce cost via magick candle
+    useIfHave($item`natural magick candle`);
+    // Get the exp synth buff online
     if (!have($effect`synthesis: learning`)) {
         // Park synth predictions into preferences
         new SynthesisPlanner().plan();
         // If we need to use a tome summon on synth, it's sugar shield for exp
         // (this indexOf thing returns -1 if the item is not in the list)
         if (retrieveSynth("exp").indexOf($item`sugar shield`) > -1) {
-            // Curse you pecan yahtzee!
             if (!have($item`sugar sheet`) && !have($item`sugar shield`)) useSkill(1, $skill`summon sugar sheets`);
         }
         // Well, at least at this point we can synthesise for sure
         performSynth("exp");
     }
-    // Hopefully get the myst synth buff online
-    if (!have($effect`synthesis: smart`)) {
-        // If this needs the LOV chocolate then we have to hold for a bit
-        if (retrieveSynth("myst").indexOf($item`lov extraterrestrial chocolate`) == -1) performSynth("myst");
-    }
+    // Get myst synth going
+    if (!have($effect`synthesis: smart`)) performSynth("myst");
     // Cloud-talk is annoying, get it like so
     if (!have($effect`That's Just Cloud-Talk, Man`)) {
         visitUrl("place.php?whichplace=campaway&action=campaway_sky");
@@ -90,7 +88,7 @@ function buffUp(): void {
     // Cook some potions!
     // Muscle tends to cap itself without the lemon one
     if (!get("hasRange")) bu($item`Dramatic™ range`);
-    useSkill($skill`Advanced Saucecrafting`);
+    if (get("reagentSummons") == 0) useSkill($skill`Advanced Saucecrafting`);
     if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
         create(1, $item`ointment of the occult`);
     }
@@ -100,8 +98,6 @@ function buffUp(): void {
     if (!have($effect`concentration`) && !have($item`cordial of concentration`)) {
         create(1, $item`cordial of concentration`);
     }
-    // We're about to start buffing. Let's reduce cost via magick candle
-    useIfHave($item`natural magick candle`);
     // Join AfHk for VIP power
     Clan.join("Alliance from Heck");
     // Alright, let 'er rip!
@@ -150,16 +146,6 @@ function buffUp(): void {
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs($effects`fidoxene, billiards belligerence, puzzle champ`);
     getBuffs($effects`leash of linguini, empathy, blood bond`);
-    // We're definitely getting the camel equip
-    familiarJacks($familiar`melodramedary`);
-    // While we're on the topic of tome summons, hopefully get a cracker
-    if (get("tomeSummons") < 3) {
-        familiarJacks($familiar`exotic parrot`);
-    } else {
-        // Curse you pecan yahtzee! Settle for +10lb equipment
-        useFamiliar($familiar`baby bugged bugbear`);
-        visitUrl("arena.php");
-    }
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     use(1, $item`a ten-percent bonus`);
@@ -204,8 +190,6 @@ function beatStuffUp(): void {
         );
         heal();
         // At this point we should have a burning newspaper
-        // Sort out delayed myst synth if it needs the chocolate
-        if (!have($effect`synthesis: smart`)) performSynth("myst");
     }
     // At this point we hit up the residual non-scaling fights
     // They're not gonna get any better, and it improves chateau yields

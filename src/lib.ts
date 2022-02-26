@@ -84,6 +84,11 @@ export function useDefaultFamiliar(canAttack=true): void {
 	} else if (get("camelSpit") < 100) {
 		// The camel takes up most of the turns in the middle of the run
 		useFamiliar($familiar`melodramedary`);
+		// Pick up the gear and stick it on
+		if (!have($item`box of familiar jacks`) && !have($item`dromedary drinking helmet`) {
+		    create(1, $item`box of familiar jacks`);
+		    use(1, $item`box of familiar jacks`);
+		}
 		equip($item`dromedary drinking helmet`);
 		// Seeing how this buddy is around the longest, add mumming trunk myst gains
 		if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
@@ -267,15 +272,6 @@ export function useIfHave(item:Item): void {
 export function bu(item:Item): void {
     if (!have(item)) buy(1, item);
     use(1, item);
-}
-
-// Get the given familiar its equipment
-export function familiarJacks(fam:Familiar): void {
-    if (!have($item`box of familiar jacks`) && !have(familiarEquipment(fam))) {
-        useFamiliar(fam);
-        create(1, $item`box of familiar jacks`);
-        use(1, $item`box of familiar jacks`);
-    }
 }
 
 // How many free kills do we have left?
