@@ -1,11 +1,48 @@
-import { adv1, setAutoAttack, useFamiliar } from "kolmafia";
-import { $effect, $familiar, $location, $skill, get, have, set } from "libram";
-import { adventureMacro, saberCheese, setChoice } from "./lib";
+import {
+    adv1,
+    cliExecute,
+    setAutoAttack,
+    useFamiliar,
+    useSkill,
+    visitUrl,
+} from "kolmafia";
+import {
+    $effect,
+    $effects,
+    $familiar,
+    $location,
+    $skill,
+    get,
+    have,
+    set
+} from "libram";
+import {
+    adventureMacro,
+    getBuffs,
+    getInnerElf,
+    saberCheese,
+    setChoice
+} from "./lib";
+import {
+    outfit,
+    outfitSpell,
+} from "./outfit";
 import Macro from "./combat";
 
-// if (get("_bittycar")) print("hi");
-// const newmacro = Macro.freeRun().toString(); print(`${newmacro}`);
-
+// Start off with Simmer so it doesn't muck anything up later
+getBuffs($effects`simmering`);
+// Acquire some constituent pieces
+if (!have($effect`sigils of yeg`)) cliExecute("cargo 177");
+if (!have($effect`pisces in the skyces`)) useSkill(1, $skill`summon alice's army cards`);
+if (!have($effect`full bottle in front of me`)) visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
+// Now that that's done, other stuff! A LOT of it!
+getBuffs($effects`spirit of garlic, Jackasses' Symphony of Destruction, Arched Eyebrow of the Archmage`);
+getBuffs($effects`carol of the hells, mental a-cue-ity, full bottle in front of me, the magic of lov`);
+getBuffs($effects`sigils of yeg, concentration, baconstoned, pisces in the skyces, grumpy and ornery`);
+getBuffs($effects`song of sauce`);
+// Traditionally Inner Elf
+getInnerElf();
+// Two birds with one stone - meteor shower and mini-adventurer buff
 if (!have($effect`Meteor Showered`) && get("_meteorShowerUses") < 5) {
     if (!have($effect`Saucefingers`)) {
         useFamiliar($familiar`Mini-Adventurer`);
@@ -19,8 +56,11 @@ if (!have($effect`Meteor Showered`) && get("_meteorShowerUses") < 5) {
             set("miniAdvClass", 4);
         }
     }
+    outfit();
     // The NEP mobs should hopefully tank a single smack of the mini-sauce guy
     saberCheese(Macro.trySkill($skill`Meteor Shower`), $location`the neverending party`);
     // Auto-attack saber means mafia doesn't get to see the meteor shower, let it know
     set("_meteorShowerUses", 1 + get("_meteorShowerUses"));
 }
+// Alright, gear and do the thing!
+outfitSpell();

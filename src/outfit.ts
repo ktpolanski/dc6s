@@ -20,7 +20,8 @@ import {
     have,
 } from "libram";
 import {
-    setRetroCape
+    foldIfNotHave,
+    setRetroCape,
 } from "./lib";
 
 // Outfits are defined as maps (dictionaries)
@@ -114,7 +115,7 @@ export function outfitCoilWire(): void {
         [$slot`offhand`, $items`abracandalabra`],
         [$slot`pants`, $items`cargo cultist shorts`],
         [$slot`acc1`, $items`retrospecs`],
-        [$slot`acc2`, $items`gold detective badge`],
+        [$slot`acc2`, $items`hewn moon-rune spoon`],
         [$slot`acc3`, $items`kremlin's greatest briefcase`]
     ]);
     dressUp(outfit);
@@ -169,7 +170,7 @@ export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`daylight shavings helmet`],
         [$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`makeshift garbage shirtfresh coat of paint`],
+        [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
         [$slot`weapon`, $items`fourth of may cosplay saber`],
         [$slot`offhand`, $items`burning paper crane, familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
@@ -179,4 +180,156 @@ export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
     ]);
     applyChanges(outfit, changes);
     dressUp(outfit);
+}
+
+// Moxie test outfit
+export function outfitMoxie(): void {
+    setRetroCape("robot", "thrill");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`very pointy crown`],
+        [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`fourth of may cosplay saber`],
+        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`pants`, $items`cargo cultist shorts`],
+        [$slot`acc1`, $items`retrospecs`],
+        [$slot`acc2`, $items`beach comb`],
+        [$slot`acc3`, $items`"I voted!" sticker`]
+    ]);
+    dressUp(outfit);
+}
+
+// Muscle (and HP) test outfit
+// Cargo shorts trivialise the HP test
+export function outfitMuscle(): void {
+    foldIfNotHave($item`wad of used tape`);
+    setRetroCape("vampire", "thrill");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`wad of used tape`],
+        [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`fourth of may cosplay saber`],
+        [$slot`offhand`, $items`dented scepter`],
+        [$slot`pants`, $items`cargo cultist shorts`],
+        [$slot`acc1`, $items`retrospecs`],
+        [$slot`acc2`, $items`brutal brogues`],
+        [$slot`acc3`, $items`"I voted!" sticker`]
+    ]);
+    dressUp(outfit);
+}
+
+// Mysticality test outfit
+// The levelling buffs would do this alone tbh
+export function outfitMysticality(): void {
+    foldIfNotHave($item`wad of used tape`);
+    setRetroCape("heck", "thrill");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`astral chapeau, wad of used tape`],
+        [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`fourth of may cosplay saber`],
+        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`pants`, $items`pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`dorky glasses, retrospecs`],
+        [$slot`acc2`, $items`battle broom`],
+        [$slot`acc3`, $items`"I voted!" sticker`]
+    ]);
+    dressUp(outfit);
+}
+
+// Hot resistance test outfit
+// Use familiar weight in spare slots for parrot
+// This one gets to have an override for cloake saber cheese purposes
+export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
+    setRetroCape("vampire", "hold");
+    // Make KGB give hot resistance
+    cliExecute("briefcase enchantment hot");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`daylight shavings helmet`],
+        [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`fourth of may cosplay saber`],
+        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`pants`, $items`pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`kremlin's greatest briefcase`],
+        [$slot`acc2`, $items`brutal brogues`],
+        [$slot`acc3`, $items`beach comb`]
+    ]);
+    applyChanges(outfit, changes);
+    dressUp(outfit);
+    useFamiliar($familiar`exotic parrot`);
+}
+
+// Noncombat test outfit
+// Put on the powerful glove to cast a cheat code
+export function outfitNoncombat(): void {
+    cliExecute("briefcase enchantment -combat");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`very pointy crown`],
+        [$slot`back`, $items`protonic accelerator pack`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`fourth of may cosplay saber`],
+        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`pants`, $items`pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`kremlin's greatest briefcase`],
+        [$slot`acc2`, $items`powerful glove`],
+        [$slot`acc3`, $items`"I voted!" sticker`]
+    ]);
+    dressUp(outfit);
+    useFamiliar($familiar`disgeist`);
+}
+
+// Weapon damage test outfit
+export function outfitWeapon(): void {
+    foldIfNotHave($item`broken champagne bottle`);
+    cliExecute("briefcase enchantment weapon");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`very pointy crown`],
+        [$slot`back`, $items`protonic accelerator pack`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`dented scepter`],
+        [$slot`offhand`, $items`broken champagne bottle`],
+        [$slot`pants`, $items`pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`brutal brogues`],
+        [$slot`acc2`, $items`kremlin's greatest briefcase`],
+        [$slot`acc3`, $items`powerful glove`]
+    ]);
+    dressUp(outfit);
+}
+
+// Spell damage test outfit
+export function outfitSpell(): void {
+    foldIfNotHave($item`broken champagne bottle`);
+    cliExecute("briefcase enchantment spell");
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`astral chapeau`],
+        [$slot`back`, $items`protonic accelerator pack`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`weeping willow wand`],
+        [$slot`offhand`, $items`abracandalabra`],
+        [$slot`pants`, $items`pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`battle broom`],
+        [$slot`acc2`, $items`kremlin's greatest briefcase`],
+        [$slot`acc3`, $items`powerful glove`]
+    ]);
+    dressUp(outfit);
+}
+
+// Item test outfit
+export function outfitItem(): void {
+    foldIfNotHave($item`wad of used tape`);
+    let outfit = new Map<Slot, Item[]>([
+        [$slot`hat`, $items`wad of used tape`],
+        [$slot`back`, $items`vampyric cloake`],
+        [$slot`shirt`, $items`shoe ad t-shirt, fresh coat of paint`],
+        [$slot`weapon`, $items`weeping willow wand`],
+        [$slot`offhand`, $items`cursed magnifying glass`],
+        [$slot`pants`, $items`pantogram pants, cargo cultist shorts`],
+        [$slot`acc1`, $items`your cowboy boots`],
+        [$slot`acc2`, $items`guzzlr tablet`],
+        [$slot`acc3`, $items`gold detective badge`]
+    ]);
+    dressUp(outfit);
+    useFamiliar($familiar`trick-or-treating tot`);
+    equip($item`li'l ninja costume`);
 }

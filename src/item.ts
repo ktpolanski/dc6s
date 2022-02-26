@@ -28,7 +28,7 @@ if (!have($effect`driving observantly`)) {
 	if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!"
 }
 // Item buff time
-getBuffs($effects`fat leon's phat loot lyric, singer's faithful ocelot, feeling lost`);
+getBuffs($effects`fat leon's phat loot lyric, singer's faithful ocelot`);
 getBuffs($effects`driving observantly, pork barrel`);
 if (!have($effect`synthesis: collection`)) performSynth("item");
 // Get bowlo buff and batform in a single runaway
@@ -40,6 +40,6 @@ if (!have($effect`cosmic ball in the air`)) {
 		Macro.trySkill($skill`bowl straight up`).trySkill($skill`become a bat`).freeRun()
 	);
 }
-// Put on clothes and that's all the setup done. Squint time!
+// Cast feel lost, put on clothes and that's all the setup done. Squint time!
+getBuffs($effects`feeling lost, steely-eyed squint`);
 outfitItem();
-getBuffs($effects`steely-eyed squint`);

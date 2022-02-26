@@ -85,7 +85,7 @@ export function useDefaultFamiliar(canAttack=true): void {
 		// The camel takes up most of the turns in the middle of the run
 		useFamiliar($familiar`melodramedary`);
 		// Pick up the gear and stick it on
-		if (!have($item`box of familiar jacks`) && !have($item`dromedary drinking helmet`) {
+		if (!have($item`box of familiar jacks`) && !have($item`dromedary drinking helmet`)) {
 		    create(1, $item`box of familiar jacks`);
 		    use(1, $item`box of familiar jacks`);
 		}
@@ -172,7 +172,7 @@ export function bustGhost(): void {
 // Do banderways in Gingerbread City
 export function gingerbreadBanderway(location:Location): void {
     // We need Ode to banderway
-    getBuffs($effects`the ode to booze`);
+    getBuffs($effects`ode to booze`);
     useFamiliar($familiar`frumious bandersnatch`);
     equip($item`miniature crystal ball`);
     foldIfNotHave($item`tinsel tights`);
@@ -236,7 +236,7 @@ export function castLibrams(): void {
     while (canCastLibrams()) {
         if (!have($item`green candy heart`) && !have($effect`heart of green`)) {
             // Fish for a green candy heart
-            useSkill(1, $skill`summon candy hearts`);
+            useSkill(1, $skill`summon candy heart`);
         } else if ((get("_brickoEyeSummons") < 3) || brickoBrickCheck()) {
             // Get building pieces for three oysters
             useSkill(1, $skill`summon brickos`)
