@@ -146,7 +146,11 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     // The ML forms are only used here, so no helper functions
-    if (get("backupCameraMode") !== "ml") cliExecute("backupcamera ml");
+    if (get("backupCameraMode") !== "ml") {
+        cliExecute("backupcamera ml");
+        // Why does this not have a pref?
+        cliExecute("briefcase enchantment ml");
+    }
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`daylight shavings helmet`],
         [$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
@@ -155,7 +159,7 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, cargo cultist shorts`],
         [$slot`acc1`, $items`hewn moon-rune spoon`],
-        [$slot`acc2`, $items`battle broom, eight days a week pill keeper`],
+        [$slot`acc2`, $items`kremlin's greatest briefcase`],
         [$slot`acc3`, $items`backup camera`]
     ]);
     applyChanges(outfit, changes);

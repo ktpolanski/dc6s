@@ -228,6 +228,15 @@ if (!have($item`li'l ninja costume`)) {
     mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.setup().freeKill());
     heal();
 }
+// Do a scavenge for some stat pocket change
+if (get("_daycareGymScavenges") == 0) {
+    outfit();
+    visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
+    // Go into the daycare, and do a scavenge
+    runChoice(3); runChoice(2);
+    // Still in the noncombats - these two choices leave them
+    runChoice(5); runChoice(4);
+}
 // Rest in the chateau, making and fighting oysters as quickly as we have them
 while (totalFreeRests() > get("timesRested")) {
     // Fish for a green candy heart, then for brickos
