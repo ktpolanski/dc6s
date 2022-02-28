@@ -14,14 +14,14 @@ import {
     $skill,
     get,
     have,
-    set
+    set,
 } from "libram";
 import {
     adventureMacro,
     getBuffs,
     getInnerElf,
     saberCheese,
-    setChoice
+    setChoice,
 } from "./lib";
 import {
     outfit,

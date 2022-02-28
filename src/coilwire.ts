@@ -142,8 +142,8 @@ if (!have($item`orange`)) {
     mapMacro($location`the skeleton store`, $monster`novelty tropical skeleton`, Macro.trySkill($skill`open a big red present`).trySkill($skill`Use the Force`));
     // Do a quick soak to heal up as early mana is scarce
     if (myHp() < 0.5*myMaxhp()) cliExecute("hottub");
-    // This leaves behind the mapping preference set. Unset it if it all worked out
-    if (get("mappingMonsters") && have($item`orange`)) set("mappingMonsters", false);
+    // This leaves behind the mapping preference set because lol saber
+    if (get("mappingMonsters")) set("mappingMonsters", false);
 }
 // Set up MCD on 10
 if (!have($item`detuned radio`)) buy(1, $item`detuned radio`);

@@ -13,7 +13,9 @@ import {
     $location,
     $skill,
     CombatLoversLocket,
+    get,
     have,
+    set,
 } from "libram"
 import {
     adventureMacro,
@@ -45,25 +47,28 @@ if (!have($effect`Do You Crush What I Crush?`)) {
 }
 // Alright, camel, time for your great moment! The combat that does all the things!
 // Spit on me, and a meteor shower, and sabering out!
-// TODO: WRAAP THIS UP IN A NICE IF
-useFamiliar($familiar`melodramedary`);
-outfit();
-// Saber items
-setChoice(1387, 3);
-Macro.trySkill($skill`%fn, spit on me!`)
-    .trySkill($skill`meteor shower`)
-    .skill($skill`Use the Force`)
-    .setAutoAttack();
-CombatLoversLocket.reminisce($monster`ungulith`);
-// Backup macro submission just in case - autoattack works though
-runCombat(Macro.trySkill($skill`%fn, spit on me!`)
-    .trySkill($skill`meteor shower`)
-    .skill($skill`Use the Force`)
-    .toString()
-);
-// Saber stuff
-if (handlingChoice()) runChoice(-1);
-// TODO: FIX COUNTS ON PREFERENCE STUFF
+if (!have($effect`meteor showered`)) {
+    useFamiliar($familiar`melodramedary`);
+    outfit();
+    // Saber items
+    setChoice(1387, 3);
+    Macro.trySkill($skill`%fn, spit on me!`)
+        .trySkill($skill`meteor shower`)
+        .skill($skill`Use the Force`)
+        .setAutoAttack();
+    CombatLoversLocket.reminisce($monster`ungulith`);
+    // Backup macro submission just in case - autoattack works though
+    runCombat(Macro.trySkill($skill`%fn, spit on me!`)
+        .trySkill($skill`meteor shower`)
+        .skill($skill`Use the Force`)
+        .toString()
+    );
+    // Saber stuff
+    if (handlingChoice()) runChoice(-1);
+    // Auto-attack saber means mafia doesn't get to see the things being used, let it know
+    set("camelSpit", 0);
+    set("_meteorShowerUses", 1 + get("_meteorShowerUses"));
+}
 // Suit up, add the last few buffs...
 outfitWeapon();
 getBuffs($effects`cowrruption, bow-legged swagger`);
