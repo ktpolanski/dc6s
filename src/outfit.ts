@@ -20,6 +20,7 @@ import {
     have,
 } from "libram";
 import {
+    checkKGB,
     foldIfNotHave,
     setRetroCape,
 } from "./lib";
@@ -146,11 +147,8 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     // The ML forms are only used here, so no helper functions
-    if (get("backupCameraMode") !== "ml") {
-        cliExecute("backupcamera ml");
-        // Why does this not have a pref?
-        cliExecute("briefcase enchantment ml");
-    }
+    if (get("backupCameraMode") !== "ml") cliExecute("backupcamera ml");
+    // KGB set up to ML outside outfit call
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`daylight shavings helmet`],
         [$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
@@ -247,7 +245,7 @@ export function outfitMysticality(): void {
 export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("vampire", "hold");
     // Make KGB give hot resistance
-    cliExecute("briefcase enchantment hot");
+    if (!checkKGB("Hot Resistance")) cliExecute("briefcase enchantment hot");
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`daylight shavings helmet`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
@@ -267,7 +265,7 @@ export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
 // Noncombat test outfit
 // Put on the powerful glove to cast a cheat code
 export function outfitNoncombat(): void {
-    cliExecute("briefcase enchantment -combat");
+    if (!checkKGB("less attracted to you")) cliExecute("briefcase enchantment -combat");
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`very pointy crown`],
         [$slot`back`, $items`protonic accelerator pack`],
@@ -286,7 +284,7 @@ export function outfitNoncombat(): void {
 // Weapon damage test outfit
 export function outfitWeapon(): void {
     foldIfNotHave($item`broken champagne bottle`);
-    cliExecute("briefcase enchantment weapon");
+    if (!checkKGB("Weapon Damage")) cliExecute("briefcase enchantment weapon");
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`very pointy crown`],
         [$slot`back`, $items`protonic accelerator pack`],
@@ -304,7 +302,7 @@ export function outfitWeapon(): void {
 // Spell damage test outfit
 export function outfitSpell(): void {
     foldIfNotHave($item`broken champagne bottle`);
-    cliExecute("briefcase enchantment spell");
+    if (!checkKGB("Spell Damage")) cliExecute("briefcase enchantment spell");
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`astral chapeau`],
         [$slot`back`, $items`protonic accelerator pack`],

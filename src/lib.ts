@@ -285,3 +285,12 @@ export function freeKillsLeft(): number {
     const missile = get("_missileLauncherUsed") ? 0 : 1;
     return (xrays + punches + mobhit + missile);
 }
+
+// Does KGB have a given enchantment?
+// Warning - case sensitive! Enchants need to be written as on the KGB itself!
+export function checkKGB(enchant:string): boolean {
+    // The current item description features the enchantments
+    const briefcase = visitUrl("desc_item.php?whichitem=311743898");
+    if (briefcase.includes(enchant)) return true;
+    else return false;
+}

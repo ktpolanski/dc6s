@@ -39,6 +39,7 @@ import {
     bu,
     bustGhost,
     castLibrams,
+    checkKGB,
     fightWitchessRoyalty,
     foldIfNotHave,
     freeKillsLeft,
@@ -204,6 +205,8 @@ if (get("_snojoFreeFights") < 10) {
         visitUrl("place.php?whichplace=snojo&action=snojo_controller");
         runChoice(2);
     }
+    // Set up KGB to be in ML mode
+    if (!checkKGB("+25 ML")) cliExecute("briefcase enchantment ml");
     // This stupid while inside an if is needed for the VIP soak later
     while (get("_snojoFreeFights") < 10) {
         useDefaultFamiliar();
@@ -223,6 +226,7 @@ if (!have($item`li'l ninja costume`)) {
     // Can't have the ninja falling over before the free kill happens
     useDefaultFamiliar(false);
     foldIfNotHave($item`tinsel tights`);
+    if (!checkKGB("+25 ML")) cliExecute("briefcase enchantment ml");
     // Doc bag for x-ray
     outfitML($items`Lil' Doctor™ bag`);
     mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.setup().freeKill());
@@ -243,6 +247,8 @@ while (totalFreeRests() > get("timesRested")) {
     castLibrams();
     // Build and fight all the oysters you can, up to three total
     if (get("_brickoFights") < 3) {
+        // Set up KGB to be in ML mode
+        if (!checkKGB("+25 ML")) cliExecute("briefcase enchantment ml");
         // Do we have oyster ingredients?
         while (have($item`bricko eye brick`) && (itemAmount($item`bricko brick`)>7)) {
             //Create the oyster
