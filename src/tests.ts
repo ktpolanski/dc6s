@@ -143,8 +143,8 @@ export function hotResPrep(): void {
 	getBuffs($effects`feel peaceful, empathy`);
 	// Collect extinguisher foam and a cloake buff via saber cheese
 	if (!have($effect`fireproof foam suit`)) {
-		equip($item`fourth of may cosplay saber`);
-		equip($item`vampyric cloake`);
+		// The outfit has the saber and the extinguisher in it already
+		OutfitHotRes($items`vampyric cloake`);
 		saberCheese(
 			Macro.trySkill($skill`Become a Cloud of Mist`).trySkill($skill`Fire Extinguisher: Foam Yourself`)
 		);
@@ -152,7 +152,7 @@ export function hotResPrep(): void {
 		set("_vampyreCloakeFormUses", get("_vampyreCloakeFormUses")-1);
 		set("_fireExtinguisherCharge", get("_fireExtinguisherCharge")-10);
 	}
-	// Stick on outfit
+	// Stick on outfit proper
 	outfitHotRes();
 }
 

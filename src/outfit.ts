@@ -263,7 +263,7 @@ export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
 }
 
 // Noncombat test outfit
-// Put on the powerful glove to cast a cheat code
+// Put on the powerful glove to cast a cheat code later
 export function outfitNoncombat(): void {
     if (!checkKGB("less attracted to you")) cliExecute("briefcase enchantment -combat");
     let outfit = new Map<Slot, Item[]>([
