@@ -141,9 +141,10 @@ export function mysticalityPrep(): void {
 export function hotResPrep(): void {
 	// Ensure buffs
 	getBuffs($effects`feel peaceful, empathy`);
-	// Collect extinguisher foam via saber cheese
+	// Collect extinguisher foam and a cloake buff via saber cheese
 	if (!have($effect`fireproof foam suit`)) {
-		outfitHotRes($items`vampyric cloake`);
+		equip($item`fourth of may cosplay saber`);
+		equip($item`vampyric cloake`);
 		saberCheese(
 			Macro.trySkill($skill`Become a Cloud of Mist`).trySkill($skill`Fire Extinguisher: Foam Yourself`)
 		);
@@ -175,13 +176,14 @@ export function famWeightPrep(): void {
 	// Acquire saber cheesed meteor shower
 	if (!have($effect`meteor showered`)) {
 		useFamiliar($familiar`none`);
-		outfitFamWeight();
+		equip($item`fourth of may cosplay saber`);
 		saberCheese(Macro.trySkill($skill`meteor shower`));
 		// Auto-attack saber means mafia doesn't get to see the meteor shower, let it know
 		set("_meteorShowerUses", 1 + get("_meteorShowerUses"));
 	}
 	// Most buffs should be on from levelling, as they get used early to make familiar go brrr
 	getBuffs($effects`robot friends, empathy`);
+	outfitFamWeight();
 	// Quick cheeser thing while we have full weight - set up DDV for spell test later
 	// This is good to do now as there's floating feel peaceful from hotres
 	// And the parrot is as fat as it's going to get
@@ -217,7 +219,7 @@ export function weaponPrep(): void {
 	if (!have($effect`Do You Crush What I Crush?`)) {
 		useFamiliar($familiar`ghost of crimbo carols`);
 		// Use a reflex hammer to get out
-		outfit($items`Lil' Doctor™ bag`);
+		equip($item`Lil' Doctor™ bag`);
 		// The Dire Warren has a beast, and just a beast - how fortunate for us!
 		adventureMacro($location`the dire warren`, Macro.freeRun());
 	}
@@ -225,7 +227,7 @@ export function weaponPrep(): void {
 	// Spit on me, and a meteor shower, and sabering out!
 	if (!have($effect`meteor showered`)) {
 		useFamiliar($familiar`melodramedary`);
-		outfit();
+		equip($item`fourth of may cosplay saber`);
 		// Saber items
 		setChoice(1387, 3);
 		Macro.trySkill($skill`%fn, spit on me!`)
@@ -277,7 +279,7 @@ export function spellPrep(): void {
 				set("miniAdvClass", 4);
 			}
 		}
-		outfit();
+		equip($item`fourth of may cosplay saber`);
 		// The NEP mobs should hopefully tank a single smack of the mini-sauce guy
 		saberCheese(Macro.trySkill($skill`Meteor Shower`), $location`the neverending party`);
 		// Auto-attack saber means mafia doesn't get to see the meteor shower, let it know
@@ -298,7 +300,8 @@ export function itemPrep(): void {
 	getBuffs($effects`driving observantly, pork barrel`);
 	if (!have($effect`synthesis: collection`)) performSynth("item");
 	// Get bowlo buff and batform in a single runaway
-	outfit($items`vampyric cloake, Lil' Doctor™ bag`);
+	equip($item`vampyric cloake`);
+	equip($item`Lil' Doctor™ bag`);
 	if (!have($effect`cosmic ball in the air`)) {
 		useFamiliar($familiar`none`);
 		adventureMacro(

@@ -190,7 +190,7 @@ export function getInnerElf(): void {
         useFamiliar($familiar`Machine Elf`);
         Clan.join("Beldungeon");
         // Put on the KGB and make sure Blood Bubble is live to not get melted
-        outfit($items`kremlin's greatest briefcase`);
+        equip($item`kremlin's greatest briefcase`);
         getBuffs($effects`blood bubble`);
         setChoice(326, 1);
         // Only some free banishers work here because of reasons
