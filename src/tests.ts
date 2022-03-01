@@ -280,6 +280,8 @@ export function spellPrep(): void {
 			}
 		}
 		equip($item`fourth of may cosplay saber`);
+		// There's gonna be a round before we get out and these are scalers... let's be safe
+		getBuffs($effects`blood bubble`);
 		// The NEP mobs should hopefully tank a single smack of the mini-sauce guy
 		saberCheese(Macro.trySkill($skill`Meteor Shower`), $location`the neverending party`);
 		// Auto-attack saber means mafia doesn't get to see the meteor shower, let it know
