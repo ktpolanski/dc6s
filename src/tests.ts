@@ -302,10 +302,10 @@ export function itemPrep(): void {
 	getBuffs($effects`driving observantly, pork barrel`);
 	if (!have($effect`synthesis: collection`)) performSynth("item");
 	// Get bowlo buff and batform in a single runaway
-	equip($item`vampyric cloake`);
-	equip($item`Lil' Doctor™ bag`);
 	if (!have($effect`cosmic ball in the air`)) {
 		useFamiliar($familiar`none`);
+		equip($item`vampyric cloake`);
+		equip($item`Lil' Doctor™ bag`);
 		adventureMacro(
 			$location`The Dire Warren`,
 			Macro.trySkill($skill`bowl straight up`).trySkill($skill`become a bat`).freeRun()
