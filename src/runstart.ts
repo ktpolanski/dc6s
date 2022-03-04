@@ -61,7 +61,8 @@ export default function runstart(): void {
         cliExecute("horsery dark horse");
     }
     // Vote - weapon damage and familiar experience
-    if (!get("_voteToday")) {
+    // Need to check this modifier thing as it tracks most reliably
+    if (get("_voteModifier") === "") {
         visitUrl("place.php?whichplace=town_right&action=townright_vote");
         visitUrl("choice.php?option=1&whichchoice=1331&g=2&local%5B%5D=2&local%5B%5D=3");
         // Hit up the booth again so mafia correctly tracks the bonuses
