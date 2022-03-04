@@ -294,3 +294,10 @@ export function checkKGB(enchant:string): boolean {
     if (briefcase.includes(enchant)) return true;
     else return false;
 }
+
+// Check whether a test failed
+export function assertTest(outcome:string, test:string): void {
+    // If the test prep went wrong, given desired turncount
+    // Then the libram wrapper will return "failed"
+    if (outcome === "failed") throw `${test} test failed to complete.`;
+}

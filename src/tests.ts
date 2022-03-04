@@ -65,7 +65,7 @@ import {
 import { performSynth } from "./synth"
 
 // Prepare for coil wire, i.e. do early run stuff
-export function coilPrep(): void {
+export function coilWirePrep(): void {
 	// Pre-coil fights are quite minimal on buffs, not enough mana to go ham
 	getBuffs($effects`inscrutable gaze, feeling excited`);
 	// Go saber a skeleton real quick
@@ -144,7 +144,7 @@ export function hotResPrep(): void {
 	// Collect extinguisher foam and a cloake buff via saber cheese
 	if (!have($effect`fireproof foam suit`)) {
 		// The outfit has the saber and the extinguisher in it already
-		OutfitHotRes($items`vampyric cloake`);
+		outfitHotRes($items`vampyric cloake`);
 		saberCheese(
 			Macro.trySkill($skill`Become a Cloud of Mist`).trySkill($skill`Fire Extinguisher: Foam Yourself`)
 		);
@@ -181,6 +181,8 @@ export function famWeightPrep(): void {
 		// Auto-attack saber means mafia doesn't get to see the meteor shower, let it know
 		set("_meteorShowerUses", 1 + get("_meteorShowerUses"));
 	}
+	// We want to be platypus for aftercore anyway, so let's save a turn here while we're at it
+	if (!get("moonTuned")) cliExecute("spoon platypus");
 	// Most buffs should be on from levelling, as they get used early to make familiar go brrr
 	getBuffs($effects`robot friends, empathy`);
 	outfitFamWeight();

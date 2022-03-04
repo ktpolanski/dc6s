@@ -148,7 +148,7 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     // The ML forms are only used here, so no helper functions
     if (get("backupCameraMode") !== "ml") cliExecute("backupcamera ml");
-    // KGB set up to ML outside outfit call
+    if (!checkKGB("Monster Level")) cliExecute("briefcase enchantment ml");
     let outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`daylight shavings helmet`],
         [$slot`back`, $items`lov epaulettes, unwrapped knock-off retro superhero cape`],
