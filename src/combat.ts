@@ -1,12 +1,14 @@
-import { myFamiliar, Skill } from "kolmafia";
+import { haveEquipped, myFamiliar, Skill } from "kolmafia";
 import { $effect, $familiar, $item, $monster, $skill, get, have, StrictMacro } from "libram";
 import { freeKillsLeft } from "./lib";
 
 // Are we allowed to cast Feel Pride? (helper function for NEP logic)
 function canFeelPride(): boolean {
-    // Preferred condition - rocking a left-hand man, bowled sideways and have inner elf
+    // Do we even have a Feel Pride to cast?
+    if (get("_feelPrideUsed") >= 3) return false;
+    // Preferred condition - rocking a familiar scrapbook, bowled sideways and have inner elf
     // (if the preference is 0, then the ball will return upon entering combat)
-    const cond1 = ((myFamiliar() === $familiar`left-hand man`) && (get("cosmicBowlingBallReturnCombats") > 0) && have($effect`inner elf`));
+    const cond1 = (haveEquipped($item`familiar scrapbook`) && (get("cosmicBowlingBallReturnCombats") > 0) && have($effect`inner elf`));
     // Panic button conditions - about to run out of garbage shirt charges
     const cond2 = (get("garbageShirtCharge") < 5);
     // The final NEP turns are free kills, let's not run out of those either
@@ -77,17 +79,16 @@ export default class Macro extends StrictMacro {
         return new Macro().ghost();
     }
     
-    // The NEP wants to make use of Feel Pride and bowling sideways
+    // The late scalers want to make use of Feel Pride and bowling sideways
     // But the former under a pretty restrictive set of conditions
     // For which there's a helper function earlier in the file
-    // Meanwhile, the latter should not accidentally get cast on a 21st combat
-    // Which would be the fifth bowling skill used
-    NEP(): Macro {
+    // Meanwhile, the latter should not accidentally get used beyond 4 bowlos
+    bowloPride(): Macro {
         return this.externalIf(canFeelPride(), Macro.trySkill($skill`feel pride`))
             .externalIf(get("_cosmicBowlingSkillsUsed")<4, Macro.trySkill($skill`bowl sideways`));
     }
-    static NEP(): Macro {
-        return new Macro().NEP();
+    static bowloPride(): Macro {
+        return new Macro().bowloPride();
     }
 
     // Get out of combat for free!
@@ -108,9 +109,10 @@ export default class Macro extends StrictMacro {
     }
     
     // Unload a free kill
-    // Unless it's a sausage goblin, a free fight - then just punch it
+    // Unless it's a free fight - then just punch it
     freeKill(): Macro {
         return this.if_($monster`sausage goblin`, Macro.attack().repeat())
+            .if_("monstername black crayon", Macro.attack().repeat())
             .trySkill($skill`chest x-ray`)
             .trySkill($skill`shattering punch`)
             .trySkill($skill`gingerbread mob hit`)

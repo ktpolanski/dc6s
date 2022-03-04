@@ -34,7 +34,6 @@ import {
     $items,
     $location,
     $skill,
-    $slot,
     Clan,
     get,
     have,
@@ -70,17 +69,21 @@ export function heal(): void {
     if (myHp() < 0.5*myMaxhp()) useSkill(1, $skill`cannelloni cocoon`);
 }
 
+// Use a familiar and put miniature crystal ball on it
+export function familiarWithOrb(familiar:Familiar): void {
+    useFamiliar(familiar);
+    equip($item`miniature crystal ball`);
+}
+
 // Pick what familiar to use
 export function useDefaultFamiliar(canAttack=true): void {
 	// Need to prioritise garbage fire and shorty to get famweight drops
 	// So that sprinkle dog can be 140lb in time for his moment
 	if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`) && canAttack) {
 		// Check the attack clause just in case, e.g. for ninja free kill
-		useFamiliar($familiar`shorter-order cook`);
-		equip($item`miniature crystal ball`);
+		familiarWithOrb($familiar`shorter-order cook`);
 	} else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
-		useFamiliar($familiar`garbage fire`);
-		equip($item`miniature crystal ball`);
+		familiarWithOrb($familiar`garbage fire`);
 	} else if (get("camelSpit") < 100) {
 		// The camel takes up most of the turns in the middle of the run
 		useFamiliar($familiar`melodramedary`);
@@ -92,15 +95,10 @@ export function useDefaultFamiliar(canAttack=true): void {
 		equip($item`dromedary drinking helmet`);
 		// Seeing how this buddy is around the longest, add mumming trunk myst gains
 		if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
-	} else if (equippedItem($slot`offhand`) !== $item`familiar scrapbook`) {
-		// We're in the NEP and fishing for kramcos
-		// Time to bust out lefty with the scrapbook
-		useFamiliar($familiar`left-hand man`);
-		equip($slot`familiar`, $item`familiar scrapbook`);
 	} else {
-		// We shouldn't end up here. Default to Melf just in case?
-		useFamiliar($familiar`machine elf`);
-		equip($item`miniature crystal ball`);
+		// We're in the NEP and fishing for kramcos
+		// Fish for hipster fights too while we're at it
+		familiarWithOrb($familiar`artistic goth kid`);
 	}
 }
 
@@ -173,8 +171,7 @@ export function bustGhost(): void {
 export function gingerbreadBanderway(location:Location): void {
     // We need Ode to banderway
     getBuffs($effects`ode to booze`);
-    useFamiliar($familiar`frumious bandersnatch`);
-    equip($item`miniature crystal ball`);
+    familiarWithOrb($familiar`frumious bandersnatch`);
     foldIfNotHave($item`tinsel tights`);
     // This is an easy opportunity to get some scraps
     // As bander provides one start of combat and one on skill use

@@ -39,6 +39,7 @@ import {
     bu,
     bustGhost,
     castLibrams,
+    familiarWithOrb,
     fightWitchessRoyalty,
     foldIfNotHave,
     freeKillsLeft,
@@ -270,8 +271,7 @@ export default function level(): void {
         getBuffs($effects`shortly stacked, heart of green`);
         // Get some sprinkles with sprinkle dog
         if (!have($item`sprinkles`)) {
-            useFamiliar($familiar`chocolate lab`);
-            equip($item`miniature crystal ball`);
+            familiarWithOrb($familiar`chocolate lab`);
             foldIfNotHave($item`makeshift garbage shirt`);
             outfitFamWeight();
             // TODO: CANNOT GUARANTEE 55 SPRINKLES, DOG IS ONLY 136 LB!!!
@@ -324,13 +324,14 @@ export default function level(): void {
     // DMT time
     while (get("_machineTunnelsAdv") < 5) {
         getInnerElf();
-        useFamiliar($familiar`machine elf`);
-        equip($item`miniature crystal ball`);
+        familiarWithOrb($familiar`machine elf`);
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         // Chuck our second bowlo here for 7
+        // And try to use Feel Prides, Inner Elf permitting
+        // As this is a good place for them, still have scrapbook
         adventureMacro($location`the deep machine tunnels`,
-            Macro.trySkill($skill`bowl sideways`).kill()
+            Macro.bowloPride().kill()
         );
         heal();
     }
@@ -341,10 +342,10 @@ export default function level(): void {
     // At this point it's time to venture into the NEP
     // This has a bit of faff to it:
     //  1. run kramco to catch as many gobbos as possible
-    //  2. once the camel is charged, switch to leftie with the scrapbook
+    //  2. once the camel is charged, switch to goth kid for hipster fights
     //  3. do a 9+11 bowlo for as many turns of bowlo stats as possible
     //  4. get inner elf as soon as level 13 (technically may already have it)
-    //  5. once 2-4 align, rip Feel Prides
+    //  5. if there are residual Feel Prides from DMT, rip them
     // This is handled via the various called functions
     if (freeKillsLeft() > 0) {
         // Screw quests (skip), screw NCs (fight)
@@ -356,8 +357,8 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
             outfit($items`Kramco Sausage-o-Matic™`);
-            // Special bit of logic to handle bowlo and Feel Pride in .NEP()
-            adventureMacro($location`the neverending party`, Macro.NEP().kill());
+            // Special bit of logic to handle bowlo and Feel Pride, previously seen in DMT
+            adventureMacro($location`the neverending party`, Macro.bowloPride().kill());
             heal();
         }
         // On to the X-rays
@@ -366,8 +367,7 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
             outfit($items`Kramco Sausage-o-Matic™, Lil' Doctor™ bag`);
-            // No time for value finesse, lefty might kill the mob
-            adventureMacro($location`the neverending party`, Macro.NEP().freeKill());
+            adventureMacro($location`the neverending party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
         // Prepare the missile launcher
@@ -378,7 +378,7 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
             outfit($items`Kramco Sausage-o-Matic™`);
-            adventureMacro($location`the neverending party`, Macro.NEP().freeKill());
+            adventureMacro($location`the neverending party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
     }
