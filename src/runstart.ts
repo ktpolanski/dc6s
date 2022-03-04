@@ -23,7 +23,7 @@ import {
 // Turn zero stuff
 export default function runstart(): void {
     // Hit up the council to get the intro text out of the way
-    visitUrl("council.php")
+    visitUrl("council.php");
     // Visit Toot Oriole and sell any non-porquoises that get pulled
     visitUrl("tutorial.php?action=toot");
     useIfHave($item`letter from King Ralph XI`);
