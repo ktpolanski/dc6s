@@ -80,9 +80,11 @@ export default class Macro extends StrictMacro {
     // The NEP wants to make use of Feel Pride and bowling sideways
     // But the former under a pretty restrictive set of conditions
     // For which there's a helper function earlier in the file
+    // Meanwhile, the latter should not accidentally get cast on a 21st combat
+    // Which would be the fifth bowling skill used
     NEP(): Macro {
         return this.externalIf(canFeelPride(), Macro.trySkill($skill`feel pride`))
-            .trySkill($skill`bowl sideways`);
+            .externalIf(get("_cosmicBowlingSkillsUsed")<4, Macro.trySkill($skill`bowl sideways`));
     }
     static NEP(): Macro {
         return new Macro().NEP();
