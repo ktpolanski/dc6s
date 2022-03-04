@@ -344,7 +344,7 @@ export default function level(): void {
     //  1. run kramco to catch as many gobbos as possible
     //  2. once the camel is charged, switch to goth kid for hipster fights
     //  3. do a 9+11 bowlo for as many turns of bowlo stats as possible
-    //  4. get inner elf as soon as level 13 (technically may already have it)
+    //  4. get inner elf as soon as level 13 (technically likely already have it)
     //  5. if there are residual Feel Prides from DMT, rip them
     // This is handled via the various called functions
     if (freeKillsLeft() > 0) {

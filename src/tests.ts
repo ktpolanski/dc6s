@@ -248,7 +248,7 @@ export function weaponPrep(): void {
 		// Auto-attack saber means mafia doesn't get to see the things being used, let it know
 		// 1932 is the ungulith ID, make locket uses know
 		if (get("_locketMonstersFought") === "") set("_locketMonstersFought", "1932");
-		else set("_locketMonstersFought", get("_locketMonstersFought")+",1932"));
+		else set("_locketMonstersFought", get("_locketMonstersFought")+",1932");
 		set("camelSpit", 0);
 		set("_meteorShowerUses", 1 + get("_meteorShowerUses"));
 	}
