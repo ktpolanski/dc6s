@@ -328,10 +328,8 @@ export default function level(): void {
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         // Chuck our second bowlo here for 7
-        // And try to use Feel Prides, Inner Elf permitting
-        // As this is a good place for them, still have scrapbook
         adventureMacro($location`the deep machine tunnels`,
-            Macro.bowloPride().kill()
+            Macro.trySkill($skill`bowl sideways`).kill()
         );
         heal();
     }
@@ -345,7 +343,7 @@ export default function level(): void {
     //  2. once the camel is charged, switch to goth kid for hipster fights
     //  3. do a 9+11 bowlo for as many turns of bowlo stats as possible
     //  4. get inner elf as soon as level 13 (technically likely already have it)
-    //  5. if there are residual Feel Prides from DMT, rip them
+    //  5. rip Feel Prides, putting the familiar scrapbook on for those turns for max gains
     // This is handled via the various called functions
     if (freeKillsLeft() > 0) {
         // Screw quests (skip), screw NCs (fight)
@@ -357,7 +355,8 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
             outfit($items`Kramco Sausage-o-Matic™`);
-            // Special bit of logic to handle bowlo and Feel Pride, previously seen in DMT
+            // The .bowloPride() handles bowling sideways
+            // And tries to rip Feel Pride when the stars align... or if it's late
             adventureMacro($location`the neverending party`, Macro.bowloPride().kill());
             heal();
         }
@@ -373,11 +372,19 @@ export default function level(): void {
         // Prepare the missile launcher
         // Just pre-fuel the thing all the way to avoid moon tuning surprises
         if (!AsdonMartin.fillWithInventoryTo(174)) throw "Breadcar refuses to charge to 174!"
+        // Do non-X-ray free kills
         while (freeKillsLeft() > 0) {
             getInnerElf();
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
-            outfit($items`Kramco Sausage-o-Matic™`);
+            // Make good conditions for Feel Pride by putting on the scrapbook
+            if ((get("_feelPrideUsed")<3) && (get("cosmicBowlingBallReturnCombats")>0)) {
+                // If the bowlo countdown is 0, then it will return this combat
+                outfit();
+            } else {
+                // Feel Pride won't happen this combat. Fish for kramcos
+                outfit($items`Kramco Sausage-o-Matic™`);
+            }
             adventureMacro($location`the neverending party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
