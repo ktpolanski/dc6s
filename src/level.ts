@@ -376,7 +376,10 @@ export default function level(): void {
         while (freeKillsLeft() > 0) {
             getInnerElf();
             useDefaultFamiliar();
-            foldIfNotHave($item`makeshift garbage shirt`);
+            // There is a possibility that the garbage shirt may run out of charge
+            if (get("garbageShirtCharge") > 0) {
+                foldIfNotHave($item`makeshift garbage shirt`);
+            } else foldIfNotHave($item`tinsel tights`);
             // Make good conditions for Feel Pride by putting on the scrapbook
             if ((get("_feelPrideUsed")<3) && (get("cosmicBowlingBallReturnCombats")>0)) {
                 // If the bowlo countdown is 0, then it will return this combat

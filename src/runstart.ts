@@ -56,7 +56,7 @@ export default function runstart(): void {
         cliExecute("detective solver");
     }
     // Get access to the bird, set up the horse
-    use(1, $item`Bird-a-Day calendar`);
+    if (get("_birdOfTheDay") === "") use(1, $item`Bird-a-Day calendar`);
     if (get("_horsery") !== "dark horse") {
         cliExecute("horsery dark horse");
     }
