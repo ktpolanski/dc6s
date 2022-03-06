@@ -90,7 +90,7 @@ export default function level(): void {
     // Cook some potions!
     // Muscle tends to cap itself without the lemon one
     if (!get("hasRange")) bu($item`Dramatic™ range`);
-    if (get("reagentSummons") == 0) useSkill($skill`Advanced Saucecrafting`);
+    if (get("reagentSummons") == 0) useSkill(1, $skill`Advanced Saucecrafting`);
     if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
         create(1, $item`ointment of the occult`);
     }
@@ -198,6 +198,19 @@ export default function level(): void {
         );
         heal();
         // At this point we should have a burning newspaper
+    }
+    // While the tentacle is technically a scaler, it caps at 400
+    // So do it early
+    if (!get("_eldritchHorrorEvoked")) {
+        useDefaultFamiliar();
+        foldIfNotHave($item`tinsel tights`);
+        outfitML();
+        // No saber in outfit, do geyser just in case shorty doesn't kill the tentacle
+        Macro.geyser().setAutoAttack();
+        useSkill(1, $skill`evoke eldritch horror`); runCombat(Macro.geyser().toString());
+        // This should take care of possible tentacle boss combat
+        // As it just sets your HP to 0
+        heal();
     }
     // At this point we hit up the residual non-scaling fights
     // They're not gonna get any better, and it improves chateau yields

@@ -121,7 +121,7 @@ export function saberCheese(macro: Macro, location = $location`The Dire Warren`)
 export function mapMacro(location: Location, monster: Monster, macro: Macro): void {
     macro.setAutoAttack();
     // TODO: make this better
-    if (!get("mappingMonsters")) useSkill($skill`Map the Monsters`);
+    if (!get("mappingMonsters")) useSkill(1, $skill`Map the Monsters`);
     // Just in case there's a sabering in the macro
     setChoice(1387, 3);
     // Sometimes there might be an introductory NC
@@ -236,7 +236,7 @@ export function castLibrams(): void {
             useSkill(1, $skill`summon candy heart`);
         } else if ((get("_brickoEyeSummons") < 3) || brickoBrickCheck()) {
             // Get building pieces for three oysters
-            useSkill(1, $skill`summon brickos`)
+            useSkill(1, $skill`summon brickos`);
         } else {
             // If we're here, we've ran out of goals
             // Add more? Resolutions?

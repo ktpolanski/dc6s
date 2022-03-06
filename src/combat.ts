@@ -99,7 +99,6 @@ export default class Macro extends StrictMacro {
                 myFamiliar() === $familiar`Pair of Stomping Boots`,
             "runaway"
         )
-            .trySkill($skill`Asdon Martin: Spring-Loaded Front Bumper`)
             .trySkill($skill`Reflex Hammer`)
             .trySkill($skill`Throw Latte on Opponent`)
             .trySkill($skill`Feel Hatred`);
