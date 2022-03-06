@@ -1,6 +1,13 @@
-import { Item, itemAmount, retrieveItem, sweetSynthesis, toItem, useSkill, visitUrl } from "kolmafia";
-import { $item, $items, $skill, get, have, set } from "libram";
-import { canCastLibrams } from "./lib";
+import {
+    Item,
+    itemAmount,
+    retrieveItem,
+    sweetSynthesis,
+    toItem,
+    useSkill,
+    visitUrl,
+} from "kolmafia";
+import { $item, $items, $skill, get, set } from "libram";
 
 export class SynthesisPlanner {
     // Prepare a sorted array of mod0 candies, as we'd rather eat pecan than sprouts
@@ -17,7 +24,7 @@ export class SynthesisPlanner {
         // And the mimic equip
         retrieveItem(1, $item`bag of many confections`);
         // The only simple candy we'll need is chubby and plump
-        if (!get("_chubbyAndPlumpUsed")) useSkill(1, $skill`chubby and plump`);
+        if (!get("_chubbyAndPlumpUsed")) useSkill(1, $skill`Chubby and Plump`);
     }
 
     // Add any pecans we may have found to the mod0 candy list
@@ -59,15 +66,17 @@ export class SynthesisPlanner {
     }
 }
 
-export function retrieveSynth(buff:string): Item[] {
+export function retrieveSynth(buff: string): Item[] {
     // Get the candy pair out of the appropriate preference
     // And turn it back into an array of items with the use of a .map
     // (think python's list comprehension in terms of outcome)
-    return get(`_dc6s_${buff}_candy`).split(",").map(x => toItem(x));
+    return get(`_dc6s_${buff}_candy`)
+        .split(",")
+        .map((x) => toItem(x));
 }
 
 // Actually perform the synthesis
-export function performSynth(buff:string): void {
+export function performSynth(buff: string): void {
     const candies = retrieveSynth(buff);
     for (const candy of candies) {
         // We should have a candy that crafts into this easily

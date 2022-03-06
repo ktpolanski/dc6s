@@ -9,16 +9,8 @@ import {
     use,
     visitUrl,
 } from "kolmafia";
-import {
-    $item,
-    get,
-    have,
-    SongBoom,
-} from "libram";
-import {
-    bu,
-    useIfHave,
-} from "./lib";
+import { $item, get, have, SongBoom } from "libram";
+import { bu, useIfHave } from "./lib";
 
 // Turn zero stuff
 export default function runstart(): void {
@@ -66,7 +58,7 @@ export default function runstart(): void {
         visitUrl("place.php?whichplace=town_right&action=townright_vote");
         visitUrl("choice.php?option=1&whichchoice=1331&g=2&local%5B%5D=2&local%5B%5D=3");
         // Hit up the booth again so mafia correctly tracks the bonuses
-        visitUrl('place.php?whichplace=town_right&action=townright_vote');
+        visitUrl("place.php?whichplace=town_right&action=townright_vote");
     }
     // Flip the reverser as this thing is funny exactly once
     if (!get("backupCameraReverserEnabled")) cliExecute("backupcamera reverser on");

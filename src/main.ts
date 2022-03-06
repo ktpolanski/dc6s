@@ -1,6 +1,6 @@
 import { cliExecute, setAutoAttack } from "kolmafia";
 import { CommunityService, get } from "libram";
-import { assertTest, freeKillsLeft } from "./lib"
+import { assertTest, freeKillsLeft } from "./lib";
 import level from "./level";
 import runstart from "./runstart";
 import {
@@ -15,7 +15,7 @@ import {
     noncombatPrep,
     spellPrep,
     weaponPrep,
-} from "./tests"
+} from "./tests";
 
 // Do this try/finally syntax to be able to undo autoattack/CCS settings
 try {
@@ -31,7 +31,7 @@ try {
     assertTest(CommunityService.HP.run(hpPrep, false, 1), "HP");
     assertTest(CommunityService.Muscle.run(musclePrep, false, 1), "Muscle");
     assertTest(CommunityService.Mysticality.run(mysticalityPrep, false, 1), "Mysticality");
-    // Now run the familiar weight block 
+    // Now run the familiar weight block
     // As familiar weight buffs were applied during levelling
     assertTest(CommunityService.HotRes.run(hotResPrep, false, 1), "Hot Resistance");
     assertTest(CommunityService.Noncombat.run(noncombatPrep, false, 1), "Noncombat");

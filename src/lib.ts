@@ -5,21 +5,18 @@ import {
     create,
     Effect,
     equip,
-    equippedItem,
     Familiar,
-    familiarEquipment,
     handlingChoice,
     Item,
     itemAmount,
     Location,
     Monster,
-    myLevel,
     myHp,
+    myLevel,
     myMaxhp,
     myMp,
     runChoice,
     runCombat,
-    setAutoAttack,
     toUrl,
     use,
     useFamiliar,
@@ -40,11 +37,7 @@ import {
     PropertiesManager,
     Witchess,
 } from "libram";
-import {
-    outfit,
-    outfitFamWeight,
-    outfitGhost,
-} from "./outfit"
+import { outfit, outfitFamWeight, outfitGhost } from "./outfit";
 import Macro from "./combat";
 
 // This thing allows controlling choice options. Neat!
@@ -54,52 +47,52 @@ export function setChoice(adv: number, choice: number | string): void {
 }
 
 // Get a provided list of buffs
-export function getBuffs(buffs:Effect[]): void {
-	for (const buff of buffs) {
-		// If the buff is not there, get it
-		// the .default thing is a CLI-compatible way to do so
-		if (!have(buff)) {
-			cliExecute(buff.default);
-		}
-	}
+export function getBuffs(buffs: Effect[]): void {
+    for (const buff of buffs) {
+        // If the buff is not there, get it
+        // the .default thing is a CLI-compatible way to do so
+        if (!have(buff)) {
+            cliExecute(buff.default);
+        }
+    }
 }
 
 // Cast Cannelloni Cocoon if at below 50% health
 export function heal(): void {
-    if (myHp() < 0.5*myMaxhp()) useSkill(1, $skill`cannelloni cocoon`);
+    if (myHp() < 0.5 * myMaxhp()) useSkill(1, $skill`Cannelloni Cocoon`);
 }
 
 // Use a familiar and put miniature crystal ball on it
-export function familiarWithOrb(familiar:Familiar): void {
+export function familiarWithOrb(familiar: Familiar): void {
     useFamiliar(familiar);
     equip($item`miniature crystal ball`);
 }
 
 // Pick what familiar to use
-export function useDefaultFamiliar(canAttack=true): void {
-	// Need to prioritise garbage fire and shorty to get famweight drops
-	// So that sprinkle dog can be 140lb in time for his moment
-	if (!have($item`short stack of pancakes`) && !have($effect`shortly stacked`) && canAttack) {
-		// Check the attack clause just in case, e.g. for ninja free kill
-		familiarWithOrb($familiar`shorter-order cook`);
-	} else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
-		familiarWithOrb($familiar`garbage fire`);
-	} else if (get("camelSpit") < 100) {
-		// The camel takes up most of the turns in the middle of the run
-		useFamiliar($familiar`melodramedary`);
-		// Pick up the gear and stick it on
-		if (!have($item`box of familiar jacks`) && !have($item`dromedary drinking helmet`)) {
-		    create(1, $item`box of familiar jacks`);
-		    use(1, $item`box of familiar jacks`);
-		}
-		equip($item`dromedary drinking helmet`);
-		// Seeing how this buddy is around the longest, add mumming trunk myst gains
-		if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
-	} else {
-		// We're in the NEP and fishing for kramcos
-		// Fish for hipster fights too while we're at it
-		familiarWithOrb($familiar`artistic goth kid`);
-	}
+export function useDefaultFamiliar(canAttack = true): void {
+    // Need to prioritise garbage fire and shorty to get famweight drops
+    // So that sprinkle dog can be 140lb in time for his moment
+    if (!have($item`short stack of pancakes`) && !have($effect`Shortly Stacked`) && canAttack) {
+        // Check the attack clause just in case, e.g. for ninja free kill
+        familiarWithOrb($familiar`Shorter-Order Cook`);
+    } else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+        familiarWithOrb($familiar`Garbage Fire`);
+    } else if (get("camelSpit") < 100) {
+        // The camel takes up most of the turns in the middle of the run
+        useFamiliar($familiar`Melodramedary`);
+        // Pick up the gear and stick it on
+        if (!have($item`box of Familiar Jacks`) && !have($item`dromedary drinking helmet`)) {
+            create(1, $item`box of Familiar Jacks`);
+            use(1, $item`box of Familiar Jacks`);
+        }
+        equip($item`dromedary drinking helmet`);
+        // Seeing how this buddy is around the longest, add mumming trunk myst gains
+        if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
+    } else {
+        // We're in the NEP and fishing for kramcos
+        // Fish for hipster fights too while we're at it
+        familiarWithOrb($familiar`Artistic Goth Kid`);
+    }
 }
 
 // Add auto-attack to the passed macro and hit up the specified location once
@@ -128,7 +121,7 @@ export function mapMacro(location: Location, monster: Monster, macro: Macro): vo
     // In that case, hit the place again and it should be fine
     const mapPage = visitUrl(toUrl(location));
     if (!mapPage.includes("Leading Yourself Right to Them")) {
-            visitUrl(toUrl(location));
+        visitUrl(toUrl(location));
     }
     runChoice(1, `heyscriptswhatsupwinkwink=${monster.id}`);
     runCombat(macro.toString());
@@ -168,27 +161,27 @@ export function bustGhost(): void {
 }
 
 // Do banderways in Gingerbread City
-export function gingerbreadBanderway(location:Location): void {
+export function gingerbreadBanderway(location: Location): void {
     // We need Ode to banderway
-    getBuffs($effects`ode to booze`);
-    familiarWithOrb($familiar`frumious bandersnatch`);
+    getBuffs($effects`Ode to Booze`);
+    familiarWithOrb($familiar`Frumious Bandersnatch`);
     foldIfNotHave($item`tinsel tights`);
     // This is an easy opportunity to get some scraps
     // As bander provides one start of combat and one on skill use
     outfitFamWeight($items`familiar scrapbook`);
-    adventureMacro(location, Macro.trySkill($skill`micrometeorite`).freeRun());
+    adventureMacro(location, Macro.trySkill($skill`Micrometeorite`).freeRun());
     heal();
 }
 
 // Get the Inner Elf buff by going into combat with momma slime
 export function getInnerElf(): void {
     // This only works once level 13
-    if ((myLevel() >= 13) && !have($effect`inner elf`)) {
+    if (myLevel() >= 13 && !have($effect`Inner Elf`)) {
         useFamiliar($familiar`Machine Elf`);
         Clan.join("Beldungeon");
         // Put on the KGB and make sure Blood Bubble is live to not get melted
-        equip($item`kremlin's greatest briefcase`);
-        getBuffs($effects`blood bubble`);
+        equip($item`Kremlin's Greatest Briefcase`);
+        getBuffs($effects`Blood Bubble`);
         setChoice(326, 1);
         // Only some free banishers work here because of reasons
         adventureMacro(
@@ -201,7 +194,7 @@ export function getInnerElf(): void {
 }
 
 // Fight a piece of Witchess royalty
-export function fightWitchessRoyalty(royalty:Monster): void {
+export function fightWitchessRoyalty(royalty: Monster): void {
     // On the off-chance we're level 13 already
     getInnerElf();
     useDefaultFamiliar();
@@ -223,20 +216,20 @@ export function canCastLibrams(): boolean {
 // Helper function to check if we've made enough bricko bricks yet
 function brickoBrickCheck(): boolean {
     // We only fight oysters, so each fight that happened is eight bricks less we need
-    const brickTarget = 24 - 8*get("_brickoFights");
-    return (itemAmount($item`bricko brick`) < brickTarget);
+    const brickTarget = 24 - 8 * get("_brickoFights");
+    return itemAmount($item`BRICKO brick`) < brickTarget;
 }
 
 // Burn mana working toward libram goals
 export function castLibrams(): void {
     // Keep casting while possible
     while (canCastLibrams()) {
-        if (!have($item`green candy heart`) && !have($effect`heart of green`)) {
+        if (!have($item`green candy heart`) && !have($effect`Heart of Green`)) {
             // Fish for a green candy heart
-            useSkill(1, $skill`summon candy heart`);
-        } else if ((get("_brickoEyeSummons") < 3) || brickoBrickCheck()) {
+            useSkill(1, $skill`Summon Candy Heart`);
+        } else if (get("_brickoEyeSummons") < 3 || brickoBrickCheck()) {
             // Get building pieces for three oysters
-            useSkill(1, $skill`summon brickos`);
+            useSkill(1, $skill`Summon BRICKOs`);
         } else {
             // If we're here, we've ran out of goals
             // Add more? Resolutions?
@@ -254,19 +247,19 @@ export function foldIfNotHave(item: Item): void {
 }
 
 // Reconfigure the retrocape if not already set up this way
-export function setRetroCape(hero:string, mode:string): void {
-    if ((get("retroCapeSuperhero") !== hero) || (get("retroCapeWashingInstructions") !== mode)) {
+export function setRetroCape(hero: string, mode: string): void {
+    if (get("retroCapeSuperhero") !== hero || get("retroCapeWashingInstructions") !== mode) {
         cliExecute(`retrocape ${hero} ${mode}`);
     }
 }
 
 // Use an item if you have it
-export function useIfHave(item:Item): void {
+export function useIfHave(item: Item): void {
     if (have(item)) use(1, item);
 }
 
 // Buy and use item; named bu after common chat macro
-export function bu(item:Item): void {
+export function bu(item: Item): void {
     if (!have(item)) buy(1, item);
     use(1, item);
 }
@@ -280,12 +273,12 @@ export function freeKillsLeft(): number {
     // Storing 0 if the preference is true and 1 if false
     const mobhit = get("_gingerbreadMobHitUsed") ? 0 : 1;
     const missile = get("_missileLauncherUsed") ? 0 : 1;
-    return (xrays + punches + mobhit + missile);
+    return xrays + punches + mobhit + missile;
 }
 
 // Does KGB have a given enchantment?
 // Warning - case sensitive! Enchants need to be written as on the KGB itself!
-export function checkKGB(enchant:string): boolean {
+export function checkKGB(enchant: string): boolean {
     // The current item description features the enchantments
     const briefcase = visitUrl("desc_item.php?whichitem=311743898");
     if (briefcase.includes(enchant)) return true;
@@ -293,7 +286,7 @@ export function checkKGB(enchant:string): boolean {
 }
 
 // Check whether a test failed
-export function assertTest(outcome:string, test:string): void {
+export function assertTest(outcome: string, test: string): void {
     // If the test prep went wrong, given desired turncount
     // Then the libram wrapper will return "failed"
     if (outcome === "failed") throw `${test} test failed to complete.`;

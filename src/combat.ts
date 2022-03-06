@@ -1,4 +1,4 @@
-import { haveEquipped, myFamiliar, Skill } from "kolmafia";
+import { haveEquipped, myFamiliar } from "kolmafia";
 import { $effect, $familiar, $item, $monster, $skill, get, have, StrictMacro } from "libram";
 import { freeKillsLeft } from "./lib";
 
@@ -8,12 +8,15 @@ function canFeelPride(): boolean {
     if (get("_feelPrideUsed") >= 3) return false;
     // Preferred condition - rocking a familiar scrapbook, bowled sideways and have inner elf
     // (if the preference is 0, then the ball will return upon entering combat)
-    const cond1 = (haveEquipped($item`familiar scrapbook`) && (get("cosmicBowlingBallReturnCombats") > 0) && have($effect`inner elf`));
+    const cond1 =
+        haveEquipped($item`familiar scrapbook`) &&
+        get("cosmicBowlingBallReturnCombats") > 0 &&
+        have($effect`Inner Elf`);
     // Panic button conditions - about to run out of garbage shirt charges
-    const cond2 = (get("garbageShirtCharge") < 5);
+    const cond2 = get("garbageShirtCharge") < 5;
     // The final NEP turns are free kills, let's not run out of those either
-    const cond3 = (freeKillsLeft() < 5);
-    return (cond1 || cond2 || cond3);
+    const cond3 = freeKillsLeft() < 5;
+    return cond1 || cond2 || cond3;
 }
 
 export default class Macro extends StrictMacro {
@@ -49,7 +52,7 @@ export default class Macro extends StrictMacro {
     static setup(skill = $skill`none`): Macro {
         return new Macro().setup(skill);
     }
-    
+
     // ...and then smack with a stick because saber is a thing
     kill(skill = $skill`none`): Macro {
         return this.setup(skill).attack().repeat();
@@ -57,35 +60,40 @@ export default class Macro extends StrictMacro {
     static kill(skill = $skill`none`): Macro {
         return new Macro().kill(skill);
     }
-    
+
     // On occasion we get to do the above but with a geyser finale
     geyser(skill = $skill`none`): Macro {
-        return this.setup(skill).skill($skill`saucegeyser`).repeat();
+        return this.setup(skill)
+            .skill($skill`Saucegeyser`)
+            .repeat();
     }
     static geyser(skill = $skill`none`): Macro {
         return new Macro().geyser(skill);
     }
-    
+
     // Protopack ghosts want to be shot and trapped
     // Which is a bit scary with its vision of heavy hits
     ghost(): Macro {
-        return this.delevel().trySkill($skill`entangling noodles`)
-            .trySkill($skill`shoot ghost`)
-            .trySkill($skill`shoot ghost`)
-            .trySkill($skill`shoot ghost`)
-            .trySkill($skill`trap ghost`);
+        return this.delevel()
+            .trySkill($skill`Entangling Noodles`)
+            .trySkill($skill`Shoot Ghost`)
+            .trySkill($skill`Shoot Ghost`)
+            .trySkill($skill`Shoot Ghost`)
+            .trySkill($skill`Trap Ghost`);
     }
     static ghost(): Macro {
         return new Macro().ghost();
     }
-    
+
     // The late scalers want to make use of Feel Pride and bowling sideways
     // But the former under a pretty restrictive set of conditions
     // For which there's a helper function earlier in the file
     // Meanwhile, the latter should not accidentally get used beyond 4 bowlos
     bowloPride(): Macro {
-        return this.externalIf(canFeelPride(), Macro.trySkill($skill`feel pride`))
-            .externalIf(get("_cosmicBowlingSkillsUsed")<4, Macro.trySkill($skill`bowl sideways`));
+        return this.externalIf(canFeelPride(), Macro.trySkill($skill`Feel Pride`)).externalIf(
+            get("_cosmicBowlingSkillsUsed") < 4,
+            Macro.trySkill($skill`Bowl Sideways`)
+        );
     }
     static bowloPride(): Macro {
         return new Macro().bowloPride();
@@ -106,16 +114,16 @@ export default class Macro extends StrictMacro {
     static freeRun(): Macro {
         return new Macro().freeRun();
     }
-    
+
     // Unload a free kill
     // Unless it's a free fight - then just punch it
     freeKill(): Macro {
         return this.if_($monster`sausage goblin`, Macro.attack().repeat())
             .if_("monstername black crayon", Macro.attack().repeat())
-            .trySkill($skill`chest x-ray`)
-            .trySkill($skill`shattering punch`)
-            .trySkill($skill`gingerbread mob hit`)
-            .trySkill($skill`asdon martin: missile launcher`)
+            .trySkill($skill`Chest X-Ray`)
+            .trySkill($skill`Shattering Punch`)
+            .trySkill($skill`Gingerbread Mob Hit`)
+            .trySkill($skill`Asdon Martin: Missile Launcher`);
     }
     static freeKill(): Macro {
         return new Macro().freeKill();

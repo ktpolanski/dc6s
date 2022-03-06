@@ -5,9 +5,8 @@ import {
     cliExecute,
     create,
     drink,
-    equip,
-    itemAmount,
     familiarWeight,
+    itemAmount,
     runChoice,
     runCombat,
     setAutoAttack,
@@ -52,37 +51,30 @@ import {
     setChoice,
     useDefaultFamiliar,
     useIfHave,
-} from "./lib"
-import {
-    outfit,
-    outfitFamWeight,
-    outfitML,
-} from "./outfit"
+} from "./lib";
+import { outfit, outfitFamWeight, outfitML } from "./outfit";
 import Macro from "./combat";
-import {
-    performSynth,
-    retrieveSynth,
-    SynthesisPlanner,
-} from "./synth";
+import { performSynth, retrieveSynth, SynthesisPlanner } from "./synth";
 
 // Myst buffing and free fighting
 export default function level(): void {
     // We're about to start casting stuff. Let's reduce cost via magick candle
     useIfHave($item`natural magick candle`);
     // Get the exp synth buff online
-    if (!have($effect`synthesis: learning`)) {
+    if (!have($effect`Synthesis: Learning`)) {
         // Park synth predictions into preferences
         new SynthesisPlanner().plan();
         // If we need to use a tome summon on synth, it's sugar shield for exp
         // (this indexOf thing returns -1 if the item is not in the list)
         if (retrieveSynth("exp").indexOf($item`sugar shield`) > -1) {
-            if (!have($item`sugar sheet`) && !have($item`sugar shield`)) useSkill(1, $skill`summon sugar sheets`);
+            if (!have($item`sugar sheet`) && !have($item`sugar shield`))
+                useSkill(1, $skill`Summon Sugar Sheets`);
         }
         // Well, at least at this point we can synthesise for sure
         performSynth("exp");
     }
     // Get myst synth going
-    if (!have($effect`synthesis: smart`)) performSynth("myst");
+    if (!have($effect`Synthesis: Smart`)) performSynth("myst");
     // Cloud-talk is annoying, get it like so
     if (!have($effect`That's Just Cloud-Talk, Man`)) {
         visitUrl("place.php?whichplace=campaway&action=campaway_sky");
@@ -90,39 +82,45 @@ export default function level(): void {
     // Cook some potions!
     // Muscle tends to cap itself without the lemon one
     if (!get("hasRange")) bu($item`Dramatic™ range`);
-    if (get("reagentSummons") == 0) useSkill(1, $skill`Advanced Saucecrafting`);
+    if (get("reagentSummons") === 0) useSkill(1, $skill`Advanced Saucecrafting`);
     if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
         create(1, $item`ointment of the occult`);
     }
-    if (!have($effect`expert oiliness`) && !have($item`oil of expertise`)) {
+    if (!have($effect`Expert Oiliness`) && !have($item`oil of expertise`)) {
         create(1, $item`oil of expertise`);
     }
-    if (!have($effect`concentration`) && !have($item`cordial of concentration`)) {
+    if (!have($effect`Concentration`) && !have($item`cordial of concentration`)) {
         create(1, $item`cordial of concentration`);
     }
     // Join AfHk for VIP power
     Clan.join("Alliance from Heck");
     // Alright, let 'er rip!
     // +exp% stuff!
-    getBuffs($effects`inscrutable gaze, thaumodynamic`);
+    getBuffs($effects`Inscrutable Gaze, Thaumodynamic`);
     // Blood Bubble is quite useful, frees up the pill keeper slot
-    getBuffs($effects`blood bubble`);
+    getBuffs($effects`Blood Bubble`);
     // +myst stuff! Quite a lot of it!
-    getBuffs($effects`uncucumbered, favored by lyle, starry-eyed, feeling excited, song of bravado`);
-    getBuffs($effects`glittering eyelashes, big, Confidence of the Votive, broad-spectrum vaccine`);
-    getBuffs($effects`total protonic reversal, mystically oiled,  Stevedave's Shanty of Superiority`);
+    getBuffs(
+        $effects`Uncucumbered, Favored by Lyle, Starry-Eyed, Feeling Excited, Song of Bravado`
+    );
+    getBuffs($effects`Glittering Eyelashes, Big, Confidence of the Votive, Broad-Spectrum Vaccine`);
+    getBuffs(
+        $effects`Total Protonic Reversal, Mystically Oiled, Stevedave's Shanty of Superiority`
+    );
     // The glove needs to be on to do its stat buff
-    if (!have($effect`triple-sized`)) {
-        outfit($items`powerful glove`);
-        getBuffs($effects`triple-sized`);
+    if (!have($effect`Triple-Sized`)) {
+        outfit($items`Powerful Glove`);
+        getBuffs($effects`Triple-Sized`);
     }
     // The three Carols to hit harder (and get a smidge more stats)
-    getBuffs($effects`carol of the bulls, carol of the hells, carol of the thrills`);
+    getBuffs($effects`Carol of the Bulls, Carol of the Hells, Carol of the Thrills`);
     // Stuff from the beach heads
-    getBuffs($effects`we're all made of starfish, do I know you from somewhere?, you learned something maybe!`);
+    getBuffs(
+        $effects`We're All Made of Starfish, Do I Know You From Somewhere?, You Learned Something Maybe!`
+    );
     // Collect familiar runaway buffs
-    if (!have($effect`nanobrainy`)) {
-        useFamiliar($familiar`nanorhino`);
+    if (!have($effect`Nanobrainy`)) {
+        useFamiliar($familiar`Nanorhino`);
         foldIfNotHave($item`tinsel tights`);
         outfit();
         if (!get("_gingerbreadClockAdvanced")) {
@@ -130,32 +128,35 @@ export default function level(): void {
             setChoice(1215, 1);
             // If this fails horrifically, something went wrong
             setAutoAttack(0);
-            adv1($location`gingerbread civic center`);
+            adv1($location`Gingerbread Civic Center`);
         }
         // Get the buff (by casting noodles) and get bowlo counting down for its 9+11 NEP appearance later
-        adventureMacro($location`gingerbread civic center`, Macro.trySkill($skill`entangling noodles`).trySkill($skill`bowl a curveball`));
+        adventureMacro(
+            $location`Gingerbread Civic Center`,
+            Macro.trySkill($skill`Entangling Noodles`).trySkill($skill`Bowl a Curveball`)
+        );
         heal();
     }
-    if (!have($effect`holiday yoked`)) {
-        useFamiliar($familiar`ghost of crimbo carols`);
+    if (!have($effect`Holiday Yoked`)) {
+        useFamiliar($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
         // Use a reflex hammer to get out
         outfit($items`Lil' Doctor™ bag`);
         // Noob Cave has a construct, and just a construct - how fortunate for us!
-        adventureMacro($location`noob cave`, Macro.freeRun());
+        adventureMacro($location`Noob Cave`, Macro.freeRun());
         heal();
     }
     // Set up the hatter buff
-    if (!have($effect`you can really taste the dormouse`)) {
+    if (!have($effect`You Can Really Taste the Dormouse`)) {
         // Get the drink me potion, and the magical hat
         visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
         if (!have($item`sombrero-mounted sparkler`)) buy(1, $item`sombrero-mounted sparkler`);
     }
     // Pump up familiar weight now that there's no accidental KO danger
-    getBuffs($effects`fidoxene, billiards belligerence, puzzle champ, blood bond`);
-    getBuffs($effects`leash of linguini, empathy, you can really taste the dormouse`);
+    getBuffs($effects`Fidoxene, Billiards Belligerence, Puzzle Champ, Blood Bond`);
+    getBuffs($effects`Leash of Linguini, Empathy, You Can Really Taste the Dormouse`);
     // Add a bit of ML
-    getBuffs($effects`drescher's annoying noise`);
+    getBuffs($effects`Drescher's Annoying Noise`);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     use(1, $item`a ten-percent bonus`);
@@ -163,7 +164,7 @@ export default function level(): void {
     // Heal up as HP is now way higher
     heal();
     // Pick up Greek fire for a nice stat buff in all the upcoming fights
-    if (!have($effect`Sweetbreads Flambé`) && !have($item`greek fire`)) {
+    if (!have($effect`Sweetbreads Flambé`) && !have($item`Greek fire`)) {
         // This will put on the shorty for the first time in run
         // As a lot of the early stuff is no-attack or one-shots
         useDefaultFamiliar();
@@ -171,9 +172,9 @@ export default function level(): void {
         outfit($items`protonic accelerator pack`);
         // The autoattack macro will work fine
         Macro.kill().setAutoAttack();
-        Witchess.fightPiece($monster`witchess rook`);
+        Witchess.fightPiece($monster`Witchess Rook`);
         heal();
-        useIfHave($item`greek fire`);
+        useIfHave($item`Greek fire`);
     }
     // Bust a ghost
     bustGhost();
@@ -186,9 +187,9 @@ export default function level(): void {
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         // Set up one massive macro to sort out all of the monsters
-        Macro.if_($monster`lov enforcer`, Macro.attack().repeat())
-            .if_($monster`lov engineer`, Macro.skill($skill`weapon of the pastalord`).repeat())
-            .if_($monster`lov equivocator`, Macro.kill())
+        Macro.if_($monster`LOV Enforcer`, Macro.attack().repeat())
+            .if_($monster`LOV Engineer`, Macro.skill($skill`Weapon of the Pastalord`).repeat())
+            .if_($monster`LOV Equivocator`, Macro.kill())
             .setAutoAttack();
         // Hit up the tunnel
         TunnelOfLove.fightAll(
@@ -207,7 +208,8 @@ export default function level(): void {
         outfitML();
         // No saber in outfit, do geyser just in case shorty doesn't kill the tentacle
         Macro.geyser().setAutoAttack();
-        useSkill(1, $skill`evoke eldritch horror`); runCombat(Macro.geyser().toString());
+        useSkill(1, $skill`Evoke Eldritch Horror`);
+        runCombat(Macro.geyser().toString());
         // This should take care of possible tentacle boss combat
         // As it just sets your HP to 0
         heal();
@@ -245,13 +247,15 @@ export default function level(): void {
         heal();
     }
     // Do a scavenge for some stat pocket change
-    if (get("_daycareGymScavenges") == 0) {
+    if (get("_daycareGymScavenges") === 0) {
         outfit();
         visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
         // Go into the daycare, and do a scavenge
-        runChoice(3); runChoice(2);
+        runChoice(3);
+        runChoice(2);
         // Still in the noncombats - these two choices leave them
-        runChoice(5); runChoice(4);
+        runChoice(5);
+        runChoice(4);
     }
     // Rest in the chateau, making and fighting oysters as quickly as we have them
     while (totalFreeRests() > get("timesRested")) {
@@ -260,50 +264,53 @@ export default function level(): void {
         // Build and fight all the oysters you can, up to three total
         if (get("_brickoFights") < 3) {
             // Do we have oyster ingredients?
-            while (have($item`bricko eye brick`) && (itemAmount($item`bricko brick`)>7)) {
+            while (have($item`BRICKO eye brick`) && itemAmount($item`BRICKO brick`) > 7) {
                 //Create the oyster
-                use(8, $item`bricko brick`);
+                use(8, $item`BRICKO brick`);
                 useDefaultFamiliar();
                 foldIfNotHave($item`tinsel tights`);
                 // Garbo doesn't currently use otoscope, and this caps the pearls
                 outfitML($items`Lil' Doctor™ bag`);
                 // Don't forget the geyser because of no saber in the ML outfit
-                Macro.geyser($skill`otoscope`).setAutoAttack();
-                use(1, $item`bricko oyster`); runCombat(Macro.geyser($skill`otoscope`).toString());
+                Macro.geyser($skill`Otoscope`).setAutoAttack();
+                use(1, $item`BRICKO oyster`);
+                runCombat(Macro.geyser($skill`Otoscope`).toString());
                 heal();
                 // Flip the pearls
-                autosell(1, $item`bricko pearl`);
+                autosell(1, $item`BRICKO pearl`);
             }
         }
         // Finally, a chateau rest!
         visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
     }
     // Hit up gingerbread city for the latte
-    if (!have($item`gingerbread spice latte`) && !have($effect`whole latte love`)) {
+    if (!have($item`gingerbread spice latte`) && !have($effect`Whole Latte Love`)) {
         // Pop a bunch of acquired familiar weight support
-        getBuffs($effects`shortly stacked, heart of green`);
+        getBuffs($effects`Shortly Stacked, Heart of Green`);
         // Get some sprinkles with sprinkle dog
         if (!have($item`sprinkles`)) {
-            familiarWithOrb($familiar`chocolate lab`);
+            familiarWithOrb($familiar`Chocolate Lab`);
             foldIfNotHave($item`makeshift garbage shirt`);
             outfitFamWeight();
             // TODO: CANNOT GUARANTEE 55 SPRINKLES, DOG IS ONLY 136 LB!!!
             // Sprinkle dog needs to be 140lb fat to guarantee enough sprinkles for stuff
-            if ((familiarWeight($familiar`chocolate lab`) + weightAdjustment()) < 140) {
-                throw "Didn't get Sprinkle Dog to 140 pounds!"
+            if (familiarWeight($familiar`Chocolate Lab`) + weightAdjustment() < 140) {
+                throw "Didn't get Sprinkle Dog to 140 pounds!";
             }
             // Ok, if we're here, we're good
             // Any non-gentrifier will get us our desired 55 sprinkles
-            adventureMacro($location`gingerbread upscale retail district`, 
-                Macro.if_($monster`gingerbread gentrifier`, Macro.trySkill($skill`macrometeorite`))
-                    .setup().freeKill()
+            adventureMacro(
+                $location`Gingerbread Upscale Retail District`,
+                Macro.if_($monster`gingerbread gentrifier`, Macro.trySkill($skill`Macrometeorite`))
+                    .setup()
+                    .freeKill()
             );
             heal();
         }
         // Rip banderways in search of the NC, where we'll buy latte
         setChoice(1208, 3);
         while (get("_gingerbreadCityTurns") < 5) {
-            gingerbreadBanderway($location`gingerbread upscale retail district`);
+            gingerbreadBanderway($location`Gingerbread Upscale Retail District`);
         }
         // Now that we have the latte, may as well use it
         useIfHave($item`gingerbread spice latte`);
@@ -311,7 +318,7 @@ export default function level(): void {
     // More banderways, this time in search of the cigarettes
     setChoice(1203, 4);
     while (get("_gingerbreadCityTurns") < 15) {
-        gingerbreadBanderway($location`gingerbread civic center`);
+        gingerbreadBanderway($location`Gingerbread Civic Center`);
     }
     // Turn cigarettes into familiar charge
     while (have($item`gingerbread cigarette`)) {
@@ -320,11 +327,14 @@ export default function level(): void {
         outfit();
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good
-        adventureMacro($location`gingerbread upscale retail district`, Macro.tryItem($item`gingerbread cigarette`));
+        adventureMacro(
+            $location`Gingerbread Upscale Retail District`,
+            Macro.tryItem($item`gingerbread cigarette`)
+        );
         heal();
     }
     // Beat up the witch as brooms are good for me
-    if (!have($item`battle broom`)) fightWitchessRoyalty($monster`witchess witch`);
+    if (!have($item`battle broom`)) fightWitchessRoyalty($monster`Witchess Witch`);
     // God Lobster time
     while (get("_godLobsterFights") < 3) {
         // Somewhere around here we might as well start checking Inner Elf eligibility
@@ -337,19 +347,20 @@ export default function level(): void {
     // DMT time
     while (get("_machineTunnelsAdv") < 5) {
         getInnerElf();
-        familiarWithOrb($familiar`machine elf`);
+        familiarWithOrb($familiar`Machine Elf`);
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         // Chuck our second bowlo here for 7
-        adventureMacro($location`the deep machine tunnels`,
-            Macro.trySkill($skill`bowl sideways`).kill()
+        adventureMacro(
+            $location`The Deep Machine Tunnels`,
+            Macro.trySkill($skill`Bowl Sideways`).kill()
         );
         heal();
     }
     // Sort out the rest of the witchess royalty while we wait for bowlo to return
     // The queen is the best stats of them all, so kill her twice
-    if (!have($item`dented scepter`)) fightWitchessRoyalty($monster`witchess king`);
-    while (get("_witchessFights") < 5) fightWitchessRoyalty($monster`witchess queen`);
+    if (!have($item`dented scepter`)) fightWitchessRoyalty($monster`Witchess King`);
+    while (get("_witchessFights") < 5) fightWitchessRoyalty($monster`Witchess Queen`);
     // At this point it's time to venture into the NEP
     // This has a bit of faff to it:
     //  1. run kramco to catch as many gobbos as possible
@@ -370,7 +381,7 @@ export default function level(): void {
             outfit($items`Kramco Sausage-o-Matic™`);
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
-            adventureMacro($location`the neverending party`, Macro.bowloPride().kill());
+            adventureMacro($location`The Neverending Party`, Macro.bowloPride().kill());
             heal();
         }
         // On to the X-rays
@@ -379,12 +390,12 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
             outfit($items`Kramco Sausage-o-Matic™, Lil' Doctor™ bag`);
-            adventureMacro($location`the neverending party`, Macro.bowloPride().setup().freeKill());
+            adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
         // Prepare the missile launcher
         // Just pre-fuel the thing all the way to avoid moon tuning surprises
-        if (!AsdonMartin.fillWithInventoryTo(174)) throw "Breadcar refuses to charge to 174!"
+        if (!AsdonMartin.fillWithInventoryTo(174)) throw "Breadcar refuses to charge to 174!";
         // Do non-X-ray free kills
         while (freeKillsLeft() > 0) {
             getInnerElf();
@@ -394,21 +405,21 @@ export default function level(): void {
                 foldIfNotHave($item`makeshift garbage shirt`);
             } else foldIfNotHave($item`tinsel tights`);
             // Make good conditions for Feel Pride by putting on the scrapbook
-            if ((get("_feelPrideUsed")<3) && (get("cosmicBowlingBallReturnCombats")>0)) {
+            if (get("_feelPrideUsed") < 3 && get("cosmicBowlingBallReturnCombats") > 0) {
                 // If the bowlo countdown is 0, then it will return this combat
                 outfit();
             } else {
                 // Feel Pride won't happen this combat. Fish for kramcos
                 outfit($items`Kramco Sausage-o-Matic™`);
             }
-            adventureMacro($location`the neverending party`, Macro.bowloPride().setup().freeKill());
+            adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
     }
     // And so ends levelling. Celebrate with a drink, and onward to tests!
     useIfHave($item`astral six-pack`);
-    if (itemAmount($item`astral pilsner`) == 6) {
-        getBuffs($effects`ode to booze`);
+    if (itemAmount($item`astral pilsner`) === 6) {
+        getBuffs($effects`Ode to Booze`);
         drink(3, $item`astral pilsner`);
     }
 }
