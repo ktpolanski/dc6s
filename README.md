@@ -1,6 +1,6 @@
 # DC6S
 
-The repository houses a set of calls required to perform a 1/106 HCCS run if you're me, DC6. Pretty much all that there's left is wrapping these up into libram's CS test infrastructure and everything should be operational. Soon!
+The repository houses an operational HCCS script that does 1/105 runs for me, DC6. Maybe it can do something for you, dear reader, but it is likely that you'd need to fiddle with some of the things to account for green box differences. But isn't that the case for most CS scripts? Hopefully my excessive commenting makes extracting information from this easier.
 
 ## Setup
 
@@ -13,6 +13,16 @@ ln -s $PWD/KoLmafia/scripts/dc6s/ ~/Library/Application\ Support/KoLmafia/script
 ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 ```
 
+Once done, the script can be called by writing `dc6s` into Mafia's CLI.
+
+## Run Setup
+
+The script is written to operate as a Pastamancer, with the following pre-run setup:
+ - Wallaby moon sign, astral chapeau, astral six-pack
+ - Asdon Martin in the workshed, peppermint garden, Our Daily Candles eudora
+ - Chateau: foreign language tapes, ceiling fan, continental juice bar
+ - Cowboy boots: nicksilver spurs, frontwinder skin
+
 ## Run Plan
 
 A pair of spreadsheets showing the run plan and buff setup for non-stat tests can be accessed [here](https://docs.google.com/spreadsheets/d/1uJ1DOd12r0VuOmfv0_FZXPMmtZ0Ln2FJUenFkhsFRHk/edit#gid=1299653939). Some notes:
@@ -20,8 +30,7 @@ A pair of spreadsheets showing the run plan and buff setup for non-stat tests ca
  - The run makes use of a few outfits: the expected mysticality% to maximise scaler returns, a flat mysticality+ for some early fights, a ML option for maximising gains from non-scaling fights, and familiar weight for Sprinkle Dog and bander runaways.
  - The Chateau rests are delayed until all non-scaling fights are picked up, which should maximise their returns.
  - Getting the Sprinkle Dog to 140 pounds before going into the Retail District guarantees that any non-gentrifier will drop 55 sprinkles, which is sufficient for a latte and cigarettes. As such, the familiar weight drop familiars are routed early to assist with this.
- - Due to the large number of various combats in the NEP, the cosmic bowling ball is consciously used earlier in a fashion that allows for 9+11 turn bowling sideways. Once the camelcalf is charged, the left-hand man is pulled out and equipped with the familiar scrapbook. Once all that comes together, Feel Pride is used for maximum gains.
- - The NEP could be further optimised by working in hipster fights, but that increase in the number of combats would complicate various stat boost use logic. The existing setup gets enough stats, so this was wilfully ignored.
+ - Due to the large number of various combats in the NEP, the cosmic bowling ball is consciously used earlier in a fashion that allows for 9+11 turn bowling sideways. Once the camelcalf is charged, hipster fights are pursued. At some point the familiar scrapbook is worn for a few combats to maximise Feel Pride returns.
 
 ## Credits
 
