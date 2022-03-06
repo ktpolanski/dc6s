@@ -1,6 +1,6 @@
 # DC6S
 
-The repository houses an operational HCCS script that does 1/105 runs for me, DC6. Maybe it can do something for you, dear reader, but it is likely that you'd need to fiddle with some of the things to account for green box differences. But isn't that the case for most CS scripts? Hopefully my excessive commenting makes extracting information from this easier.
+The repository houses an operational HCCS script that does 1/105 runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
 
 ## Setup
 
