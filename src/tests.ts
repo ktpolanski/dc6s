@@ -306,8 +306,7 @@ export function spellPrep(): number {
     outfitSpell();
     // The spell damage prep thing is a little different, as Simmer takes a turn to do
     // Let the libram CS wrapper know so it corrects for it
-    if (have($effect`$Simmering`)) return 1;
-    else return 0;
+    return have($effect`Simmering`) ? 1 : 0
 }
 
 // Prepare for item/booze drop test
