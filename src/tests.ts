@@ -264,7 +264,7 @@ export function weaponPrep(): void {
 }
 
 // Prepare for spell damage test
-export function spellPrep(): void {
+export function spellPrep(): number {
     // Start off with Simmer so it doesn't muck anything up later
     getBuffs($effects`Simmering`);
     // Acquire some constituent pieces
@@ -304,6 +304,10 @@ export function spellPrep(): void {
     }
     // Alright, gear and do the thing!
     outfitSpell();
+    // The spell damage prep thing is a little different, as Simmer takes a turn to do
+    // Let the libram CS wrapper know so it corrects for it
+    if (have($effect`$Simmering`)) return 1;
+    else return 0;
 }
 
 // Prepare for item/booze drop test
