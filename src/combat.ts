@@ -61,14 +61,14 @@ export default class Macro extends StrictMacro {
         return new Macro().kill(skill);
     }
 
-    // On occasion we get to do the above but with a geyser finale
-    geyser(skill = $skill`none`): Macro {
+    // On occasion we get to do the above but with a saucestorm finale
+    saucestorm(skill = $skill`none`): Macro {
         return this.setup(skill)
-            .skill($skill`Saucegeyser`)
+            .skill($skill`Saucestorm`)
             .repeat();
     }
-    static geyser(skill = $skill`none`): Macro {
-        return new Macro().geyser(skill);
+    static saucestorm(skill = $skill`none`): Macro {
+        return new Macro().saucestorm(skill);
     }
 
     // Protopack ghosts want to be shot and trapped

@@ -120,7 +120,7 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 }
 
 // Putting on some ML to fight non-scaling stuff like snojo
-// Use with the .geyser() macro!
+// Use with the .saucestorm() macro!
 export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     // The ML forms are only used here, so no helper functions

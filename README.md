@@ -13,7 +13,7 @@ ln -s $PWD/KoLmafia/scripts/dc6s/ ~/Library/Application\ Support/KoLmafia/script
 ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 ```
 
-Once done, the script can be called by writing `dc6s` into Mafia's CLI.
+Once done, the script can be called by writing `dc6s` into Mafia's CLI. There is also `dc6s_halfloop`, which will add some basic breakfast tasks and a [garbo](https://github.com/Loathing-Associates-Scripting-Society/garbage-collector) leg on either side of DC6s, but it currently isn't fully automatic as I'm still picking up perms before runs.
 
 ## Run Setup
 

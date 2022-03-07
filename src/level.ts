@@ -48,6 +48,7 @@ import {
     globMacro,
     heal,
     mapMacro,
+    scavenge,
     setChoice,
     useDefaultFamiliar,
     useIfHave,
@@ -206,10 +207,16 @@ export default function level(): void {
         useDefaultFamiliar();
         foldIfNotHave($item`tinsel tights`);
         outfitML();
-        // No saber in outfit, do geyser just in case shorty doesn't kill the tentacle
-        Macro.geyser().setAutoAttack();
+        // No saber in outfit, and this thing hurts. Spam Saucestorm
+        Macro.skill($skill`Saucestorm`)
+            .repeat()
+            .setAutoAttack();
         useSkill(1, $skill`Evoke Eldritch Horror`);
-        runCombat(Macro.geyser().toString());
+        runCombat(
+            Macro.skill($skill`Saucestorm`)
+                .repeat()
+                .toString()
+        );
         // This should take care of possible tentacle boss combat
         // As it just sets your HP to 0
         heal();
@@ -227,8 +234,8 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`tinsel tights`);
             outfitML();
-            // Don't forget to geyser - the ML outfit lacks the saber
-            adventureMacro($location`The X-32-F Combat Training Snowman`, Macro.geyser());
+            // Don't forget to saucestorm - the ML outfit lacks the saber
+            adventureMacro($location`The X-32-F Combat Training Snowman`, Macro.saucestorm());
             heal();
         }
         // The snowman can apply various weird debuffs
@@ -247,16 +254,7 @@ export default function level(): void {
         heal();
     }
     // Do a scavenge for some stat pocket change
-    if (get("_daycareGymScavenges") === 0) {
-        outfit();
-        visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
-        // Go into the daycare, and do a scavenge
-        runChoice(3);
-        runChoice(2);
-        // Still in the noncombats - these two choices leave them
-        runChoice(5);
-        runChoice(4);
-    }
+    scavenge();
     // Rest in the chateau, making and fighting oysters as quickly as we have them
     while (totalFreeRests() > get("timesRested")) {
         // Fish for a green candy heart, then for brickos
@@ -271,10 +269,10 @@ export default function level(): void {
                 foldIfNotHave($item`tinsel tights`);
                 // Garbo doesn't currently use otoscope, and this caps the pearls
                 outfitML($items`Lil' Doctor™ bag`);
-                // Don't forget the geyser because of no saber in the ML outfit
-                Macro.geyser($skill`Otoscope`).setAutoAttack();
+                // Don't forget the saucestorm because of no saber in the ML outfit
+                Macro.saucestorm($skill`Otoscope`).setAutoAttack();
                 use(1, $item`BRICKO oyster`);
-                runCombat(Macro.geyser($skill`Otoscope`).toString());
+                runCombat(Macro.saucestorm($skill`Otoscope`).toString());
                 heal();
                 // Flip the pearls
                 autosell(1, $item`BRICKO pearl`);

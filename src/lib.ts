@@ -3,18 +3,25 @@ import {
     buy,
     cliExecute,
     create,
+    drink,
     Effect,
     equip,
     Familiar,
+    getWorkshed,
     handlingChoice,
+    inebrietyLimit,
     Item,
     itemAmount,
     Location,
+    mallPrice,
     Monster,
+    myAdventures,
     myHp,
+    myInebriety,
     myLevel,
     myMaxhp,
     myMp,
+    retrieveItem,
     runChoice,
     runCombat,
     toUrl,
@@ -31,10 +38,16 @@ import {
     $items,
     $location,
     $skill,
+    AsdonMartin,
+    ChateauMantegna,
     Clan,
     get,
     have,
+    haveInCampground,
+    prepareAscension,
     PropertiesManager,
+    set,
+    SourceTerminal,
     Witchess,
 } from "libram";
 import { outfit, outfitFamWeight, outfitGhost } from "./outfit";
@@ -157,6 +170,21 @@ export function bustGhost(): void {
         // As protopack ghosts override them in priority
         adventureMacro(ghostLocation, Macro.ghost());
         heal();
+    }
+}
+
+// Do a daycare scavenge
+export function scavenge(): void {
+    if (get("_daycareGymScavenges") === 0) {
+        // Only bother putting on the stat gain stuff if in run
+        if (!get("kingLiberated")) outfit();
+        visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
+        // Go into the daycare, and do a scavenge
+        runChoice(3);
+        runChoice(2);
+        // Still in the noncombats - these two choices leave them
+        runChoice(5);
+        runChoice(4);
     }
 }
 
@@ -290,4 +318,96 @@ export function assertTest(outcome: string, test: string): void {
     // If the test prep went wrong, given desired turncount
     // Then the libram wrapper will return "failed"
     if (outcome === "failed") throw `${test} test failed to complete.`;
+}
+
+// Half-loop script functions
+// Simple breakfasty start of day stuff
+export function breakfast(): void {
+    Clan.join("Alliance from Heck");
+    cliExecute("breakfast");
+    // These don't get used by garbo so we may as well go for it
+    if (!get("_aprilShower")) cliExecute("shower cold");
+    cliExecute("detective solver");
+    scavenge();
+}
+
+// Call garbo, either in ascend or not ascend mode based on the argument
+export function garbo(ascend: boolean): void {
+    if (myAdventures() > 0) {
+        // Refresh horse paste price for optimal garbo dieting
+        mallPrice($item`Extrovermectin™`);
+        set("valueOfAdventure", 6000);
+        const garboCall = ascend ? "garbo ascend" : "garbo";
+        cliExecute(garboCall);
+    }
+}
+
+// Overdrink, and possibly set up for rollover with pyjamas
+export function nightcap(pyjamas: boolean): void {
+    if (myAdventures() === 0 && myInebriety() <= inebrietyLimit()) {
+        // A little extra liver is good, I hear
+        useFamiliar($familiar`Stooper`);
+        cliExecute("CONSUME NIGHTCAP VALUE 4000");
+    }
+    if (pyjamas) {
+        // Has the adventure furniture
+        Clan.join("Alliance from Hobopolis");
+        useFamiliar($familiar`Trick-or-Treating Tot`);
+        if (!have($item`stinky cheese diaper`)) cliExecute("fold stinky cheese diaper");
+        // There are a lot of 6-adventure accessories
+        // Go for the ones with relevant rollover buffs
+        cliExecute("maximize adventures +equip Spacegate scientist's insignia +equip Sasq™ watch");
+    }
+}
+
+// Prepare for ascension, and ascend
+export function gashHop(): void {
+    // Set up the various options
+    // (the {} stuff allows for named argument passing)
+    prepareAscension({
+        workshed: "Asdon Martin keyfob",
+        garden: "Peppermint Pip Packet",
+        eudora: "Our Daily Candles™ order form",
+        chateau: {
+            desk: "continental juice bar",
+            nightstand: "foreign language tapes",
+            ceiling: "ceiling fan",
+        },
+    });
+    // TODO: add ascending once out of ideas on what to perm
+}
+
+// Various "turn zero aftercore" things to do post-CS
+export function postrun(): void {
+    // Get stuff out of Hagnk's
+    cliExecute("pull all");
+    cliExecute("refresh all");
+    // Acquire one of Irrat's cheap clockwork maids
+    if (!haveInCampground($item`clockwork maid`)) {
+        if (buy(1, $item`clockwork maid`, 25000)) use(1, $item`clockwork maid`);
+    }
+    // Buff up with Asdon and swap to CMC for horse paste
+    if (!get("_workshedItemUsed") && getWorkshed() === $item`Asdon Martin keyfob`) {
+        AsdonMartin.drive($effect`Driving Observantly`, 1100);
+        use($item`cold medicine cabinet`);
+    }
+    // Switch Chateau to skylight
+    ChateauMantegna.changeCeiling("artificial skylight");
+    // Get beach access - might have bus pass from a fumbled run
+    if (!have($item`bitchin' meatcar`) && !have($item`Desert Bus pass`)) {
+        retrieveItem(1, $item`bitchin' meatcar`);
+    }
+    // Lose undesirable effects
+    for (const effect of $effects`Feeling Lost, Cowrruption`) {
+        if (have(effect)) cliExecute(`uneffect ${effect}`);
+    }
+    // The Source Terminal enquiry buff needs to be set each run
+    SourceTerminal.enquiry($effect`familiar.enq`);
+    // Open up the Rain-Doh
+    useIfHave($item`can of Rain-Doh`);
+    // That's it! Celebrate with a drink, as garbo won't down pilsners
+    if (have($item`astral pilsner`)) {
+        getBuffs($effects`Ode to Booze`);
+        drink(itemAmount($item`astral pilsner`), $item`astral pilsner`);
+    }
 }
