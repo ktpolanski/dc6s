@@ -323,11 +323,16 @@ export function assertTest(outcome: string, test: string): void {
 // Half-loop script functions
 // Simple breakfasty start of day stuff
 export function breakfast(): void {
+    // Pick up an Embezzler fax from a backup clan
+    if (!get("_photocopyUsed") && !have($item`photocopied monster`)) {
+        Clan.join("Fax-In-The-Box");
+        cliExecute("fax get");
+    }
     Clan.join("Alliance from Heck");
     cliExecute("breakfast");
     // These don't get used by garbo so we may as well go for it
     if (!get("_aprilShower")) cliExecute("shower cold");
-    cliExecute("detective solver");
+    if (!get("_detectiveCasesCompleted")) cliExecute("detective solver");
     scavenge();
 }
 
@@ -353,6 +358,8 @@ export function nightcap(pyjamas: boolean): void {
     if (pyjamas) {
         // Has the adventure furniture
         Clan.join("Alliance from Hobopolis");
+        // Catches the potted meat plant, maybe some others
+        cliExecute("breakfast");
         useFamiliar($familiar`Trick-or-Treating Tot`);
         foldIfNotHave($item`stinky cheese diaper`);
         // There are a lot of 6-adventure accessories
