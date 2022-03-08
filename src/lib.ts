@@ -338,7 +338,8 @@ export function garbo(ascend: boolean): void {
         mallPrice($item`Extrovermectin™`);
         set("valueOfAdventure", 6000);
         const garboCall = ascend ? "garbo ascend" : "garbo";
-        cliExecute(garboCall);
+        // In case of garbo abort, abort the whole thing
+        if (!cliExecute(garboCall)) throw "Garbo errored out";
     }
 }
 
@@ -353,7 +354,7 @@ export function nightcap(pyjamas: boolean): void {
         // Has the adventure furniture
         Clan.join("Alliance from Hobopolis");
         useFamiliar($familiar`Trick-or-Treating Tot`);
-        if (!have($item`stinky cheese diaper`)) cliExecute("fold stinky cheese diaper");
+        foldIfNotHave($item`stinky cheese diaper`);
         // There are a lot of 6-adventure accessories
         // Go for the ones with relevant rollover buffs
         cliExecute("maximize adventures +equip Spacegate scientist's insignia +equip Sasq™ watch");
@@ -362,19 +363,22 @@ export function nightcap(pyjamas: boolean): void {
 
 // Prepare for ascension, and ascend
 export function gashHop(): void {
-    // Set up the various options
-    // (the {} stuff allows for named argument passing)
-    prepareAscension({
-        workshed: "Asdon Martin keyfob",
-        garden: "Peppermint Pip Packet",
-        eudora: "Our Daily Candles™ order form",
-        chateau: {
-            desk: "continental juice bar",
-            nightstand: "foreign language tapes",
-            ceiling: "ceiling fan",
-        },
-    });
-    // TODO: add ascending once out of ideas on what to perm
+    // Only prep for ascension once out of adventures and overdrunk
+    if (myAdventures() === 0 && myInebriety() > inebrietyLimit()) {
+        // Set up the various options
+        // (the {} stuff allows for named argument passing)
+        prepareAscension({
+            workshed: "Asdon Martin keyfob",
+            garden: "Peppermint Pip Packet",
+            eudora: "Our Daily Candles™ order form",
+            chateau: {
+                desk: "continental juice bar",
+                nightstand: "foreign language tapes",
+                ceiling: "ceiling fan",
+            },
+        });
+        // TODO: add ascending once out of ideas on what to perm
+    }
 }
 
 // Various "turn zero aftercore" things to do post-CS

@@ -157,7 +157,7 @@ export default function level(): void {
     getBuffs($effects`Fidoxene, Billiards Belligerence, Puzzle Champ, Blood Bond`);
     getBuffs($effects`Leash of Linguini, Empathy, You Can Really Taste the Dormouse`);
     // Add a bit of ML
-    getBuffs($effects`Drescher's Annoying Noise`);
+    getBuffs($effects`Drescher's Annoying Noise, Ur-Kel's Aria of Annoyance, Pride of the Puffin`);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     use(1, $item`a ten-percent bonus`);
