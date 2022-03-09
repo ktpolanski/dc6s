@@ -13,7 +13,7 @@ ln -s $PWD/KoLmafia/scripts/dc6s/ ~/Library/Application\ Support/KoLmafia/script
 ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 ```
 
-Once done, the script can be called by writing `dc6s` into Mafia's CLI. There is also `dc6s_halfloop`, which will add some basic breakfast tasks and a [garbo](https://github.com/Loathing-Associates-Scripting-Society/garbage-collector) leg on either side of DC6s, but it currently isn't fully automatic as I'm still picking up perms before runs.
+Once done, the script can be called by writing `dc6s` into Mafia's CLI. There is also `dc6s_halfloop`, which will add some basic breakfast tasks and a [garbo](https://github.com/Loathing-Associates-Scripting-Society/garbage-collector) leg on either side of DC6s. Upon running the command, you will be prompted whether you want to ascend automatically. Clicking yes performs the entire half-loop. Clicking no, e.g. to perm some things while in Valhalla, will deposit you in an ascension-ready state and you can re-run the command once in CS.
 
 ## Run Setup
 

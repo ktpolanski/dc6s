@@ -1,4 +1,4 @@
-import { cliExecute, myDaycount } from "kolmafia";
+import { cliExecute, myDaycount, userConfirm } from "kolmafia";
 import { get } from "libram";
 import { breakfast, garbo, gashHop, nightcap, postrun } from "./lib";
 
@@ -6,12 +6,12 @@ import { breakfast, garbo, gashHop, nightcap, postrun } from "./lib";
 // garbo() true means ascending
 // nightcap() true means done for the day, put pyjamas on
 if (myDaycount() > 1) {
+    const hop = userConfirm("Hop the gash automatically? Won't perm any skills this way");
     breakfast();
     garbo(true);
     nightcap(false);
     garbo(true);
-    // This currently does not ascend, merely prepares for it
-    gashHop();
+    gashHop(hop);
 }
 
 // Run DC6S proper

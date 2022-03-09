@@ -16,6 +16,7 @@ import {
     mallPrice,
     Monster,
     myAdventures,
+    myAscensions,
     myHp,
     myInebriety,
     myLevel,
@@ -31,6 +32,7 @@ import {
     visitUrl,
 } from "kolmafia";
 import {
+    $class,
     $effect,
     $effects,
     $familiar,
@@ -38,12 +40,15 @@ import {
     $items,
     $location,
     $skill,
+    ascend,
     AsdonMartin,
     ChateauMantegna,
     Clan,
     get,
     have,
     haveInCampground,
+    Lifestyle,
+    Paths,
     prepareAscension,
     PropertiesManager,
     set,
@@ -368,8 +373,8 @@ export function nightcap(pyjamas: boolean): void {
     }
 }
 
-// Prepare for ascension, and ascend
-export function gashHop(): void {
+// Prepare for ascension, and ascend (if the argument says to)
+export function gashHop(hop:boolean): void {
     // Only prep for ascension once out of adventures and overdrunk
     if (myAdventures() === 0 && myInebriety() > inebrietyLimit()) {
         // Set up the various options
@@ -384,15 +389,27 @@ export function gashHop(): void {
                 ceiling: "ceiling fan",
             },
         });
-        // TODO: add ascending once out of ideas on what to perm
+        if (hop) {
+            // Ascend with the expected configuration of stuff
+            ascend(
+                Paths.CommunityService,
+                $class`Pastamancer`,
+                Lifestyle.hardcore,
+                "wallaby",
+                $item`astral six-pack`,
+                $item`astral chapeau`
+            );
+        }
     }
 }
 
 // Various "turn zero aftercore" things to do post-CS
 export function postrun(): void {
     // Get stuff out of Hagnk's
-    cliExecute("pull all");
-    cliExecute("refresh all");
+    if (get("lastEmptiedStorage") < myAscensions()) {
+        cliExecute("pull all");
+        cliExecute("refresh all");
+    }
     // Acquire one of Irrat's cheap clockwork maids
     if (!haveInCampground($item`clockwork maid`)) {
         if (buy(1, $item`clockwork maid`, 25000)) use(1, $item`clockwork maid`);
@@ -413,7 +430,7 @@ export function postrun(): void {
         if (have(effect)) cliExecute(`uneffect ${effect}`);
     }
     // The Source Terminal enquiry buff needs to be set each run
-    SourceTerminal.enquiry($effect`familiar.enq`);
+    if (!get("sourceTerminalEnquiry")) SourceTerminal.enquiry($effect`familiar.enq`);
     // Open up the Rain-Doh
     useIfHave($item`can of Rain-Doh`);
     // That's it! Celebrate with a drink, as garbo won't down pilsners
