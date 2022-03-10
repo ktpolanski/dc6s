@@ -58,7 +58,7 @@ import {
 import { outfit, outfitFamWeight, outfitGhost } from "./outfit";
 import Macro from "./combat";
 
-// This thing allows controlling choice options. Neat!
+// This thing allows controlling properties and choice options. Neat!
 export const PropertyManager = new PropertiesManager();
 export function setChoice(adv: number, choice: number | string): void {
     PropertyManager.setChoices({ [adv]: choice });

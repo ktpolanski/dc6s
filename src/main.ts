@@ -1,6 +1,6 @@
 import { cliExecute, setAutoAttack } from "kolmafia";
 import { CommunityService, get } from "libram";
-import { assertTest, freeKillsLeft } from "./lib";
+import { assertTest, freeKillsLeft, PropertyManager } from "./lib";
 import level from "./level";
 import runstart from "./runstart";
 import {
@@ -17,10 +17,14 @@ import {
     weaponPrep,
 } from "./tests";
 
-// Do this try/finally syntax to be able to undo autoattack/CCS settings
+// Do this try/finally syntax to be able to undo autoattack/CCS/recovery settings
 try {
-    // Set up the twiddle CCS script
-    cliExecute("ccs dc6s");
+    // Set up the twiddle CCS script and skip autorecovery
+    PropertyManager.set({
+        customCombatScript: "dc6s",
+        battleAction: "custom combat script",
+        recoveryScript: ""
+    });
     // Do turn zero stuff like pick up items, then run coil wire
     runstart();
     assertTest(CommunityService.CoilWire.run(coilWirePrep, false, 60), "Coil Wire");
@@ -44,7 +48,7 @@ try {
     assertTest(CommunityService.BoozeDrop.run(itemPrep, false, 1), "Item");
 } finally {
     setAutoAttack(0);
-    cliExecute("ccs default");
+    PropertyManager.resetAll();
 }
 
 // End the run once the bits are done

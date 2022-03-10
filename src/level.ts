@@ -160,7 +160,7 @@ export default function level(): void {
     getBuffs($effects`Drescher's Annoying Noise, Ur-Kel's Aria of Annoyance, Pride of the Puffin`);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
-    use(1, $item`a ten-percent bonus`);
+    useIfHave(1, $item`a ten-percent bonus`);
     cliExecute("bastille myst brogues");
     // Heal up as HP is now way higher
     heal();
@@ -384,6 +384,8 @@ export default function level(): void {
         }
         // On to the X-rays
         while (get("_chestXRayUsed") < 3) {
+            // Doctor bag may try to give a quest if there's hipster fight overload, skip it
+            setChoice(1340, 3);
             getInnerElf();
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
