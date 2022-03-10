@@ -44,6 +44,7 @@ import {
     AsdonMartin,
     ChateauMantegna,
     Clan,
+    CommunityService,
     get,
     have,
     haveInCampground,
@@ -318,11 +319,15 @@ export function checkKGB(enchant: string): boolean {
     else return false;
 }
 
-// Check whether a test failed
-export function assertTest(outcome: string, test: string): void {
+// Try to run a test and see what happens
+// The "() => number | void" thing means "a function that outputs a number or void"
+export function assertTest(test: CommunityService, prep: () => number | void, turns: number): void {
+    // Try to .run() the test, passing the prep function to it
     // If the test prep went wrong, given desired turncount
     // Then the libram wrapper will return "failed"
-    if (outcome === "failed") throw `${test} test failed to complete.`;
+    if (test.run(prep, false, turns) === "failed") {
+        throw `${test.name} failed to complete.`;
+    }
 }
 
 // Half-loop script functions
