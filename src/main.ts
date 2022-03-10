@@ -1,4 +1,4 @@
-import { cliExecute, setAutoAttack } from "kolmafia";
+import { setAutoAttack } from "kolmafia";
 import { CommunityService, get } from "libram";
 import { assertTest, freeKillsLeft, PropertyManager } from "./lib";
 import level from "./level";
@@ -23,7 +23,7 @@ try {
     PropertyManager.set({
         customCombatScript: "dc6s",
         battleAction: "custom combat script",
-        recoveryScript: ""
+        recoveryScript: "",
     });
     // Do turn zero stuff like pick up items, then run coil wire
     runstart();
@@ -48,6 +48,7 @@ try {
     assertTest(CommunityService.BoozeDrop.run(itemPrep, false, 1), "Item");
 } finally {
     setAutoAttack(0);
+    // This reverts the .set() stuff from earlier
     PropertyManager.resetAll();
 }
 

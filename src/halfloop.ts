@@ -16,7 +16,7 @@ if (myDaycount() > 1) {
 
 // Run DC6S proper
 if (!get("kingLiberated")) {
-	if (!cliExecute("dc6s")) throw "DC6S errored out";
+    if (!cliExecute("dc6s")) throw "DC6S errored out";
 }
 
 // Post-ascension garbo leg

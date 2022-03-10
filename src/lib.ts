@@ -374,7 +374,7 @@ export function nightcap(pyjamas: boolean): void {
 }
 
 // Prepare for ascension, and ascend (if the argument says to)
-export function gashHop(hop:boolean): void {
+export function gashHop(hop: boolean): void {
     // Only prep for ascension once out of adventures and overdrunk
     if (myAdventures() === 0 && myInebriety() > inebrietyLimit()) {
         // Set up the various options
