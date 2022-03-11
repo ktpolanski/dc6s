@@ -22,6 +22,7 @@ import {
     myLevel,
     myMaxhp,
     myMp,
+    receiveFax,
     retrieveItem,
     runChoice,
     runCombat,
@@ -336,7 +337,7 @@ export function breakfast(): void {
     // Pick up an Embezzler fax from a backup clan
     if (!get("_photocopyUsed") && !have($item`photocopied monster`)) {
         Clan.join("Fax-In-The-Box");
-        cliExecute("fax get");
+        receiveFax();
     }
     Clan.join("Alliance from Heck");
     cliExecute("breakfast");

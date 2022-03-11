@@ -101,13 +101,20 @@ export default function level(): void {
     // Blood Bubble is quite useful, frees up the pill keeper slot
     getBuffs($effects`Blood Bubble`);
     // +myst stuff! Quite a lot of it!
-    getBuffs(
-        $effects`Uncucumbered, Favored by Lyle, Starry-Eyed, Feeling Excited, Song of Bravado`
-    );
-    getBuffs($effects`Glittering Eyelashes, Big, Confidence of the Votive, Broad-Spectrum Vaccine`);
-    getBuffs(
-        $effects`Total Protonic Reversal, Mystically Oiled, Stevedave's Shanty of Superiority`
-    );
+    getBuffs([
+        $effect`Uncucumbered`,
+        $effect`Favored by Lyle`,
+        $effect`Starry-Eyed`,
+        $effect`Feeling Excited`,
+        $effect`Song of Bravado`,
+        $effect`Glittering Eyelashes`,
+        $effect`Big`,
+        $effect`Confidence of the Votive`,
+        $effect`Broad-Spectrum Vaccine`,
+        $effect`Total Protonic Reversal`,
+        $effect`Mystically Oiled`,
+        $effect`Stevedave's Shanty of Superiority`,
+    ]);
     // The glove needs to be on to do its stat buff
     if (!have($effect`Triple-Sized`)) {
         outfit($items`Powerful Glove`);
@@ -116,9 +123,11 @@ export default function level(): void {
     // The three Carols to hit harder (and get a smidge more stats)
     getBuffs($effects`Carol of the Bulls, Carol of the Hells, Carol of the Thrills`);
     // Stuff from the beach heads
-    getBuffs(
-        $effects`We're All Made of Starfish, Do I Know You From Somewhere?, You Learned Something Maybe!`
-    );
+    getBuffs([
+        $effect`We're All Made of Starfish`,
+        $effect`Do I Know You From Somewhere?`,
+        $effect`You Learned Something Maybe!`,
+    ]);
     // Collect familiar runaway buffs
     if (!have($effect`Nanobrainy`)) {
         useFamiliar($familiar`Nanorhino`);
@@ -154,10 +163,21 @@ export default function level(): void {
         if (!have($item`sombrero-mounted sparkler`)) buy(1, $item`sombrero-mounted sparkler`);
     }
     // Pump up familiar weight now that there's no accidental KO danger
-    getBuffs($effects`Fidoxene, Billiards Belligerence, Puzzle Champ, Blood Bond`);
-    getBuffs($effects`Leash of Linguini, Empathy, You Can Really Taste the Dormouse`);
+    getBuffs([
+        $effect`Fidoxene`,
+        $effect`Billiards Belligerence`,
+        $effect`Puzzle Champ`,
+        $effect`Blood Bond`,
+        $effect`Leash of Linguini`,
+        $effect`Empathy`,
+        $effect`You Can Really Taste the Dormouse`,
+    ]);
     // Add a bit of ML
-    getBuffs($effects`Drescher's Annoying Noise, Ur-Kel's Aria of Annoyance, Pride of the Puffin`);
+    getBuffs([
+        $effect`Drescher's Annoying Noise`,
+        $effect`Ur-Kel's Aria of Annoyance`,
+        $effect`Pride of the Puffin`,
+    ]);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     useIfHave($item`a ten-percent bonus`);

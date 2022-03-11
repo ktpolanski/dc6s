@@ -153,7 +153,7 @@ export function hotResPrep(): void {
             )
         );
         // Need to fix preferences as saber autoattack means mafia doesn't see these being used
-        set("_vampyreCloakeFormUses", get("_vampyreCloakeFormUses") - 1);
+        set("_vampyreCloakeFormUses", get("_vampyreCloakeFormUses") + 1);
         set("_fireExtinguisherCharge", get("_fireExtinguisherCharge") - 10);
     }
     // Stick on outfit proper
@@ -167,8 +167,16 @@ export function noncombatPrep(): void {
         if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!";
     }
     // Get buffs
-    getBuffs($effects`The Sonata of Sneakiness, Smooth Movements, Gummed Shoes, Empathy`);
-    getBuffs($effects`Throwing Some Shade, Feeling Lonely, Silent Running, Driving Stealthily`);
+    getBuffs([
+        $effect`The Sonata of Sneakiness`,
+        $effect`Smooth Movements`,
+        $effect`Gummed Shoes`,
+        $effect`Empathy`,
+        $effect`Throwing Some Shade`,
+        $effect`Feeling Lonely`,
+        $effect`Silent Running`,
+        $effect`Driving Stealthily`,
+    ]);
     // Apply outfit...
     outfitNoncombat();
     // ...and get one more buff, as the outfit features the powerful glove
@@ -216,10 +224,15 @@ export function famWeightPrep(): void {
 // Prepare for the weapon damage test
 export function weaponPrep(): void {
     // Buff up
-    getBuffs($effects`Song of the North, Carol of the Bulls, Blessing of the Bird`);
-    getBuffs($effects`Lack of Body-Building, Billiards Belligerence, The Power of LOV`);
-    // Buffs with commas in the names don't work well with $effects
-    getBuffs([$effect`Frenzied, Bloody`]);
+    getBuffs([
+        $effect`Song of the North`,
+        $effect`Carol of the Bulls`,
+        $effect`Blessing of the Bird`,
+        $effect`Lack of Body-Building`,
+        $effect`Billiards Belligerence`,
+        $effect`The Power of LOV`,
+        $effect`Frenzied, Bloody`,
+    ]);
     // Acquire Inner Elf for test purposes
     getInnerElf();
     // Get carol ghost buff
@@ -268,16 +281,27 @@ export function spellPrep(): number {
     // Start off with Simmer so it doesn't muck anything up later
     getBuffs($effects`Simmering`);
     // Acquire some constituent pieces
-    if (!have($effect`Sigils of Yeg`)) cliExecute("cargo 177");
-    if (!have($effect`Pisces in the Skyces`)) useSkill(1, $skill`Summon Alice's Army Cards`);
+    if (!have($effect`Sigils of Yeg`) && !have($item`Yeg's Motel hand soap`)) {
+        cliExecute("cargo 177");
+    }
+    if (!have($effect`Pisces in the Skyces`) && !have($item`Ye Wizard's Shack snack voucher`)) {
+        useSkill(1, $skill`Summon Alice's Army Cards`);
+    }
     // Now that that's done, other stuff! A LOT of it!
-    getBuffs(
-        $effects`Spirit of Garlic, Jackasses' Symphony of Destruction, Arched Eyebrow of the Archmage`
-    );
-    getBuffs($effects`Carol of the Hells, Mental A-cue-ity, Song of Sauce, The Magic of LOV`);
-    getBuffs(
-        $effects`Sigils of Yeg, Concentration, Baconstoned, Pisces in the Skyces, Grumpy and Ornery`
-    );
+    getBuffs([
+        $effect`Spirit of Garlic`,
+        $effect`Jackasses' Symphony of Destruction`,
+        $effect`Arched Eyebrow of the Archmage`,
+        $effect`Carol of the Hells`,
+        $effect`Mental A-cue-ity`,
+        $effect`Song of Sauce`,
+        $effect`The Magic of LOV`,
+        $effect`Sigils of Yeg`,
+        $effect`Concentration`,
+        $effect`Baconstoned`,
+        $effect`Pisces in the Skyces`,
+        $effect`Grumpy and Ornery`,
+    ]);
     // Traditionally Inner Elf
     getInnerElf();
     // Two birds with one stone - meteor shower and mini-adventurer buff
@@ -305,7 +329,7 @@ export function spellPrep(): number {
     // Alright, gear and do the thing!
     outfitSpell();
     // The spell damage prep thing is a little different, as Simmer takes a turn to do
-    // Let the libram CS wrapper know so it corrects for it
+    // Let the libram CS wrapper know if we have Simmering so it corrects for it
     return have($effect`Simmering`) ? 1 : 0;
 }
 
@@ -316,8 +340,12 @@ export function itemPrep(): void {
         if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!";
     }
     // Item buff time
-    getBuffs($effects`Fat Leon's Phat Loot Lyric, Singer's Faithful Ocelot`);
-    getBuffs($effects`Driving Observantly, Pork Barrel`);
+    getBuffs([
+        $effect`Fat Leon's Phat Loot Lyric`,
+        $effect`Singer's Faithful Ocelot`,
+        $effect`Driving Observantly`,
+        $effect`Pork Barrel`,
+    ]);
     if (!have($effect`Synthesis: Collection`)) performSynth("item");
     // Get bowlo buff and batform in a single runaway
     if (!have($effect`Cosmic Ball in the Air`)) {
