@@ -32,8 +32,8 @@
     },
     "dependencies": {
         "core-js": "^3.16.4",
-        "kolmafia": ">=1.2.0",
-        "libram": ">=0.3.0"
+        "kolmafia": "^2.1.1",
+        "libram": "^0.6.8"
     },
     "author": "DanceCommander6",
     "license": "ISC",
