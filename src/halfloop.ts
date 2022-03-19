@@ -1,20 +1,24 @@
-import { cliExecute, myDaycount, userConfirm } from "kolmafia";
+import { cliExecute, myDaycount } from "kolmafia";
 import { get } from "libram";
 import { breakfast, garbo, gashHop, nightcap, postrun } from "./lib";
 
 // Wrap the half-loop into a main() function, calling the script will find and run it
 // It's necessary as this way I can return easily to combat garbo heisenbugs
-export function main(): void {
+
+// Accept an optional argument after the script name
+// If set to noascend, deposit the user in front of the gash, ready to hop
+// Useful if perming stuff is going to happen
+export function main(hop?: string): void {
     // Pre-ascension garbo leg
     // garbo() true means ascending
     // nightcap() true means done for the day, put pyjamas on
     if (myDaycount() > 1) {
-        const hop = userConfirm("Hop the gash automatically? Won't perm any skills this way");
         breakfast();
         garbo(true);
         nightcap(false);
         garbo(true);
-        gashHop(hop);
+        // This turns the input argument into a true/false that gashHop() understands
+        gashHop(hop !== "noascend");
     }
     // Run DC6S proper
     if (!get("kingLiberated")) {
