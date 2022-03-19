@@ -13,7 +13,10 @@ ln -s $PWD/KoLmafia/scripts/dc6s/ ~/Library/Application\ Support/KoLmafia/script
 ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 ```
 
-Once done, the script can be called by writing `dc6s` into Mafia's CLI. There is also `dc6s_halfloop`, which will add some basic breakfast tasks and a [garbo](https://github.com/Loathing-Associates-Scripting-Society/garbage-collector) leg on either side of DC6s. Upon running the command, you will be prompted whether you want to ascend automatically. Clicking yes performs the entire half-loop. Clicking no, e.g. to perm some things while in Valhalla, will deposit you in an ascension-ready state and you can re-run the command once in CS.
+This offers a few commands accessible from Mafia's CLI:
+-   `dc6s` performs the CS run.
+-   `dc6s_halfloop` was going to perform the whole uninterrupted half-loop, adding some basic breakfast tasks, garbo legs and automatic ascension. A bizarre garbo interaction which leaves the spleen cleaners non-functional and the devs stumped had other plans. As a result, `dc6s_halfloop` needs to be re-ran after the CS completes.
+-   `dc6s_wrapper` does the one-click half-loop by re-running the above once it's done with the ascension. A pragmatic solution to a strange problem.
 
 ## Run Setup
 
