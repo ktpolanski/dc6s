@@ -1,4 +1,4 @@
-import { haveEquipped, myFamiliar } from "kolmafia";
+import { haveEquipped, inHardcore, myFamiliar } from "kolmafia";
 import { $effect, $familiar, $item, $monster, $skill, get, have, StrictMacro } from "libram";
 import { freeKillsLeft } from "./lib";
 
@@ -30,6 +30,17 @@ export default class Macro extends StrictMacro {
         return new Macro().delevel();
     }
 
+    // In softcore, the camel should be used for a spit as soon as it's there
+    camel(): Macro {
+        return this.externalIf(
+            !inHardcore() && get("camelSpit") === 100,
+            Macro.trySkill($skill`%fn, spit on me!`)
+        );
+    }
+    static camel(): Macro {
+        return new Macro().camel();
+    }
+
     // Try to cheese in some extra value stuff
     value(): Macro {
         return this.trySkill($skill`Extract`).trySkill($skill`Sing Along`);
@@ -38,15 +49,15 @@ export default class Macro extends StrictMacro {
         return new Macro().value();
     }
 
-    // The default mode of operation is to do the two above
+    // The default mode of operation is to do the three above
     // Maybe add an extra skill in there
     setup(skill = $skill`none`): Macro {
         if (skill !== $skill`none`) {
             // We got given a skill, work it into the macro
-            return this.delevel().value().trySkill(skill);
+            return this.delevel().camel().value().trySkill(skill);
         } else {
             // No skill just basic stuff
-            return this.delevel().value();
+            return this.delevel().camel().value();
         }
     }
     static setup(skill = $skill`none`): Macro {

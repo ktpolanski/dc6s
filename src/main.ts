@@ -1,21 +1,9 @@
-import { setAutoAttack } from "kolmafia";
+import { inHardcore, setAutoAttack } from "kolmafia";
 import { CommunityService, get } from "libram";
-import { assertTest, freeKillsLeft, PropertyManager } from "./lib";
+import { assertTest, damageTests, freeKillsLeft, PropertyManager, weightTests } from "./lib";
 import level from "./level";
 import runstart from "./runstart";
-import {
-    coilWirePrep,
-    famWeightPrep,
-    hotResPrep,
-    hpPrep,
-    itemPrep,
-    moxiePrep,
-    musclePrep,
-    mysticalityPrep,
-    noncombatPrep,
-    spellPrep,
-    weaponPrep,
-} from "./tests";
+import { coilWirePrep, hpPrep, itemPrep, moxiePrep, musclePrep, mysticalityPrep } from "./tests";
 
 // Do this try/finally syntax to be able to undo autoattack/CCS/recovery settings
 try {
@@ -35,15 +23,19 @@ try {
     assertTest(CommunityService.HP, hpPrep, 1);
     assertTest(CommunityService.Muscle, musclePrep, 1);
     assertTest(CommunityService.Mysticality, mysticalityPrep, 1);
-    // Now run the familiar weight block
-    // As familiar weight buffs were applied during levelling
-    assertTest(CommunityService.HotRes, hotResPrep, 1);
-    assertTest(CommunityService.Noncombat, noncombatPrep, 1);
-    assertTest(CommunityService.FamiliarWeight, famWeightPrep, 25);
-    // Now do the weapon/spell damage block
-    // This might swap places with familiar weight in softcore routing later
-    assertTest(CommunityService.WeaponDamage, weaponPrep, 1);
-    assertTest(CommunityService.SpellDamage, spellPrep, 25);
+    // Test order depends on hardcore/softcore
+    if (inHardcore()) {
+        // In hardcore, familiar weight buffs are all popped during levelling
+        // So need to do the weight tests first so they don't run out
+        weightTests();
+        damageTests();
+    } else {
+        // In softcore, the critical familiar weight is filled by repaid diaper
+        // And the camel spit is used during levelling instead to accelerate things
+        // So need to do the damage tests first so the spit doesn't run out
+        damageTests();
+        weightTests();
+    }
     // And cap it off with the item test for Feel Lost purposes
     assertTest(CommunityService.BoozeDrop, itemPrep, 1);
 } finally {

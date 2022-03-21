@@ -6,6 +6,7 @@ import {
     create,
     drink,
     familiarWeight,
+    inHardcore,
     itemAmount,
     runChoice,
     runCombat,
@@ -219,7 +220,7 @@ export default function level(): void {
             "LOV Extraterrestrial Chocolate"
         );
         heal();
-        // At this point we should have a burning newspaper
+        // At this point we should have a burning newspaper in HC
     }
     // While the tentacle is technically a scaler, it caps at 400
     // So do it early
@@ -261,7 +262,7 @@ export default function level(): void {
         // The snowman can apply various weird debuffs
         // The easiest way out is to just do a quick soak afterward
         cliExecute("hottub");
-        // At this point the shorty should have yielded his drop
+        // At this point the shorty should have yielded his drop in HC
     }
     // Go hit the ninja on the head
     if (!have($item`li'l ninja costume`)) {
@@ -304,7 +305,8 @@ export default function level(): void {
     // Hit up gingerbread city for the latte
     if (!have($item`gingerbread spice latte`) && !have($effect`Whole Latte Love`)) {
         // Pop a bunch of acquired familiar weight support
-        getBuffs($effects`Shortly Stacked, Heart of Green`);
+        // In softcore, the repaid diaper will take care of it
+        if (inHardcore()) getBuffs($effects`Shortly Stacked, Heart of Green`);
         // Get some sprinkles with sprinkle dog
         if (!have($item`sprinkles`)) {
             familiarWithOrb($familiar`Chocolate Lab`);
@@ -330,8 +332,9 @@ export default function level(): void {
         while (get("_gingerbreadCityTurns") < 5) {
             gingerbreadBanderway($location`Gingerbread Upscale Retail District`);
         }
-        // Now that we have the latte, may as well use it
-        useIfHave($item`gingerbread spice latte`);
+        // Now that we have the latte, may as well use it in HC
+        // Hold it for later in softcore as spell damage will happen before famweight
+        if (inHardcore()) useIfHave($item`gingerbread spice latte`);
     }
     // More banderways, this time in search of the cigarettes
     setChoice(1203, 4);
@@ -382,7 +385,7 @@ export default function level(): void {
     // At this point it's time to venture into the NEP
     // This has a bit of faff to it:
     //  1. run kramco to catch as many gobbos as possible
-    //  2. once the camel is charged, switch to goth kid for hipster fights
+    //  2. once the familiars are all charged up, switch to goth kid for hipster fights
     //  3. do a 9+11 bowlo for as many turns of bowlo stats as possible
     //  4. get inner elf as soon as level 13 (technically likely already have it)
     //  5. rip Feel Prides, putting the familiar scrapbook on for those turns for max gains

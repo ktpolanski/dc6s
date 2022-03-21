@@ -1,4 +1,14 @@
-import { canEquip, cliExecute, create, equip, Item, Slot, toSlot, useFamiliar } from "kolmafia";
+import {
+    canEquip,
+    cliExecute,
+    create,
+    equip,
+    inHardcore,
+    Item,
+    Slot,
+    toSlot,
+    useFamiliar,
+} from "kolmafia";
 import { $familiar, $item, $items, $slot, get, have } from "libram";
 import { checkKGB, foldIfNotHave, setRetroCape } from "./lib";
 
@@ -111,7 +121,7 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
-        [$slot`acc1`, $items`Retrospecs`],
+        [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`battle broom, Eight Days a Week Pill Keeper`],
         [$slot`acc3`, $items`your cowboy boots`],
     ]);
@@ -152,7 +162,7 @@ export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`burning paper crane, familiar scrapbook`],
-        [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
+        [$slot`pants`, $items`repaid diaper, tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`Brutal brogues`],
         [$slot`acc2`, $items`hewn moon-rune spoon`],
         [$slot`acc3`, $items`Beach Comb`],
@@ -274,24 +284,34 @@ export function outfitWeapon(): void {
         [$slot`acc3`, $items`Powerful Glove`],
     ]);
     dressUp(outfit);
+    if (have($item`Stick-Knife of Loathing`)) {
+        useFamiliar($familiar`Disembodied Hand`);
+        equip($slot`familiar`, $item`Stick-Knife of Loathing`);
+    }
 }
 
 // Spell damage test outfit
 export function outfitSpell(): void {
     foldIfNotHave($item`broken champagne bottle`);
-    if (!checkKGB("Spell Damage")) cliExecute("briefcase enchantment spell");
+    // Only need to reconfigure the KGB if in hardcore
+    // In softcore just wear the meteorite necklace and all is well
+    if (!checkKGB("Spell Damage") && inHardcore()) cliExecute("briefcase enchantment spell");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`astral chapeau`],
         [$slot`back`, $items`protonic accelerator pack`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
-        [$slot`weapon`, $items`weeping willow wand`],
+        [$slot`weapon`, $items`Staff of the Roaring Hearth, weeping willow wand`],
         [$slot`offhand`, $items`Abracandalabra`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`battle broom`],
-        [$slot`acc2`, $items`Kremlin's Greatest Briefcase`],
+        [$slot`acc2`, $items`meteorite necklace, Kremlin's Greatest Briefcase`],
         [$slot`acc3`, $items`Powerful Glove`],
     ]);
     dressUp(outfit);
+    if (have($item`Stick-Knife of Loathing`)) {
+        useFamiliar($familiar`Disembodied Hand`);
+        equip($slot`familiar`, $item`Stick-Knife of Loathing`);
+    }
 }
 
 // Item test outfit

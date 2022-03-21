@@ -7,6 +7,7 @@ import {
     equip,
     handlingChoice,
     haveEffect,
+    inHardcore,
     myHp,
     myMaxhp,
     runChoice,
@@ -196,7 +197,16 @@ export function famWeightPrep(): void {
     // We want to be platypus for aftercore anyway, so let's save a turn here while we're at it
     if (!get("moonTuned")) cliExecute("spoon platypus");
     // Most buffs should be on from levelling, as they get used early to make familiar go brrr
-    getBuffs($effects`Robot Friends, Empathy`);
+    getBuffs([
+        $effect`Robot Friends`,
+        $effect`Empathy`,
+        $effect`Leash of Linguini`,
+        $effect`Blood Bond`,
+        $effect`Billiards Belligerence`,
+        $effect`Shortly Stacked`,
+        $effect`Heart of Green`,
+        $effect`Whole Latte Love`,
+    ]);
     outfitFamWeight();
     // Quick cheeser thing while we have full weight - set up DDV for spell test later
     // This is good to do now as there's floating feel peaceful from hotres
@@ -213,11 +223,17 @@ export function famWeightPrep(): void {
         useSkill(1, $skill`Deep Dark Visions`);
         heal();
     }
-    // Use the BBB and its free +10lb equip
-    useFamiliar($familiar`Baby Bugged Bugbear`);
-    if (!have($item`bugged beanie`)) {
-        visitUrl("arena.php");
-        equip($item`bugged beanie`);
+    if (inHardcore()) {
+        // Use the BBB and its free +10lb equip
+        useFamiliar($familiar`Baby Bugged Bugbear`);
+        if (!have($item`bugged beanie`)) {
+            visitUrl("arena.php");
+            equip($item`bugged beanie`);
+        }
+    } else {
+        // Softcore means Doppelshifter meme time
+        useFamiliar($familiar`Doppelshifter`);
+        equip($item`tiny costume wardrobe`);
     }
 }
 
@@ -228,11 +244,11 @@ export function weaponPrep(): void {
         $effect`Song of the North`,
         $effect`Carol of the Bulls`,
         $effect`Blessing of the Bird`,
-        $effect`Lack of Body-Building`,
-        $effect`Billiards Belligerence`,
         $effect`The Power of LOV`,
         $effect`Frenzied, Bloody`,
     ]);
+    // These two can be skipped due to Stick-Knife in softcore
+    if (inHardcore()) getBuffs($effects`Lack of Body-Building, Billiards Belligerence`);
     // Acquire Inner Elf for test purposes
     getInnerElf();
     // Get carol ghost buff
@@ -246,7 +262,9 @@ export function weaponPrep(): void {
     // Alright, camel, time for your great moment! The combat that does all the things!
     // Spit on me, and a meteor shower, and sabering out!
     if (!have($effect`Meteor Showered`)) {
-        useFamiliar($familiar`Melodramedary`);
+        // ...actually, camel, maybe you did your thing already
+        // If in softcore, then the buff was gotten during levelling
+        if (inHardcore()) useFamiliar($familiar`Melodramedary`);
         equip($item`Fourth of May Cosplay Saber`);
         // Saber items
         setChoice(1387, 3);
@@ -268,8 +286,9 @@ export function weaponPrep(): void {
         // 1932 is the ungulith ID, make locket uses know
         if (get("_locketMonstersFought") === "") set("_locketMonstersFought", "1932");
         else set("_locketMonstersFought", `${get("_locketMonstersFought")},1932`);
-        set("camelSpit", 0);
         set("_meteorShowerUses", 1 + get("_meteorShowerUses"));
+        // The spit happened earlier in a less screwy manner in softcore
+        if (inHardcore()) set("camelSpit", 0);
     }
     // Suit up, add the last few buffs...
     outfitWeapon();

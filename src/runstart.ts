@@ -3,9 +3,11 @@ import {
     buy,
     cliExecute,
     create,
+    inHardcore,
     myLevel,
     mySpleenUse,
     runChoice,
+    takeStorage,
     use,
     visitUrl,
 } from "kolmafia";
@@ -93,5 +95,17 @@ export default function runstart(): void {
     if (get("questM25Armorer") === "unstarted") {
         visitUrl("shop.php?whichshop=armory&action=talk");
         runChoice(1);
+    }
+    // Do pulls, if not in hardcore
+    if (!inHardcore()) {
+        for (const pull of [
+            $item`Staff of the Roaring Hearth`,
+            $item`repaid diaper`,
+            $item`meteorite necklace`,
+            $item`tiny costume wardrobe`,
+            $item`Stick-Knife of Loathing`,
+        ]) {
+            if (!have(pull)) takeStorage(1, pull);
+        }
     }
 }

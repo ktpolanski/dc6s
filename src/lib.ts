@@ -6,10 +6,12 @@ import {
     drink,
     Effect,
     equip,
+    equippedItem,
     Familiar,
     getWorkshed,
     handlingChoice,
     inebrietyLimit,
+    inHardcore,
     Item,
     itemAmount,
     Location,
@@ -41,6 +43,7 @@ import {
     $items,
     $location,
     $skill,
+    $slot,
     ascend,
     AsdonMartin,
     ChateauMantegna,
@@ -57,6 +60,7 @@ import {
     SourceTerminal,
     Witchess,
 } from "libram";
+import { famWeightPrep, hotResPrep, noncombatPrep, spellPrep, weaponPrep } from "./tests";
 import { outfit, outfitFamWeight, outfitGhost } from "./outfit";
 import Macro from "./combat";
 
@@ -88,8 +92,21 @@ export function familiarWithOrb(familiar: Familiar): void {
     equip($item`miniature crystal ball`);
 }
 
-// Pick what familiar to use
-export function useDefaultFamiliar(canAttack = true): void {
+// Pull the camel out and set it up for use
+function camel(): void {
+    useFamiliar($familiar`Melodramedary`);
+    // Pick up the gear and stick it on
+    if (!have($item`box of Familiar Jacks`) && !have($item`dromedary drinking helmet`)) {
+        create(1, $item`box of Familiar Jacks`);
+        use(1, $item`box of Familiar Jacks`);
+    }
+    equip($item`dromedary drinking helmet`);
+    // Seeing how this buddy is around the longest, add mumming trunk myst gains
+    if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
+}
+
+// Pick what familiar to use, hardcore edition
+export function hardcoreFamiliar(canAttack = true): void {
     // Need to prioritise garbage fire and shorty to get famweight drops
     // So that sprinkle dog can be 140lb in time for his moment
     if (!have($item`short stack of pancakes`) && !have($effect`Shortly Stacked`) && canAttack) {
@@ -99,20 +116,42 @@ export function useDefaultFamiliar(canAttack = true): void {
         familiarWithOrb($familiar`Garbage Fire`);
     } else if (get("camelSpit") < 100) {
         // The camel takes up most of the turns in the middle of the run
-        useFamiliar($familiar`Melodramedary`);
-        // Pick up the gear and stick it on
-        if (!have($item`box of Familiar Jacks`) && !have($item`dromedary drinking helmet`)) {
-            create(1, $item`box of Familiar Jacks`);
-            use(1, $item`box of Familiar Jacks`);
-        }
-        equip($item`dromedary drinking helmet`);
-        // Seeing how this buddy is around the longest, add mumming trunk myst gains
-        if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
+        camel();
     } else {
         // We're in the NEP and fishing for kramcos
         // Fish for hipster fights too while we're at it
         familiarWithOrb($familiar`Artistic Goth Kid`);
     }
+}
+
+// Pick what familiar to use, softcore edition
+export function softcoreFamiliar(canAttack = true): void {
+    // Repaid diaper brings sprinkle dog up fat enough to not need to rush famweight drops
+    // Do camel charging first and spit upon yourself to aid with levelling
+    if (!have($effect`Spit Upon`)) {
+        camel();
+    } else if (
+        !have($item`short stack of pancakes`) &&
+        !have($effect`Shortly Stacked`) &&
+        canAttack
+    ) {
+        // Check the attack clause just in case, e.g. for ninja free kill
+        familiarWithOrb($familiar`Shorter-Order Cook`);
+    } else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+        familiarWithOrb($familiar`Garbage Fire`);
+    } else {
+        // We're in the NEP and fishing for kramcos
+        // Fish for hipster fights too while we're at it
+        familiarWithOrb($familiar`Artistic Goth Kid`);
+    }
+}
+
+// Pick what familiar to use
+export function useDefaultFamiliar(canAttack = true): void {
+    // If in hardcore, prioritise the famweight drops
+    // If in softcore, prioritise the camel and get spat on
+    if (inHardcore()) hardcoreFamiliar(canAttack);
+    else softcoreFamiliar(canAttack);
 }
 
 // Add auto-attack to the passed macro and hit up the specified location once
@@ -331,6 +370,19 @@ export function assertTest(test: CommunityService, prep: () => number | void, tu
     }
 }
 
+// Perform familiar weight block of tests
+export function weightTests(): void {
+    assertTest(CommunityService.HotRes, hotResPrep, 1);
+    assertTest(CommunityService.Noncombat, noncombatPrep, 1);
+    assertTest(CommunityService.FamiliarWeight, famWeightPrep, 25);
+}
+
+// Perform weapon/spell damage tests
+export function damageTests(): void {
+    assertTest(CommunityService.WeaponDamage, weaponPrep, 1);
+    assertTest(CommunityService.SpellDamage, spellPrep, 25);
+}
+
 // Half-loop script functions
 // Simple breakfasty start of day stuff
 export function breakfast(): void {
@@ -353,9 +405,10 @@ export function garbo(ascend: boolean): void {
         // Refresh horse paste price for optimal garbo dieting
         mallPrice($item`Extrovermectin™`);
         set("valueOfAdventure", 6000);
-        const garboCall = ascend ? "garbo ascend" : "garbo";
+        const garboCall = ascend ? "garbo ascend" : "garbo simdiet";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
+        if (!ascend) throw "ASSESS SIMDIET OUTPUT AND RUN GARBO";
     }
 }
 
@@ -395,6 +448,11 @@ export function gashHop(hop: boolean): void {
                 ceiling: "ceiling fan",
             },
         });
+        // Check cowboy boots, which store their stuff in $slots
+        if (equippedItem($slot`bootskin`) !== $item`frontwinder skin`)
+            throw "Cowboy boots - put on frontwinder skin!";
+        if (equippedItem($slot`bootspurs`) !== $item`nicksilver spurs`)
+            throw "Cowboy boots - put on nicksilver spurs!";
         if (hop) {
             // Ascend with the expected configuration of stuff
             ascend(
@@ -436,7 +494,7 @@ export function postrun(): void {
         if (have(effect)) cliExecute(`uneffect ${effect}`);
     }
     // The Source Terminal enquiry buff needs to be set each run
-    if (!get("sourceTerminalEnquiry")) SourceTerminal.enquiry($effect`familiar.enq`);
+    SourceTerminal.enquiry($effect`familiar.enq`);
     // Open up the Rain-Doh
     useIfHave($item`can of Rain-Doh`);
     // That's it! Celebrate with a drink, as garbo won't down pilsners
