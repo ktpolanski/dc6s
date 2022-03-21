@@ -275,7 +275,8 @@ export function fightWitchessRoyalty(royalty: Monster): void {
     foldIfNotHave($item`makeshift garbage shirt`);
     outfit();
     // Witchess royalty allows for no combat finesse
-    Macro.attack().repeat().setAutoAttack();
+    // Apart from an attempt at a camel spit if in softcore
+    Macro.camel().attack().repeat().setAutoAttack();
     Witchess.fightPiece(royalty);
     heal();
 }

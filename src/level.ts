@@ -27,6 +27,7 @@ import {
     $location,
     $monster,
     $skill,
+    $slot,
     AsdonMartin,
     Clan,
     get,
@@ -412,7 +413,10 @@ export default function level(): void {
             getInnerElf();
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
-            outfit($items`Kramco Sausage-o-Matic™, Lil' Doctor™ bag`);
+            // In hardcore, the disposable accessory is the default acc1
+            // In softcore, acc3 is comparably the weakest at this point
+            if (inHardcore()) outfit($items`Kramco Sausage-o-Matic™, Lil' Doctor™ bag`);
+            else outfit([$item`Kramco Sausage-o-Matic™`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
