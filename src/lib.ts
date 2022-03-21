@@ -42,6 +42,7 @@ import {
     $item,
     $items,
     $location,
+    $monster,
     $skill,
     $slot,
     ascend,
@@ -276,7 +277,8 @@ export function fightWitchessRoyalty(royalty: Monster): void {
     // A workaround is to use hardcore familiar prioritising no matter what
     // If hardcore, this is fine, that's what we're after
     // If softcore, it will prioritise charging up familiar weight drop familiars
-    hardcoreFamiliar();
+    if (royalty === $monster`Witchess Queen`) hardcoreFamiliar();
+    else useDefaultFamiliar();
     foldIfNotHave($item`makeshift garbage shirt`);
     outfit();
     // Witchess royalty allows for no combat finesse
