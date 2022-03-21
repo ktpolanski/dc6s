@@ -271,7 +271,12 @@ export function getInnerElf(): void {
 export function fightWitchessRoyalty(royalty: Monster): void {
     // On the off-chance we're level 13 already
     getInnerElf();
-    useDefaultFamiliar();
+    // If we're about to go up against a queen, and we're in softcore
+    // Then if we have a spit-ready camel, it won't be able to spit
+    // A workaround is to use hardcore familiar prioritising no matter what
+    // If hardcore, this is fine, that's what we're after
+    // If softcore, it will prioritise charging up familiar weight drop familiars
+    hardcoreFamiliar();
     foldIfNotHave($item`makeshift garbage shirt`);
     outfit();
     // Witchess royalty allows for no combat finesse
