@@ -173,6 +173,8 @@ export default function level(): void {
         $effect`Empathy`,
         $effect`You Can Really Taste the Dormouse`,
     ]);
+    // This won't last long enough in softcore
+    if (!inHardcore()) getBuffs($effects`Billiards Belligerence`);
     // Add a bit of ML
     getBuffs([
         $effect`Drescher's Annoying Noise`,
