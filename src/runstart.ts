@@ -1,6 +1,5 @@
 import {
     autosell,
-    buy,
     cliExecute,
     create,
     inHardcore,
@@ -12,7 +11,7 @@ import {
     visitUrl,
 } from "kolmafia";
 import { $item, get, have, SongBoom } from "libram";
-import { bu, useIfHave } from "./lib";
+import { useIfHave } from "./lib";
 
 // Turn zero stuff
 export default function runstart(): void {
@@ -64,13 +63,6 @@ export default function runstart(): void {
     }
     // Flip the reverser as this thing is funny exactly once
     if (!get("backupCameraReverserEnabled")) cliExecute("backupcamera reverser on");
-    // Get an accordion and sewer items
-    if (!have($item`toy accordion`)) {
-        buy(1, $item`toy accordion`);
-    }
-    while (!have($item`turtle totem`)) {
-        bu($item`chewing gum on a string`);
-    }
     // Early turn generation - numberology and borrowed time
     if (myLevel() === 1 && !mySpleenUse()) {
         while (get("_universeCalculated") < get("skillLevel144")) {

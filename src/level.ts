@@ -149,7 +149,9 @@ export default function level(): void {
         );
         heal();
     }
-    if (!have($effect`Holiday Yoked`)) {
+    // Can't use the carol ghost for stats in softcore
+    // However, Baconstoned can be popped early 
+    if (inHardcore() && !have($effect`Holiday Yoked`)) {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
         // Use a reflex hammer to get out
@@ -157,7 +159,7 @@ export default function level(): void {
         // Noob Cave has a construct, and just a construct - how fortunate for us!
         adventureMacro($location`Noob Cave`, Macro.freeRun());
         heal();
-    }
+    } else getBuffs($effects`baconstoned`);
     // Set up the hatter buff
     if (!have($effect`You Can Really Taste the Dormouse`)) {
         // Get the drink me potion, and the magical hat
@@ -356,7 +358,7 @@ export default function level(): void {
         // But it charges the familiar so that's good
         adventureMacro(
             $location`Gingerbread Upscale Retail District`,
-            Macro.tryItem($item`gingerbread cigarette`)
+            Macro.camel().tryItem($item`gingerbread cigarette`)
         );
         heal();
     }

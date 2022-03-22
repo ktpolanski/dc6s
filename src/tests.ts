@@ -37,6 +37,7 @@ import {
 } from "libram";
 import {
     adventureMacro,
+    bu,
     bustGhost,
     castLibrams,
     foldIfNotHave,
@@ -92,6 +93,16 @@ export function coilWirePrep(): void {
     // Set up MCD on 10 now that shrub has provided us with some funds
     if (!have($item`detuned radio`)) buy(1, $item`detuned radio`);
     changeMcd(10);
+    // Get an accordion and sewer items
+    if (!have($item`toy accordion`)) {
+        buy(1, $item`toy accordion`);
+    }
+    while (!have($item`turtle totem`)) {
+        bu($item`chewing gum on a string`);
+    }
+    while (!have($item`saucepan`)) {
+        bu($item`chewing gum on a string`);
+    }
     // Catch a kramco with the mimic out, and a paranormal prediction to boot
     if (!have($item`bag of many confections`)) {
         useFamiliar($familiar`Stocking Mimic`);
@@ -143,7 +154,7 @@ export function mysticalityPrep(): void {
 // Prepare for the hot resistance test
 export function hotResPrep(): void {
     // Ensure buffs
-    getBuffs($effects`Feeling Peaceful, Empathy`);
+    getBuffs($effects`Feeling Peaceful, Empathy, Elemental Saucesphere, Astral Shell`);
     // Collect extinguisher foam and a cloake buff via saber cheese
     if (!have($effect`Fireproof Foam Suit`)) {
         // The outfit has the saber and the extinguisher in it already
@@ -198,31 +209,16 @@ export function famWeightPrep(): void {
     if (!get("moonTuned")) cliExecute("spoon platypus");
     // Most buffs should be on from levelling, as they get used early to make familiar go brrr
     getBuffs([
-        $effect`Robot Friends`,
-        $effect`Empathy`,
         $effect`Leash of Linguini`,
+        $effect`Empathy`,
         $effect`Blood Bond`,
+        $effect`Heart of Green`,
+        $effect`Robot Friends`,
         $effect`Billiards Belligerence`,
         $effect`Shortly Stacked`,
-        $effect`Heart of Green`,
         $effect`Whole Latte Love`,
     ]);
     outfitFamWeight();
-    // Quick cheeser thing while we have full weight - set up DDV for spell test later
-    // This is good to do now as there's floating feel peaceful from hotres
-    // And the parrot is as fat as it's going to get
-    while (haveEffect($effect`Visions of the Deep Dark Deeps`) < 30) {
-        useFamiliar($familiar`Exotic Parrot`);
-        // Just in case, to avoid disappointment
-        if (elementalResistance($element`spooky`) < 10)
-            throw "Can't get enough spooky resistance for DDV!";
-        // DDV needs 500 HP minimum
-        if (myMaxhp() < 500 && !have($effect`Song of Starch`)) useSkill(1, $skill`Song of Starch`);
-        // This thing slaps the HP hard
-        heal();
-        useSkill(1, $skill`Deep Dark Visions`);
-        heal();
-    }
     if (inHardcore()) {
         // Use the BBB and its free +10lb equip
         useFamiliar($familiar`Baby Bugged Bugbear`);
@@ -258,6 +254,22 @@ export function weaponPrep(): void {
         equip($item`Lil' Doctor™ bag`);
         // The Dire Warren has a beast, and just a beast - how fortunate for us!
         adventureMacro($location`The Dire Warren`, Macro.freeRun());
+    }
+    // Since these are the last moments before Cowrruption, which is going to demolish HP
+    // Acquire Deep Dark Visions now
+    if (!have($effect`Visions of the Deep Dark Deeps`)) {
+        useFamiliar($familiar`Exotic Parrot`);
+        outfitFamWeight();
+        getBuffs($effects`Elemental Saucesphere, Astral Shell`);
+        // Just in case, to avoid disappointment
+        if (elementalResistance($element`spooky`) < 10)
+            throw "Can't get enough spooky resistance for DDV!";
+        // DDV needs 500 HP minimum
+        if (myMaxhp() < 500 && !have($effect`Song of Starch`)) useSkill(1, $skill`Song of Starch`);
+        // This thing slaps the HP hard
+        heal();
+        useSkill(1, $skill`Deep Dark Visions`);
+        heal();
     }
     // Alright, camel, time for your great moment! The combat that does all the things!
     // Spit on me, and a meteor shower, and sabering out!

@@ -459,14 +459,14 @@ export function gashHop(hop: boolean): void {
         // Check cowboy boots, which store their stuff in $slots
         if (equippedItem($slot`bootskin`) !== $item`frontwinder skin`)
             throw "Cowboy boots - put on frontwinder skin!";
-        if (equippedItem($slot`bootspurs`) !== $item`nicksilver spurs`)
+        if (equippedItem($slot`bootspur`) !== $item`nicksilver spurs`)
             throw "Cowboy boots - put on nicksilver spurs!";
         if (hop) {
             // Ascend with the expected configuration of stuff
             ascend(
                 Paths.CommunityService,
                 $class`Pastamancer`,
-                Lifestyle.hardcore,
+                Lifestyle.softcore,
                 "wallaby",
                 $item`astral six-pack`,
                 $item`astral chapeau`
