@@ -188,6 +188,7 @@ export function noncombatPrep(): void {
         $effect`Feeling Lonely`,
         $effect`Silent Running`,
         $effect`Driving Stealthily`,
+        $effect`Blessing of the Bird`,
     ]);
     // Apply outfit...
     outfitNoncombat();
