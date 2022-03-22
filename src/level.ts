@@ -167,7 +167,6 @@ export default function level(): void {
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs([
         $effect`Fidoxene`,
-        $effect`Billiards Belligerence`,
         $effect`Puzzle Champ`,
         $effect`Blood Bond`,
         $effect`Leash of Linguini`,
@@ -313,10 +312,10 @@ export default function level(): void {
             familiarWithOrb($familiar`Chocolate Lab`);
             foldIfNotHave($item`makeshift garbage shirt`);
             outfitFamWeight();
-            // TODO: CANNOT GUARANTEE 55 SPRINKLES, DOG IS ONLY 136 LB!!!
             // Sprinkle dog needs to be 140lb fat to guarantee enough sprinkles for stuff
-            if (familiarWeight($familiar`Chocolate Lab`) + weightAdjustment() < 140) {
-                throw "Didn't get Sprinkle Dog to 140 pounds!";
+            // But 20lb of that can come from a meteor shower, so aim for 120lb in gear
+            if (familiarWeight($familiar`Chocolate Lab`) + weightAdjustment() < 120) {
+                throw "Didn't get Sprinkle Dog to 120 pounds!";
             }
             // Ok, if we're here, we're good
             // Any non-gentrifier will get us our desired 55 sprinkles
@@ -324,6 +323,10 @@ export default function level(): void {
                 $location`Gingerbread Upscale Retail District`,
                 Macro.if_($monster`gingerbread gentrifier`, Macro.trySkill($skill`Macrometeorite`))
                     .setup()
+                    .externalIf(
+                        familiarWeight($familiar`Chocolate Lab`) + weightAdjustment() < 140,
+                        Macro.trySkill($skill`Meteor Shower`)
+                    )
                     .freeKill()
             );
             heal();
