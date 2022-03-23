@@ -1,4 +1,4 @@
-import { cliExecute, myDaycount } from "kolmafia";
+import { cliExecute, myDaycount, print } from "kolmafia";
 import { get } from "libram";
 import { breakfast, garbo, gashHop, nightcap, postrun } from "./lib";
 
@@ -25,6 +25,7 @@ export function main(hop?: string): void {
         if (!cliExecute("dc6s")) throw "DC6S errored out";
         // If I go straight into garbo from here, it doesn't use organ cleaners correctly
         // So return out and run again from another wrapper layer. Fun!
+        print("re-run dc6s_halfloop to do your post-CS garbo leg", "green");
         return;
     }
     // Post-ascension garbo leg

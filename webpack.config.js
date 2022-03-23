@@ -13,7 +13,6 @@ module.exports = {
         // You need an emitted file for each entrypoint into your code, e.g. the main script and the ccs or ccs consult script it calls
         dc6s: "./src/main.ts",
         dc6s_halfloop: "./src/halfloop.ts",
-        dc6s_wrapper: "./src/wrapper.ts",
     },
     // Turns on tree-shaking and minification in the default Terser minifier
     // https://webpack.js.org/plugins/terser-webpack-plugin/

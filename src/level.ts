@@ -150,7 +150,7 @@ export default function level(): void {
         heal();
     }
     // Can't use the carol ghost for stats in softcore
-    // However, Baconstoned can be popped early 
+    // However, Baconstoned can be popped early as spell damage comes quickly
     if (inHardcore() && !have($effect`Holiday Yoked`)) {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
@@ -159,7 +159,7 @@ export default function level(): void {
         // Noob Cave has a construct, and just a construct - how fortunate for us!
         adventureMacro($location`Noob Cave`, Macro.freeRun());
         heal();
-    } else getBuffs($effects`baconstoned`);
+    } else getBuffs($effects`Baconstoned`);
     // Set up the hatter buff
     if (!have($effect`You Can Really Taste the Dormouse`)) {
         // Get the drink me potion, and the magical hat
@@ -176,7 +176,7 @@ export default function level(): void {
         $effect`You Can Really Taste the Dormouse`,
     ]);
     // This won't last long enough in softcore
-    if (!inHardcore()) getBuffs($effects`Billiards Belligerence`);
+    if (inHardcore()) getBuffs($effects`Billiards Belligerence`);
     // Add a bit of ML
     getBuffs([
         $effect`Drescher's Annoying Noise`,

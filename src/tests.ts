@@ -6,10 +6,10 @@ import {
     elementalResistance,
     equip,
     handlingChoice,
-    haveEffect,
     inHardcore,
     myHp,
     myMaxhp,
+    myThrall,
     runChoice,
     runCombat,
     setAutoAttack,
@@ -29,6 +29,7 @@ import {
     $monster,
     $skill,
     $slot,
+    $thrall,
     AsdonMartin,
     CombatLoversLocket,
     get,
@@ -123,24 +124,27 @@ export function coilWirePrep(): void {
 
 // Prepare for the moxie test
 export function moxiePrep(): void {
-    // Acquire equaliser
-    getBuffs($effects`Expert Oiliness, Blessing of the Bird`);
+    // Ensure equaliser and gaze
+    if (myThrall() !== $thrall`penne dreadful`) useSkill(1, $skill`Bind Penne Dreadful`);
+    getBuffs($effects`Blessing of the Bird, Quiet Desperation`);
     // Stick on outfit
     outfitMoxie();
 }
 
 // Prepare for the HP test
 export function hpPrep(): void {
-    // Ensure equalizer
-    getBuffs($effects`Expert Oiliness`);
+    // Ensure equalizer and gaze
+    if (myThrall() !== $thrall`elbow macaroni`) useSkill(1, $skill`Bind Undead Elbow Macaroni`);
+    getBuffs($effects`Quiet Determination`);
     // Stick on outfit... just go with muscle
     outfitMuscle();
 }
 
 // Prepare for the muscle test
 export function musclePrep(): void {
-    // Ensure equalizer
-    getBuffs($effects`Expert Oiliness`);
+    // Ensure equalizer and gaze
+    if (myThrall() !== $thrall`elbow macaroni`) useSkill(1, $skill`Bind Undead Elbow Macaroni`);
+    getBuffs($effects`Quiet Determination`);
     // Stick on outfit
     outfitMuscle();
 }

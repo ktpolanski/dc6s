@@ -1,6 +1,6 @@
 # DC6S
 
-The repository houses an operational HCCS script that does 1/105 runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
+The repository houses an operational CS script that does 1/89 SC and 1/105 HC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
 
 ## Setup
 
@@ -18,7 +18,6 @@ This offers a few commands accessible from Mafia's CLI:
 -   `dc6s` performs the CS run.
 -   `dc6s_halfloop` was going to perform the whole uninterrupted half-loop, adding some basic breakfast tasks, garbo legs and automatic ascension. A bizarre garbo interaction which leaves the spleen cleaners non-functional and the devs stumped had other plans. As a result, `dc6s_halfloop` needs to be re-ran after the CS completes.
     -   Running `dc6s_halfloop noascend` in the pre-CS leg will deposit the user in a gash-ready state. Useful if skill perming is desired.
--   `dc6s_wrapper` does the one-click half-loop by re-running the above once it's done with the ascension. A pragmatic solution to a strange problem.
 
 ## Run Setup
 
@@ -38,6 +37,7 @@ A pair of spreadsheets showing the run plan and buff setup for non-stat tests ca
 -   The Chateau rests are delayed until all non-scaling fights are picked up, which should maximise their returns.
 -   Getting the Sprinkle Dog to 140 pounds before going into the Retail District guarantees that any non-gentrifier will drop 55 sprinkles, which is sufficient for a latte and cigarettes. As such, the familiar weight drop familiars are routed early to assist with this.
 -   Due to the large number of various combats in the NEP, the cosmic bowling ball is consciously used earlier in a fashion that allows for 9+11 turn bowling sideways. Once the camelcalf is charged, hipster fights are pursued. At some point the familiar scrapbook is worn for a few combats to maximise Feel Pride returns.
+-   In softcore, the familiar weight pressure is considerably alleviated by a repaid diaper. Also, the various spell damage pulls shorten that test considerably. As a result, the camel is charged first and the spit is used during levelling for a further boost, and the damage tests are done ahead of the familiar weight ones.
 
 ## Credits
 
