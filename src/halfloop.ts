@@ -5,10 +5,10 @@ import { breakfast, garbo, gashHop, nightcap, postrun } from "./lib";
 // Wrap the half-loop into a main() function, calling the script will find and run it
 // It's necessary as this way I can return easily to combat garbo heisenbugs
 
-// Accept an optional argument after the script name
-// If set to noascend, deposit the user in front of the gash, ready to hop
-// Useful if perming stuff is going to happen
-export function main(hop?: string): void {
+// Accept an optional argument after the script name:
+// - noascend prepares for ascension but leaves the user in front of the gash
+// - hardcore does HCCS (the default is SCCS)
+export function main(arg = ""): void {
     // Pre-ascension garbo leg
     // garbo() true means ascending
     // nightcap() true means done for the day, put pyjamas on
@@ -17,8 +17,8 @@ export function main(hop?: string): void {
         garbo(true);
         nightcap(false);
         garbo(true);
-        // This turns the input argument into a true/false that gashHop() understands
-        gashHop(hop !== "noascend");
+        // This will internally parse the various possible input options
+        gashHop(arg);
     }
     // Run DC6S proper
     if (!get("kingLiberated")) {

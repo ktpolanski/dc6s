@@ -16,8 +16,9 @@ ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 This offers a few commands accessible from Mafia's CLI:
 
 -   `dc6s` performs the CS run.
--   `dc6s_halfloop` was going to perform the whole uninterrupted half-loop, adding some basic breakfast tasks, garbo legs and automatic ascension. A bizarre garbo interaction which leaves the spleen cleaners non-functional and the devs stumped had other plans. As a result, `dc6s_halfloop` needs to be re-ran after the CS completes.
-    -   Running `dc6s_halfloop noascend` in the pre-CS leg will deposit the user in a gash-ready state. Useful if skill perming is desired.
+-   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. However, a strange garbo interaction means the half-loop can't be ran in one call, and the script needs to be re-ran once the CS leg finishes. Accepts the following optional arguments:
+    -   `hardcore` will ascend HCCS rather than the default SCCS
+    -   `noascend` will deposit the user in front of the gash in an ascension-ready state; useful for perming skills
 
 ## Run Setup
 

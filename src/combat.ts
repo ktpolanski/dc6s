@@ -100,10 +100,13 @@ export default class Macro extends StrictMacro {
     // But the former under a pretty restrictive set of conditions
     // For which there's a helper function earlier in the file
     // Meanwhile, the latter should not accidentally get used beyond 4 bowlos
+    // Also, there's the thing where you apparently can't AA bowlo on the first round
+    // So start the bowl sideways attempt with Saucy Salve to skip a round
+    // This way BALLS sees bowlo land round one and any familiar attacks are skipped
     bowloPride(): Macro {
         return this.externalIf(canFeelPride(), Macro.trySkill($skill`Feel Pride`)).externalIf(
             get("_cosmicBowlingSkillsUsed") < 4,
-            Macro.trySkill($skill`Bowl Sideways`)
+            Macro.trySkill($skill`Saucy Salve`).trySkill($skill`Bowl Sideways`)
         );
     }
     static bowloPride(): Macro {

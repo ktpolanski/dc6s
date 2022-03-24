@@ -24,6 +24,7 @@ import {
     myLevel,
     myMaxhp,
     myMp,
+    print,
     receiveFax,
     retrieveItem,
     runChoice,
@@ -440,8 +441,10 @@ export function nightcap(pyjamas: boolean): void {
     }
 }
 
-// Prepare for ascension, and ascend (if the argument says to)
-export function gashHop(hop: boolean): void {
+// Prepare for ascension, and possibly ascend depending on the argument if specified:
+// - noascend prepares for ascension but leaves the user in front of the gash
+// - hardcore does HCCS (the default is SCCS)
+export function gashHop(arg = ""): void {
     // Only prep for ascension once out of adventures and overdrunk
     if (myAdventures() === 0 && myInebriety() > inebrietyLimit()) {
         // Set up the various options
@@ -461,17 +464,20 @@ export function gashHop(hop: boolean): void {
             throw "Cowboy boots - put on frontwinder skin!";
         if (equippedItem($slot`bootspur`) !== $item`nicksilver spurs`)
             throw "Cowboy boots - put on nicksilver spurs!";
-        if (hop) {
+        // The absence of noascend means we can ascend
+        if (!arg.includes("noascend")) {
+            // The absence of hardcore means we go softcore
+            const lifestyle = arg.includes("hardcore") ? Lifestyle.hardcore : Lifestyle.softcore;
             // Ascend with the expected configuration of stuff
             ascend(
                 Paths.CommunityService,
                 $class`Pastamancer`,
-                Lifestyle.softcore,
+                lifestyle,
                 "wallaby",
                 $item`astral six-pack`,
                 $item`astral chapeau`
             );
-        }
+        } else print("All ready to ascend!", "blue");
     }
 }
 
