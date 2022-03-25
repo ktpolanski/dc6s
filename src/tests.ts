@@ -260,8 +260,8 @@ export function weaponPrep(): void {
     // Get carol ghost buff
     if (!have($effect`Do You Crush What I Crush?`)) {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
-        // Use a reflex hammer to get out
-        equip($item`Lil' Doctor™ bag`);
+        // Use a latte throw to get out
+        equip($item`latte lovers member's mug`);
         // The Dire Warren has a beast, and just a beast - how fortunate for us!
         adventureMacro($location`The Dire Warren`, Macro.freeRun());
     }
