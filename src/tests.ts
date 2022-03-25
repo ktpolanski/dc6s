@@ -45,7 +45,6 @@ import {
     getBuffs,
     getInnerElf,
     heal,
-    mapMacro,
     saberCheese,
     setChoice,
 } from "./lib";
@@ -69,8 +68,8 @@ import { performSynth } from "./synth";
 export function coilWirePrep(): void {
     // Pre-coil fights are quite minimal on buffs, not enough mana to go ham
     getBuffs($effects`Inscrutable Gaze, Feeling Excited`);
-    // Go saber a skeleton real quick
-    if (!have($item`orange`)) {
+    // Go rip a shrub red ray real quick
+    if (!have($effect`Everything Looks Red`)) {
         useFamiliar($familiar`Crimbo Shrub`);
         // Decorate Crimbo Shrub with LED Mandala, Jack-O-Lantern Lights, Popcorn Strands, and Big Red-Wrapped Presents
         if (!get("_shrubDecorated")) {
@@ -80,16 +79,22 @@ export function coilWirePrep(): void {
         }
         foldIfNotHave($item`tinsel tights`);
         // Put on the scrapbook to get a scrap off the shrub doing stuff
-        outfitEarly($items`familiar scrapbook`);
-        mapMacro(
+        // And the doc bag to run away with a reflex hammer
+        outfitEarly($items`familiar scrapbook, Lil' Doctor™ bag`);
+        // 100% spooky zone, shrub tuned to spooky, monsters won't die
+        adventureMacro(
             $location`The Skeleton Store`,
-            $monster`novelty tropical skeleton`,
-            Macro.trySkill($skill`Open a Big Red Present`).trySkill($skill`Use the Force`)
+            Macro.trySkill($skill`Open a Big Red Present`).freeRun()
         );
+        // The above will catch the opening NC, go again
+        if (!have($effect`Everything Looks Red`)) {
+            adventureMacro(
+                $location`The Skeleton Store`,
+                Macro.trySkill($skill`Open a Big Red Present`).freeRun()
+            );
+        }
         // Do a quick soak to heal up as early mana is scarce
         if (myHp() < 0.5 * myMaxhp()) cliExecute("hottub");
-        // This leaves behind the mapping preference set because lol saber
-        if (get("mappingMonsters")) set("mappingMonsters", false);
     }
     // Set up MCD on 10 now that shrub has provided us with some funds
     if (!have($item`detuned radio`)) buy(1, $item`detuned radio`);
