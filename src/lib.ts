@@ -414,10 +414,9 @@ export function garbo(ascend: boolean): void {
         // Refresh horse paste price for optimal garbo dieting
         mallPrice($item`Extrovermectin™`);
         set("valueOfAdventure", 6000);
-        const garboCall = ascend ? "garbo ascend" : "garbo simdiet";
+        const garboCall = ascend ? "garbo ascend" : "garbo";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
-        if (!ascend) throw "ASSESS SIMDIET OUTPUT AND RUN GARBO";
     }
 }
 
