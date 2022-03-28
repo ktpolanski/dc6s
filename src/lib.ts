@@ -7,6 +7,7 @@ import {
     Effect,
     equip,
     equippedItem,
+    eudora,
     Familiar,
     getWorkshed,
     handlingChoice,
@@ -502,6 +503,8 @@ export function postrun(): void {
     if (!have($item`bitchin' meatcar`) && !have($item`Desert Bus pass`)) {
         retrieveItem(1, $item`bitchin' meatcar`);
     }
+    // Switch eudora to New-You Club for free money
+    if (eudora() !== "New-You Club") eudora("New-You Club");
     // Lose undesirable effects
     for (const effect of $effects`Feeling Lost, Cowrruption`) {
         if (have(effect)) cliExecute(`uneffect ${effect}`);
