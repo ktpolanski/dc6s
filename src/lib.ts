@@ -20,6 +20,7 @@ import {
     Monster,
     myAdventures,
     myAscensions,
+    myGardenType,
     myHp,
     myInebriety,
     myLevel,
@@ -53,6 +54,7 @@ import {
     Clan,
     CommunityService,
     get,
+    getTodaysHolidayWanderers,
     have,
     haveInCampground,
     Lifestyle,
@@ -203,6 +205,17 @@ export function globMacro(macro: Macro, choice = 3): void {
     // Need to do this to sort out the choice adventure afterward
     visitUrl("choice.php");
     runChoice(-1);
+}
+
+// If it's a holiday with wanderers, do a banderway in the Noob Cave
+export function holidayCheck(): void {
+    // This lists today's wanderers - if it's non-empty, there are wanderers
+    if (getTodaysHolidayWanderers().length > 0) {
+        // Use the boots as they don't require Ode, just go and run, nothing fancy
+        familiarWithOrb($familiar`Pair of Stomping Boots`);
+        outfitFamWeight();
+        adventureMacro($location`Noob Cave`, Macro.freeRun());
+    }
 }
 
 // Hit up the protopack ghost
@@ -433,6 +446,13 @@ export function nightcap(pyjamas: boolean): void {
         Clan.join("Alliance from Hobopolis");
         // Catches the potted meat plant, maybe some others
         cliExecute("breakfast");
+        // Switch to Thanksgarden and prime for three cornucopias tomorrow
+        if (myGardenType() !== "thanksgarden") {
+            // The garden needs to be tall grass for the fertilizer to work
+            if (myGardenType() !== "grass") use(1, $item`packet of tall grass seeds`);
+            use(1, $item`Poké-Gro fertilizer`);
+            use(1, $item`packet of thanksgarden seeds`);
+        }
         useFamiliar($familiar`Trick-or-Treating Tot`);
         foldIfNotHave($item`stinky cheese diaper`);
         // There are a lot of 6-adventure accessories

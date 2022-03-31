@@ -7,7 +7,7 @@ import {
     useSkill,
     visitUrl,
 } from "kolmafia";
-import { $item, $items, $skill, get, set } from "libram";
+import { $item, $items, $skill, get, have, set } from "libram";
 
 export class SynthesisPlanner {
     // Prepare a sorted array of mod0 candies, as we'd rather eat pecan than sprouts
@@ -23,8 +23,6 @@ export class SynthesisPlanner {
         if (get("_candySummons") === 0) useSkill(1, $skill`Summon Crimbo Candy`);
         // And the mimic equip
         retrieveItem(1, $item`bag of many confections`);
-        // The only simple candy we'll need is chubby and plump
-        if (!get("_chubbyAndPlumpUsed")) useSkill(1, $skill`Chubby and Plump`);
     }
 
     // Add any pecans we may have found to the mod0 candy list
@@ -41,10 +39,19 @@ export class SynthesisPlanner {
         this.addPecans();
 
         // So these two outcomes are really common in the plans
-        set("_dc6s_myst_candy", $items`Chubby and Plump bar, bag of many confections`); // 2+4
         set("_dc6s_item_candy", [this.mod0.shift(), $item`peppermint twist`]); // 0+1
         // But what if this ate a good this.mod0.shift() and then gets overwritten?
         // In 3 barks, mod0 is 100% peppermint sprouts so it doesn't matter
+
+        // Do a 2+4 myst candy. Can we use a candy heart for it?
+        // One might have fallen out in the existing summons or something
+        if (have($item`lavender candy heart`)) {
+            set("_dc6s_myst_candy", $items`lavender candy heart, bag of many confections`); // 2+4
+        } else {
+            // No candy heart, but we can just get a Chubby and Plump and all is well
+            if (!get("_chubbyAndPlumpUsed")) useSkill(1, $skill`Chubby and Plump`);
+            set("_dc6s_myst_candy", $items`Chubby and Plump bar, bag of many confections`); // 2+4
+        }
 
         // 3 barks, 2 fudge, 1 bark are all lit
         if (itemAmount($item`Crimbo peppermint bark`) >= 3) {

@@ -24,7 +24,7 @@ export function main(arg = ""): void {
     if (!get("kingLiberated")) {
         if (!cliExecute("dc6s")) throw "DC6S errored out";
         // If I go straight into garbo from here, it doesn't use organ cleaners correctly
-        // So return out and run again from another wrapper layer. Fun!
+        // So return with instructions to run again. Hey, at least it works.
         print("Re-run dc6s_halfloop to do your post-CS garbo leg", "green");
         return;
     }

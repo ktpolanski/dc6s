@@ -45,6 +45,7 @@ import {
     getBuffs,
     getInnerElf,
     heal,
+    holidayCheck,
     saberCheese,
     setChoice,
 } from "./lib";
@@ -66,6 +67,8 @@ import { performSynth } from "./synth";
 
 // Prepare for coil wire, i.e. do early run stuff
 export function coilWirePrep(): void {
+    // Bail from a holiday wanderer if needed
+    holidayCheck();
     // Pre-coil fights are quite minimal on buffs, not enough mana to go ham
     getBuffs($effects`Inscrutable Gaze, Feeling Excited`);
     // Go rip a shrub red ray real quick
@@ -156,6 +159,8 @@ export function musclePrep(): void {
 
 // Prepare for the mysticality test
 export function mysticalityPrep(): void {
+    // Get rid of equalizer thralls, they've done their job
+    if (myThrall() !== $thrall`none`) useSkill(1, $skill`Dismiss Pasta Thrall`);
     // Stick on outfit
     outfitMysticality();
 }

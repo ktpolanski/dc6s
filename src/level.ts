@@ -49,6 +49,7 @@ import {
     gingerbreadBanderway,
     globMacro,
     heal,
+    holidayCheck,
     mapMacro,
     scavenge,
     setChoice,
@@ -127,6 +128,9 @@ export default function level(): void {
         $effect`Do I Know You From Somewhere?`,
         $effect`You Learned Something Maybe!`,
     ]);
+    // Buffs done, time to start doing stuff with combats!
+    // Bail from a holiday wanderer if needed, banderway #2 if so
+    if (get("_banderRunaways") < 2) holidayCheck();
     // Collect familiar runaway buffs
     if (!have($effect`Nanobrainy`)) {
         useFamiliar($familiar`Nanorhino`);

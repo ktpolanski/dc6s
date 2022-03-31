@@ -181,7 +181,7 @@ export function outfitMoxie(): void {
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`industrial fire extinguisher`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
-        [$slot`acc1`, $items`Retrospecs`],
+        [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`Beach Comb`],
         [$slot`acc3`, $items`"I Voted!" sticker`],
     ]);
@@ -200,7 +200,7 @@ export function outfitMuscle(): void {
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`dented scepter`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
-        [$slot`acc1`, $items`Retrospecs`],
+        [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`Brutal brogues`],
         [$slot`acc3`, $items`"I Voted!" sticker`],
     ]);
@@ -219,9 +219,9 @@ export function outfitMysticality(): void {
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`industrial fire extinguisher`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
-        [$slot`acc1`, $items`dorky glasses, Retrospecs`],
+        [$slot`acc1`, $items`meteorite necklace, dorky glasses, Retrospecs`],
         [$slot`acc2`, $items`battle broom`],
-        [$slot`acc3`, $items`"I Voted!" sticker`],
+        [$slot`acc3`, $items`your cowboy boots`],
     ]);
     dressUp(outfit);
 }
