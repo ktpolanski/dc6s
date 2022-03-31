@@ -67,8 +67,8 @@ import { performSynth } from "./synth";
 
 // Prepare for coil wire, i.e. do early run stuff
 export function coilWirePrep(): void {
-    // Bail from a holiday wanderer if needed
-    holidayCheck();
+    // Bail from a holiday wanderer if needed, banderway #1 if so
+    if (get("_banderRunaways") < 1) holidayCheck();
     // Pre-coil fights are quite minimal on buffs, not enough mana to go ham
     getBuffs($effects`Inscrutable Gaze, Feeling Excited`);
     // Go rip a shrub red ray real quick
