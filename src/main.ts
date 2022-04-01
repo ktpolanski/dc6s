@@ -14,6 +14,7 @@ try {
         recoveryScript: "",
     });
     // Do turn zero stuff like pick up items, then run coil wire
+    // This logTask thing just times how long the functions take to run
     CommunityService.logTask("Run start", runstart);
     assertTest(CommunityService.CoilWire, coilWirePrep, 60);
     // A sign that we're done levelling is we ran out of free kills
