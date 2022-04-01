@@ -388,7 +388,7 @@ export function assertTest(test: CommunityService, prep: () => number | void, tu
     // Try to .run() the test, passing the prep function to it
     // If the test prep went wrong, given desired turncount
     // Then the libram wrapper will return "failed"
-    if (test.run(prep, false, turns) === "failed") {
+    if (test.run(prep, turns) === "failed") {
         throw `${test.name} failed to complete.`;
     }
 }

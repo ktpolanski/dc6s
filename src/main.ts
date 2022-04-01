@@ -14,10 +14,10 @@ try {
         recoveryScript: "",
     });
     // Do turn zero stuff like pick up items, then run coil wire
-    runstart();
+    CommunityService.logTask("Run start", runstart);
     assertTest(CommunityService.CoilWire, coilWirePrep, 60);
     // A sign that we're done levelling is we ran out of free kills
-    if (freeKillsLeft() > 0) level();
+    if (freeKillsLeft() > 0) CommunityService.logTask("Levelling", level);
     // Do stat tests first as buffed up, so they go easy now
     assertTest(CommunityService.Moxie, moxiePrep, 1);
     assertTest(CommunityService.HP, hpPrep, 1);
