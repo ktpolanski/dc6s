@@ -427,6 +427,7 @@ export function garbo(ascend: boolean): void {
     if (myAdventures() > 0) {
         // Refresh horse paste price for optimal garbo dieting
         mallPrice($item`Extrovermectin™`);
+        set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
         const garboCall = ascend ? "garbo ascend" : "garbo";
         // In case of garbo abort, abort the whole thing
