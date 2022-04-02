@@ -453,6 +453,8 @@ export function nightcap(pyjamas: boolean): void {
             use(1, $item`Poké-Gro fertilizer`);
             use(1, $item`packet of thanksgarden seeds`);
         }
+        // Just so it doesn't auto-pick if re-logging into mafia later in the day
+        set("harvestGardenSoftcore", "cornucopia (3)");
         useFamiliar($familiar`Trick-or-Treating Tot`);
         foldIfNotHave($item`stinky cheese diaper`);
         // There are a lot of 6-adventure accessories
