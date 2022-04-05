@@ -83,7 +83,7 @@ export function outfitGhost(): void {
         [$slot`back`, $items`protonic accelerator pack`],
         [$slot`shirt`, $items`fresh coat of paint`],
         [$slot`weapon`, $items`weeping willow wand`],
-        [$slot`offhand`, $items`unbreakable umbrella`],
+        [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`hewn moon-rune spoon`],
         [$slot`acc2`, $items`Eight Days a Week Pill Keeper`],
@@ -112,6 +112,7 @@ export function outfitCoilWire(): void {
 }
 
 // The default levelling outfit
+// The off-hand becomes an unbreakable umbrella for uncapped scalers
 export function outfit(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     const outfit = new Map<Slot, Item[]>([
@@ -119,7 +120,7 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`unbreakable umbrella`],
+        [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`battle broom, Eight Days a Week Pill Keeper`],

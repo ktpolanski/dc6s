@@ -135,8 +135,7 @@ export default function level(): void {
     if (!have($effect`Nanobrainy`)) {
         useFamiliar($familiar`Nanorhino`);
         foldIfNotHave($item`tinsel tights`);
-        // May as well try to get a bit of scrap
-        outfit($items`familiar scrapbook`);
+        outfit();
         if (!get("_gingerbreadClockAdvanced")) {
             // Advance the clock to make gingercity go quicker
             setChoice(1215, 1);
@@ -157,7 +156,7 @@ export default function level(): void {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
         // Use a reflex hammer to get out
-        outfit($items`familiar scrapbook, Lil' Doctor™ bag`);
+        outfit($items`Lil' Doctor™ bag`);
         // Noob Cave has a construct, and just a construct - how fortunate for us!
         adventureMacro($location`Noob Cave`, Macro.freeRun());
         heal();
@@ -186,7 +185,7 @@ export default function level(): void {
         $effect`Pride of the Puffin`,
     ]);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
-    outfit($items`familiar scrapbook`);
+    outfit();
     useIfHave($item`a ten-percent bonus`);
     cliExecute("bastille myst brogues");
     // Heal up as HP is now way higher
@@ -213,7 +212,7 @@ export default function level(): void {
         // Attack familiars screw up elixir drops
         useDefaultFamiliar(false);
         foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
+        outfit($items`unbreakable umbrella`);
         // Set up one massive macro to sort out all of the monsters
         Macro.if_($monster`LOV Enforcer`, Macro.attack().repeat())
             .if_($monster`LOV Engineer`, Macro.skill($skill`Weapon of the Pastalord`).repeat())
@@ -309,7 +308,7 @@ export default function level(): void {
             }
         }
         // Finally, a chateau rest!
-        outfit($items`familiar scrapbook`);
+        outfit();
         visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
     }
     // Hit up gingerbread city for the latte
@@ -359,7 +358,7 @@ export default function level(): void {
     while (have($item`gingerbread cigarette`)) {
         useDefaultFamiliar();
         foldIfNotHave($item`tinsel tights`);
-        outfit($items`familiar scrapbook`);
+        outfit();
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good
         adventureMacro(
@@ -384,7 +383,7 @@ export default function level(): void {
         getInnerElf();
         familiarWithOrb($familiar`Machine Elf`);
         foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
+        outfit($items`unbreakable umbrella`);
         // Chuck our second bowlo here for 7
         adventureMacro(
             $location`The Deep Machine Tunnels`,
@@ -415,7 +414,7 @@ export default function level(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             // Catch a kramco if one's up
             if (get("_sausageFights") < 2) outfit($items`Kramco Sausage-o-Matic™`);
-            else outfit();
+            else outfit($items`unbreakable umbrella`);
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().kill());
@@ -430,8 +429,8 @@ export default function level(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             // In hardcore, the disposable accessory is the default acc1
             // In softcore, acc3 is comparably the weakest at this point
-            if (inHardcore()) outfit($items`Lil' Doctor™ bag`);
-            else outfit([[$slot`acc3`, $item`Lil' Doctor™ bag`]]);
+            if (inHardcore()) outfit($items`unbreakable umbrella, Lil' Doctor™ bag`);
+            else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
@@ -446,7 +445,7 @@ export default function level(): void {
             if (get("garbageShirtCharge") > 0) {
                 foldIfNotHave($item`makeshift garbage shirt`);
             } else foldIfNotHave($item`tinsel tights`);
-            outfit();
+            outfit($items`unbreakable umbrella`);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }

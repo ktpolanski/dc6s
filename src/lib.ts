@@ -244,7 +244,7 @@ export function bustGhost(): void {
 export function scavenge(): void {
     if (get("_daycareGymScavenges") === 0) {
         // Only bother putting on the stat gain stuff if in run
-        if (!get("kingLiberated")) outfit($items`familiar scrapbook`);
+        if (!get("kingLiberated")) outfit();
         visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
         // Go into the daycare, and do a scavenge
         runChoice(3);
@@ -300,7 +300,7 @@ export function fightWitchessRoyalty(royalty: Monster): void {
     if (royalty === $monster`Witchess Queen`) hardcoreFamiliar();
     else useDefaultFamiliar();
     foldIfNotHave($item`makeshift garbage shirt`);
-    outfit();
+    outfit($items`unbreakable umbrella`);
     // Witchess royalty allows for no combat finesse
     // Apart from an attempt at a camel spit if in softcore
     Macro.camel().attack().repeat().setAutoAttack();
