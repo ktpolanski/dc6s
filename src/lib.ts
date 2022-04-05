@@ -86,9 +86,14 @@ export function getBuffs(buffs: Effect[]): void {
     }
 }
 
-// Cast Cannelloni Cocoon if at below 50% health
-export function heal(): void {
-    if (myHp() < 0.5 * myMaxhp()) useSkill(1, $skill`Cannelloni Cocoon`);
+// Cast Cannelloni Cocoon if at below provided fraction health
+export function heal(thresh = 0.6): void {
+    // Are we beaten up? We shouldn't be!
+    if (have($effect`Beaten Up`)) throw "We got beaten up somehow?!";
+    if (myHp() < thresh * myMaxhp()) {
+        // Occasionally the HP pool exceeds a single Cocoon's range
+        while (myHp() < myMaxhp()) useSkill(1, $skill`Cannelloni Cocoon`);
+    }
 }
 
 // Use a familiar and put miniature crystal ball on it
@@ -239,7 +244,7 @@ export function bustGhost(): void {
 export function scavenge(): void {
     if (get("_daycareGymScavenges") === 0) {
         // Only bother putting on the stat gain stuff if in run
-        if (!get("kingLiberated")) outfit();
+        if (!get("kingLiberated")) outfit($items`familiar scrapbook`);
         visitUrl("place.php?whichplace=town_wrong&action=townwrong_boxingdaycare");
         // Go into the daycare, and do a scavenge
         runChoice(3);

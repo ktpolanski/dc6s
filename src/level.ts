@@ -135,7 +135,8 @@ export default function level(): void {
     if (!have($effect`Nanobrainy`)) {
         useFamiliar($familiar`Nanorhino`);
         foldIfNotHave($item`tinsel tights`);
-        outfit();
+        // May as well try to get a bit of scrap
+        outfit($items`familiar scrapbook`);
         if (!get("_gingerbreadClockAdvanced")) {
             // Advance the clock to make gingercity go quicker
             setChoice(1215, 1);
@@ -156,7 +157,7 @@ export default function level(): void {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
         // Use a reflex hammer to get out
-        outfit($items`Lil' Doctor™ bag`);
+        outfit($items`familiar scrapbook, Lil' Doctor™ bag`);
         // Noob Cave has a construct, and just a construct - how fortunate for us!
         adventureMacro($location`Noob Cave`, Macro.freeRun());
         heal();
@@ -185,7 +186,7 @@ export default function level(): void {
         $effect`Pride of the Puffin`,
     ]);
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
-    outfit();
+    outfit($items`familiar scrapbook`);
     useIfHave($item`a ten-percent bonus`);
     cliExecute("bastille myst brogues");
     // Heal up as HP is now way higher
@@ -255,6 +256,8 @@ export default function level(): void {
             visitUrl("place.php?whichplace=snojo&action=snojo_controller");
             runChoice(2);
         }
+        // Buff up elemental resistance a bit to help with his various damage auras
+        getBuffs($effects`Astral Shell, Elemental Saucesphere, Feeling Peaceful`);
         // This stupid while inside an if is needed for the VIP soak later
         while (get("_snojoFreeFights") < 10) {
             useDefaultFamiliar();
@@ -262,7 +265,8 @@ export default function level(): void {
             outfitML();
             // Don't forget to saucestorm - the ML outfit lacks the saber
             adventureMacro($location`The X-32-F Combat Training Snowman`, Macro.saucestorm());
-            heal();
+            // This bugger can hurt! Heal with a way lower tolerance threshold
+            heal(0.9);
         }
         // The snowman can apply various weird debuffs
         // The easiest way out is to just do a quick soak afterward
@@ -305,6 +309,7 @@ export default function level(): void {
             }
         }
         // Finally, a chateau rest!
+        outfit($items`familiar scrapbook`);
         visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
     }
     // Hit up gingerbread city for the latte
@@ -354,7 +359,7 @@ export default function level(): void {
     while (have($item`gingerbread cigarette`)) {
         useDefaultFamiliar();
         foldIfNotHave($item`tinsel tights`);
-        outfit();
+        outfit($items`familiar scrapbook`);
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good
         adventureMacro(
@@ -393,11 +398,11 @@ export default function level(): void {
     while (get("_witchessFights") < 5) fightWitchessRoyalty($monster`Witchess Queen`);
     // At this point it's time to venture into the NEP
     // This has a bit of faff to it:
-    //  1. run kramco to catch as many gobbos as possible
+    //  1. run kramco to catch a gobbo, once done switch to umbrella
     //  2. once the familiars are all charged up, switch to goth kid for hipster fights
     //  3. do a 9+11 bowlo for as many turns of bowlo stats as possible
     //  4. get inner elf as soon as level 13 (technically likely already have it)
-    //  5. rip Feel Prides, putting the familiar scrapbook on for those turns for max gains
+    //  5. rip Feel Prides late
     // This is handled via the various called functions
     if (freeKillsLeft() > 0) {
         // Screw quests (skip), screw NCs (fight)
@@ -408,7 +413,9 @@ export default function level(): void {
             getInnerElf();
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
-            outfit($items`Kramco Sausage-o-Matic™`);
+            // Catch a kramco if one's up
+            if (get("_sausageFights") < 2) outfit($items`Kramco Sausage-o-Matic™`);
+            else outfit();
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().kill());
@@ -423,8 +430,8 @@ export default function level(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             // In hardcore, the disposable accessory is the default acc1
             // In softcore, acc3 is comparably the weakest at this point
-            if (inHardcore()) outfit($items`Kramco Sausage-o-Matic™, Lil' Doctor™ bag`);
-            else outfit([$item`Kramco Sausage-o-Matic™`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
+            if (inHardcore()) outfit($items`Lil' Doctor™ bag`);
+            else outfit([[$slot`acc3`, $item`Lil' Doctor™ bag`]]);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
@@ -439,14 +446,7 @@ export default function level(): void {
             if (get("garbageShirtCharge") > 0) {
                 foldIfNotHave($item`makeshift garbage shirt`);
             } else foldIfNotHave($item`tinsel tights`);
-            // Make good conditions for Feel Pride by putting on the scrapbook
-            if (get("_feelPrideUsed") < 3 && get("cosmicBowlingBallReturnCombats") > 0) {
-                // If the bowlo countdown is 0, then it will return this combat
-                outfit();
-            } else {
-                // Feel Pride won't happen this combat. Fish for kramcos
-                outfit($items`Kramco Sausage-o-Matic™`);
-            }
+            outfit();
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }

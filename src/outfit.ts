@@ -83,7 +83,7 @@ export function outfitGhost(): void {
         [$slot`back`, $items`protonic accelerator pack`],
         [$slot`shirt`, $items`fresh coat of paint`],
         [$slot`weapon`, $items`weeping willow wand`],
-        [$slot`offhand`, $items`familiar scrapbook`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`hewn moon-rune spoon`],
         [$slot`acc2`, $items`Eight Days a Week Pill Keeper`],
@@ -107,8 +107,8 @@ export function outfitCoilWire(): void {
         [$slot`acc3`, $items`Kremlin's Greatest Briefcase`],
     ]);
     dressUp(outfit);
-    useFamiliar($familiar`Disembodied Hand`);
-    equip($slot`familiar`, $item`industrial fire extinguisher`);
+    useFamiliar($familiar`Left-Hand Man`);
+    equip($slot`familiar`, $item`unbreakable umbrella`);
 }
 
 // The default levelling outfit
@@ -119,7 +119,7 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`familiar scrapbook`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`battle broom, Eight Days a Week Pill Keeper`],
@@ -141,7 +141,7 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`fresh coat of paint`],
         [$slot`weapon`, $items`weeping willow wand, Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`familiar scrapbook`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`hewn moon-rune spoon`],
         [$slot`acc2`, $items`Kremlin's Greatest Briefcase`],
@@ -179,7 +179,7 @@ export function outfitMoxie(): void {
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`Beach Comb`],
@@ -217,7 +217,7 @@ export function outfitMysticality(): void {
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, dorky glasses, Retrospecs`],
         [$slot`acc2`, $items`battle broom`],
