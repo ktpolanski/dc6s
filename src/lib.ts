@@ -300,7 +300,7 @@ export function fightWitchessRoyalty(royalty: Monster): void {
     if (royalty === $monster`Witchess Queen`) hardcoreFamiliar();
     else useDefaultFamiliar();
     foldIfNotHave($item`makeshift garbage shirt`);
-    outfit($items`unbreakable umbrella`);
+    outfit($items`unbreakable umbrella (broken)`);
     // Witchess royalty allows for no combat finesse
     // Apart from an attempt at a camel spit if in softcore
     Macro.camel().attack().repeat().setAutoAttack();

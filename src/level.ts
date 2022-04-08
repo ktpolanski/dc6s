@@ -212,7 +212,7 @@ export default function level(): void {
         // Attack familiars screw up elixir drops
         useDefaultFamiliar(false);
         foldIfNotHave($item`makeshift garbage shirt`);
-        outfit($items`unbreakable umbrella`);
+        outfit($items`unbreakable umbrella (broken)`);
         // Set up one massive macro to sort out all of the monsters
         Macro.if_($monster`LOV Enforcer`, Macro.attack().repeat())
             .if_($monster`LOV Engineer`, Macro.skill($skill`Weapon of the Pastalord`).repeat())
@@ -383,7 +383,7 @@ export default function level(): void {
         getInnerElf();
         familiarWithOrb($familiar`Machine Elf`);
         foldIfNotHave($item`makeshift garbage shirt`);
-        outfit($items`unbreakable umbrella`);
+        outfit($items`unbreakable umbrella (broken)`);
         // Chuck our second bowlo here for 7
         adventureMacro(
             $location`The Deep Machine Tunnels`,
@@ -414,7 +414,7 @@ export default function level(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             // Catch a kramco if one's up
             if (get("_sausageFights") < 2) outfit($items`Kramco Sausage-o-Matic™`);
-            else outfit($items`unbreakable umbrella`);
+            else outfit($items`unbreakable umbrella (broken)`);
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().kill());
@@ -429,8 +429,8 @@ export default function level(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             // In hardcore, the disposable accessory is the default acc1
             // In softcore, acc3 is comparably the weakest at this point
-            if (inHardcore()) outfit($items`unbreakable umbrella, Lil' Doctor™ bag`);
-            else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
+            if (inHardcore()) outfit($items`unbreakable umbrella (broken), Lil' Doctor™ bag`);
+            else outfit([$item`unbreakable umbrella (broken)`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
@@ -445,7 +445,7 @@ export default function level(): void {
             if (get("garbageShirtCharge") > 0) {
                 foldIfNotHave($item`makeshift garbage shirt`);
             } else foldIfNotHave($item`tinsel tights`);
-            outfit($items`unbreakable umbrella`);
+            outfit($items`unbreakable umbrella (broken)`);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
