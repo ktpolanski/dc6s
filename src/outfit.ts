@@ -108,7 +108,7 @@ export function outfitCoilWire(): void {
     ]);
     dressUp(outfit);
     useFamiliar($familiar`Left-Hand Man`);
-    equip($slot`familiar`, $item`unbreakable umbrella (broken)`);
+    equip($slot`familiar`, $item`unbreakable umbrella`);
 }
 
 // The default levelling outfit
@@ -142,7 +142,7 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`fresh coat of paint`],
         [$slot`weapon`, $items`weeping willow wand, Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`unbreakable umbrella (broken)`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`hewn moon-rune spoon`],
         [$slot`acc2`, $items`Kremlin's Greatest Briefcase`],
@@ -180,7 +180,7 @@ export function outfitMoxie(): void {
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`unbreakable umbrella (broken)`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`Beach Comb`],
@@ -218,7 +218,7 @@ export function outfitMysticality(): void {
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`unbreakable umbrella (broken)`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, dorky glasses, Retrospecs`],
         [$slot`acc2`, $items`battle broom`],
@@ -253,13 +253,13 @@ export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
 // Noncombat test outfit
 // Put on the powerful glove to cast a cheat code later
 export function outfitNoncombat(): void {
-    if (!checkKGB("less attracted to you")) cliExecute("briefcase enchantment -combat");
+    if (get("umbrellaState") !== "cocoon") cliExecute("umbrella nc");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`very pointy crown`],
         [$slot`back`, $items`protonic accelerator pack`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
-        [$slot`offhand`, $items`industrial fire extinguisher`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`Kremlin's Greatest Briefcase`],
         [$slot`acc2`, $items`Powerful Glove`],
@@ -318,12 +318,13 @@ export function outfitSpell(): void {
 // Item test outfit
 export function outfitItem(): void {
     foldIfNotHave($item`wad of used tape`);
+    if (get("umbrellaState") !== "bucket style") cliExecute("umbrella item");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`wad of used tape`],
         [$slot`back`, $items`vampyric cloake`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
         [$slot`weapon`, $items`weeping willow wand`],
-        [$slot`offhand`, $items`cursed magnifying glass`],
+        [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`your cowboy boots`],
         [$slot`acc2`, $items`Guzzlr tablet`],
