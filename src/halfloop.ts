@@ -1,4 +1,4 @@
-import { cliExecute, myDaycount, print } from "kolmafia";
+import { cliExecute, myDaycount } from "kolmafia";
 import { get } from "libram";
 import { breakfast, garbo, gashHop, nightcap, postrun } from "./lib";
 
@@ -23,10 +23,9 @@ export function main(arg = ""): void {
     // Run DC6S proper
     if (!get("kingLiberated")) {
         if (!cliExecute("dc6s")) throw "DC6S errored out";
-        // If I go straight into garbo from here, it doesn't use organ cleaners correctly
-        // So return with instructions to run again. Hey, at least it works.
-        print("Re-run dc6s_halfloop to do your post-CS garbo leg", "green");
-        return;
+        // If I go straight into garbo from here
+        // Sometimes it doesn't use organ cleaners correctly
+        // If that starts happening again, add a return here
     }
     // Post-ascension garbo leg
     if (myDaycount() === 1) {

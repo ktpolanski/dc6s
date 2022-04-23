@@ -16,7 +16,7 @@ ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 This offers a few commands accessible from Mafia's CLI:
 
 -   `dc6s` performs the CS run.
--   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. However, a strange garbo interaction means the half-loop can't be ran in one call, and the script needs to be re-ran once the CS leg finishes. Accepts the following optional arguments:
+-   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. Accepts the following optional arguments:
     -   `hardcore` will ascend HCCS rather than the default SCCS
     -   `noascend` will deposit the user in front of the gash in an ascension-ready state; useful for perming skills
 
