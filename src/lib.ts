@@ -32,7 +32,6 @@ import {
     retrievePrice,
     runChoice,
     runCombat,
-    setAutoAttack,
     toUrl,
     use,
     useFamiliar,
@@ -462,13 +461,12 @@ export function breakfast(): void {
             if (item === $item`fused fuse` && !have($item`fused fuse`)) {
                 use(1, $item`Clara's bell`);
                 setChoice(1091, 7);
-                // In case something very weird happens, do a runaway
-                // Inject a simple runaway call straight to adv1()
+                // Kill time pranks, run away from presumed holiday wanderers
                 equip($item`Greatest American Pants`);
-                setAutoAttack(0);
-                while (!have($item`fused fuse`)) {
-                    adv1($location`LavaCo™ Lamp Factory`, -1, "runaway;");
-                }
+                Macro.if_($monster`time-spinner prank`, Macro.attack().repeat())
+                    .runaway()
+                    .setAutoAttack();
+                while (!have($item`fused fuse`)) adv1($location`LavaCo™ Lamp Factory`);
             } else retrieveItem(quantity, item);
             // And now we can turn the quest in
             visitUrl("place.php?whichplace=airport_hot&action=airport4_questhub");

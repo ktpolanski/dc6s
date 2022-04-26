@@ -119,7 +119,7 @@ export default class Macro extends StrictMacro {
         return this.externalIf(
             (myFamiliar() === $familiar`Frumious Bandersnatch` && have($effect`Ode to Booze`)) ||
                 myFamiliar() === $familiar`Pair of Stomping Boots`,
-            "runaway"
+            Macro.runaway()
         )
             .trySkill($skill`Reflex Hammer`)
             .trySkill($skill`Throw Latte on Opponent`)
