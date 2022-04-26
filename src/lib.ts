@@ -29,8 +29,10 @@ import {
     print,
     receiveFax,
     retrieveItem,
+    retrievePrice,
     runChoice,
     runCombat,
+    setAutoAttack,
     toUrl,
     use,
     useFamiliar,
@@ -425,6 +427,54 @@ export function breakfast(): void {
     if (!get("_aprilShower")) cliExecute("shower cold");
     if (!get("_detectiveCasesCompleted")) cliExecute("detective solver");
     scavenge();
+    // Do the volcano quest by hand to avoid any occasional garbo weirdness
+    if (!get("_volcanoItemRedeemed")) {
+        // Get the quest items for the day
+        visitUrl("place.php?whichplace=airport_hot&action=airport4_questhub");
+        // Store the values of the items on offer, assuming they're not worth by default
+        const values = [Infinity, Infinity, Infinity];
+        for (const i of Array(3).keys()) {
+            // TS is zero-indexed, so offset this by one when getting the prefs out
+            // Also the item is an integer, and needs to be converted via mafia's Item
+            const item = Item.get(get(`_volcanoItem${i + 1}`));
+            const quantity = parseInt(get(`_volcanoItemCount${i + 1}`));
+            // The mallable stuff is in multiples
+            // Or is a SMOOCH bottlecap/superduperheated metal
+            if (quantity > 1 || $items`SMOOCH bottlecap, superduperheated metal`.includes(item)) {
+                values[i] = quantity * retrievePrice(item);
+            } else if (item === $item`fused fuse` && !get("_claraBellUsed")) {
+                // We have the power to Clara's bell for the fuse
+                // The main counter-candidate is a Yacht, which is like 40k gain
+                values[i] = 40000;
+            }
+        }
+        // So how much is a Volcoino worth? Are we cheaper?
+        const bestValue = Math.min(...values);
+        const volcoinoCost = mallPrice($item`one-day ticket to That 70s Volcano`) / 3;
+        if (bestValue < volcoinoCost) {
+            // Alright, cool, which was the best item?
+            const i = values.indexOf(bestValue);
+            // Get the item out of the prefs, like in the loop before
+            const item = Item.get(get(`_volcanoItem${i + 1}`));
+            const quantity = parseInt(get(`_volcanoItemCount${i + 1}`));
+            // If we're to get the fuse, let's get the fuse
+            // Otherwise just retrieve the item
+            if (item === $item`fused fuse` && !have($item`fused fuse`)) {
+                use(1, $item`Clara's bell`);
+                setChoice(1091, 7);
+                // In case something very weird happens, do a runaway
+                // Inject a simple runaway call straight to adv1()
+                equip($item`Greatest American Pants`);
+                setAutoAttack(0);
+                while (!have($item`fused fuse`)) {
+                    adv1($location`LavaCo™ Lamp Factory`, -1, "runaway;");
+                }
+            } else retrieveItem(quantity, item);
+            // And now we can turn the quest in
+            visitUrl("place.php?whichplace=airport_hot&action=airport4_questhub");
+            runChoice(i + 1);
+        }
+    }
 }
 
 // Call garbo, either in ascend or not ascend mode based on the argument
