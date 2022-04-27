@@ -34,6 +34,7 @@ import {
     retrievePrice,
     runChoice,
     runCombat,
+    setAutoAttack,
     toInt,
     toUrl,
     use,
@@ -608,6 +609,17 @@ export function postrun(): void {
     SourceTerminal.enquiry($effect`familiar.enq`);
     // Open up the Rain-Doh
     useIfHave($item`can of Rain-Doh`);
+    // Do a DMT dupe
+    const dupeTarget = $item`very fancy whiskey`;
+    if (get("encountersUntilDMTChoice") === 0 && have(dupeTarget)) {
+        useFamiliar($familiar`Machine Elf`);
+        // Go for the dupe, and then pass the right item to it
+        setChoice(1119, 4);
+        setChoice(1125, `1&iid=${toInt(dupeTarget)}`);
+        // Go catch the NC
+        setAutoAttack(0);
+        adv1($location`The Deep Machine Tunnels`);
+    }
     // That's it! Celebrate with a drink, as garbo won't down pilsners
     if (have($item`astral pilsner`)) {
         getBuffs($effects`Ode to Booze`);
