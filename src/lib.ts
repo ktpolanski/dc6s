@@ -1,5 +1,6 @@
 import {
     adv1,
+    autosell,
     buy,
     cliExecute,
     create,
@@ -27,11 +28,13 @@ import {
     myMaxhp,
     myMp,
     print,
+    putShop,
     receiveFax,
     retrieveItem,
     retrievePrice,
     runChoice,
     runCombat,
+    toInt,
     toUrl,
     use,
     useFamiliar,
@@ -413,6 +416,22 @@ export function damageTests(): void {
 }
 
 // Half-loop script functions
+
+// Use or autosell the provided items, leaving behind the specified quantity
+function useOrAutosell(items: Item[], quantity = 0): void {
+    for (const item of items) {
+        // Determine if the item is usable, if so use, if not autosell
+        if (item.usable) use(itemAmount(item) - quantity, item);
+        else autosell(itemAmount(item) - quantity, item);
+    }
+}
+
+// Put the specified item in the shop at the specified price
+function shopIt(item: Item, price: number): void {
+    // The mafia function is a little lame so this is just a syntax wrapper
+    putShop(price, 0, itemAmount(item), item);
+}
+
 // Simple breakfasty start of day stuff
 export function breakfast(): void {
     // Pick up an Embezzler fax from a backup clan
@@ -594,4 +613,65 @@ export function postrun(): void {
         getBuffs($effects`Ode to Booze`);
         drink(itemAmount($item`astral pilsner`), $item`astral pilsner`);
     }
+}
+
+// Clean up various junk - barrels, autosell fodder, mall stuff
+export function cleanup(): void {
+    // Rip barrels! Manny code
+    const barrels = [
+        $item`little firkin`,
+        $item`normal barrel`,
+        $item`big tun`,
+        $item`weathered barrel`,
+        $item`dusty barrel`,
+        $item`disintegrating barrel`,
+        $item`moist barrel`,
+        $item`rotting barrel`,
+        $item`mouldering barrel`,
+        $item`barnacled barrel`,
+    ];
+    barrels.forEach((barrel) => {
+        if (have(barrel)) {
+            let page = visitUrl(`inv_use.php?pwd&whichitem=${toInt(barrel).toString()}&choice=1`);
+            while (page.includes("Click a barrel to smash it!")) {
+                page = visitUrl("choice.php?pwd&whichchoice=1101&option=2");
+            }
+        }
+    });
+    // This junk gets cleaned out completely
+    useOrAutosell([
+        $item`1952 Mickey Mantle card`,
+        $item`decomposed boot`,
+        $item`dollar-sign bag`,
+        $item`half of a gold tooth`,
+        $item`huge gold coin`,
+        $item`leather bookmark`,
+        $item`massive gemstone`,
+        $item`pile of gold coins`,
+        $item`bag of gross foreign snacks`,
+        $item`expensive camera`,
+        $item`filthy child leash`,
+        $item`meat stack`,
+        $item`ancient vinyl coin purse`,
+        $item`duct tape wallet`,
+        $item`fat wallet`,
+        $item`old coin purse`,
+        $item`old leather wallet`,
+        $item`pixel coin`,
+        $item`pixellated moneybag`,
+        $item`shiny stones`,
+        $item`stolen meatpouch`,
+        $item`Gathered Meat-Clip`,
+    ]);
+    // This junk we want to keep one of
+    useOrAutosell([$item`cheap sunglasses`, $item`bag of park garbage`], 1);
+    // Mall some stuff that flips easy
+    shopIt($item`battery (AAA)`, 10500);
+    shopIt($item`11-leaf clover`, 22900);
+    shopIt($item`frost-rimed desk bell`, 43000);
+    shopIt($item`greasy desk bell`, 43000);
+    shopIt($item`nasty desk bell`, 43000);
+    shopIt($item`sizzling desk bell`, 43000);
+    shopIt($item`uncanny desk bell`, 43000);
+    shopIt($item`cornucopia`, 30000);
 }
