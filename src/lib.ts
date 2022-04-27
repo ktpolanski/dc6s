@@ -664,7 +664,7 @@ export function cleanup(): void {
         $item`Gathered Meat-Clip`,
     ]);
     // This junk we want to keep one of
-    useOrAutosell([$item`cheap sunglasses`, $item`bag of park garbage`], 1);
+    useOrAutosell($items`cheap sunglasses, bag of park garbage`, 1);
     // Mall some stuff that flips easy
     shopIt($item`battery (AAA)`, 10500);
     shopIt($item`11-leaf clover`, 22900);
