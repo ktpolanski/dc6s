@@ -3,6 +3,7 @@ import {
     buy,
     changeMcd,
     cliExecute,
+    create,
     elementalResistance,
     equip,
     handlingChoice,
@@ -221,6 +222,13 @@ export function famWeightPrep(): void {
     }
     // We want to be platypus for aftercore anyway, so let's save a turn here while we're at it
     if (!get("moonTuned")) cliExecute("spoon platypus");
+    // The hatter buff should be ideally acquired during levelling
+    // But might have been skipped for meat reasons
+    if (!have($effect`You Can Really Taste the Dormouse`)) {
+        // Get the drink me potion, and the magical hat
+        visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
+        if (!have($item`sombrero-mounted sparkler`)) buy(1, $item`sombrero-mounted sparkler`);
+    }
     // Most buffs should be on from levelling, as they get used early to make familiar go brrr
     getBuffs([
         $effect`Leash of Linguini`,
@@ -231,6 +239,7 @@ export function famWeightPrep(): void {
         $effect`Billiards Belligerence`,
         $effect`Shortly Stacked`,
         $effect`Whole Latte Love`,
+        $effect`You Can Really Taste the Dormouse`,
     ]);
     outfitFamWeight();
     if (inHardcore()) {
@@ -332,6 +341,10 @@ export function spellPrep(): number {
     if (!have($effect`Pisces in the Skyces`) && !have($item`Ye Wizard's Shack snack voucher`)) {
         useSkill(1, $skill`Summon Alice's Army Cards`);
     }
+    // Cook the spell damage potion
+    if (!have($effect`Concentration`) && !have($item`cordial of concentration`)) {
+        create(1, $item`cordial of concentration`);
+    }
     // Now that that's done, other stuff! A LOT of it!
     getBuffs([
         $effect`Spirit of Garlic`,
@@ -366,6 +379,8 @@ export function spellPrep(): number {
         equip($item`Fourth of May Cosplay Saber`);
         // There's gonna be a round before we get out and these are scalers... let's be safe
         getBuffs($effects`Blood Bubble`);
+        // In the event of NEP noncombat, pick a fight
+        setChoice(1324, 5);
         // The NEP mobs should hopefully tank a single smack of the mini-sauce guy
         saberCheese(Macro.trySkill($skill`Meteor Shower`), $location`The Neverending Party`);
         // Auto-attack saber means mafia doesn't get to see the meteor shower, let it know

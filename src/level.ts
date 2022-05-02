@@ -83,15 +83,12 @@ export default function level(): void {
     if (!have($effect`That's Just Cloud-Talk, Man`)) {
         visitUrl("place.php?whichplace=campaway&action=campaway_sky");
     }
-    // Cook some potions! Get some ingredients for said potions first!
+    // Cook the myst potion! Get some ingredients for said potions first!
     if (!get("hasRange")) bu($item`Dramatic™ range`);
     if (get("reagentSummons") === 0) useSkill(1, $skill`Advanced Saucecrafting`);
     if (!get("_preventScurvy")) useSkill(1, $skill`Prevent Scurvy and Sobriety`);
     if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
         create(1, $item`ointment of the occult`);
-    }
-    if (!have($effect`Concentration`) && !have($item`cordial of concentration`)) {
-        create(1, $item`cordial of concentration`);
     }
     // Join AfHk for VIP power
     Clan.join("Alliance from Heck");
@@ -107,7 +104,6 @@ export default function level(): void {
         $effect`Starry-Eyed`,
         $effect`Feeling Excited`,
         $effect`Song of Bravado`,
-        $effect`Glittering Eyelashes`,
         $effect`Big`,
         $effect`Confidence of the Votive`,
         $effect`Broad-Spectrum Vaccine`,
@@ -115,6 +111,8 @@ export default function level(): void {
         $effect`Mystically Oiled`,
         $effect`Stevedave's Shanty of Superiority`,
     ]);
+    // The default usage for glittery mascara is 5, we just need one
+    if (!have($effect`Glittering Eyelashes`)) bu($item`glittery mascara`);
     // The glove needs to be on to do its stat buff
     if (!have($effect`Triple-Sized`)) {
         outfit($items`Powerful Glove`);

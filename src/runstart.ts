@@ -17,12 +17,13 @@ import { useIfHave } from "./lib";
 export default function runstart(): void {
     // Hit up the council to get the intro text out of the way
     visitUrl("council.php");
-    // Visit Toot Oriole and sell any non-porquoises that get pulled
+    // Visit Toot Oriole
     visitUrl("tutorial.php?action=toot");
     useIfHave($item`letter from King Ralph XI`);
     useIfHave($item`pork elf goodies sack`);
-    autosell(5, $item`baconstone`);
-    autosell(5, $item`hamethyst`);
+    // Sell one of the gems for a little bit of seed meat
+    if (have($item`baconstone`)) autosell(1, $item`baconstone`);
+    else autosell(1, $item`hamethyst`);
     // Loot the chateau desk
     if (!get("_chateauDeskHarvested")) {
         visitUrl("place.php?whichplace=chateau&action=chateau_desk2");

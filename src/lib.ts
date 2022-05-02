@@ -460,7 +460,7 @@ export function breakfast(): void {
             // The mallable stuff is in multiples
             // Or is a SMOOCH bottlecap/superduperheated metal
             if (quantity > 1 || $items`SMOOCH bottlecap, superduperheated metal`.includes(item)) {
-                values[i] = quantity * retrievePrice(item);
+                values[i] = retrievePrice(quantity, item);
             } else if (item === $item`fused fuse` && !get("_claraBellUsed")) {
                 // We have the power to Clara's bell for the fuse
                 // The main counter-candidate is a Yacht, which is like 40k gain
@@ -685,5 +685,5 @@ export function cleanup(): void {
     shopIt($item`nasty desk bell`, 43000);
     shopIt($item`sizzling desk bell`, 43000);
     shopIt($item`uncanny desk bell`, 43000);
-    shopIt($item`cornucopia`, 30000);
+    shopIt($item`cornucopia`, 28900);
 }
