@@ -222,8 +222,7 @@ export function famWeightPrep(): void {
     }
     // We want to be platypus for aftercore anyway, so let's save a turn here while we're at it
     if (!get("moonTuned")) cliExecute("spoon platypus");
-    // The hatter buff should be ideally acquired during levelling
-    // But might have been skipped for meat reasons
+    // Prepare for the hatter buff
     if (!have($effect`You Can Really Taste the Dormouse`)) {
         // Get the drink me potion, and the magical hat
         visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");

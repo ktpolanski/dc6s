@@ -1,7 +1,6 @@
 import {
     adv1,
     autosell,
-    buy,
     cliExecute,
     create,
     drink,
@@ -171,12 +170,6 @@ export default function level(): void {
         adventureMacro($location`Noob Cave`, Macro.freeRun());
         heal();
     } else getBuffs($effects`Baconstoned`);
-    // Set up the hatter buff
-    if (!have($effect`You Can Really Taste the Dormouse`)) {
-        // Get the drink me potion, and the magical hat
-        visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
-        if (!have($item`sombrero-mounted sparkler`)) buy(1, $item`sombrero-mounted sparkler`);
-    }
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs([
         $effect`Fidoxene`,
@@ -184,7 +177,6 @@ export default function level(): void {
         $effect`Blood Bond`,
         $effect`Leash of Linguini`,
         $effect`Empathy`,
-        $effect`You Can Really Taste the Dormouse`,
     ]);
     // This won't last long enough in softcore
     if (inHardcore()) getBuffs($effects`Billiards Belligerence`);
