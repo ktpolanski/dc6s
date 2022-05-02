@@ -21,9 +21,8 @@ export default function runstart(): void {
     visitUrl("tutorial.php?action=toot");
     useIfHave($item`letter from King Ralph XI`);
     useIfHave($item`pork elf goodies sack`);
-    // Sell one of the gems for a little bit of seed meat
-    if (have($item`baconstone`)) autosell(1, $item`baconstone`);
-    else autosell(1, $item`hamethyst`);
+    // One of the gems may get sold later to make ends meet
+    autosell(1, $item`Newbiesport™ tent`);
     // Loot the chateau desk
     if (!get("_chateauDeskHarvested")) {
         visitUrl("place.php?whichplace=chateau&action=chateau_desk2");

@@ -8,6 +8,7 @@ import {
     familiarWeight,
     inHardcore,
     itemAmount,
+    myMeat,
     runChoice,
     runCombat,
     setAutoAttack,
@@ -83,8 +84,18 @@ export default function level(): void {
     if (!have($effect`That's Just Cloud-Talk, Man`)) {
         visitUrl("place.php?whichplace=campaway&action=campaway_sky");
     }
+    // The default usage for glittery mascara is 5, we just need one
+    if (!have($effect`Glittering Eyelashes`)) bu($item`glittery mascara`);
     // Cook the myst potion! Get some ingredients for said potions first!
-    if (!get("hasRange")) bu($item`Dramatic™ range`);
+    if (!get("hasRange")) {
+        // Sell off a pork gem if there's not enough meat to pull this off
+        if (myMeat() < 950) {
+            if (have($item`baconstone`)) autosell(1, $item`baconstone`);
+            else if (have($item`hamethyst`)) autosell(1, $item`hamethyst`);
+            else autosell(1, $item`porquoise`);
+        }
+        bu($item`Dramatic™ range`);
+    }
     if (get("reagentSummons") === 0) useSkill(1, $skill`Advanced Saucecrafting`);
     if (!get("_preventScurvy")) useSkill(1, $skill`Prevent Scurvy and Sobriety`);
     if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
@@ -111,8 +122,6 @@ export default function level(): void {
         $effect`Mystically Oiled`,
         $effect`Stevedave's Shanty of Superiority`,
     ]);
-    // The default usage for glittery mascara is 5, we just need one
-    if (!have($effect`Glittering Eyelashes`)) bu($item`glittery mascara`);
     // The glove needs to be on to do its stat buff
     if (!have($effect`Triple-Sized`)) {
         outfit($items`Powerful Glove`);
