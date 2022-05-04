@@ -9,7 +9,7 @@ import {
     toSlot,
     useFamiliar,
 } from "kolmafia";
-import { $familiar, $item, $items, $slot, get, have } from "libram";
+import { $effect, $familiar, $item, $items, $slot, get, have } from "libram";
 import { checkKGB, foldIfNotHave, setRetroCape } from "./lib";
 
 // Outfits are defined as maps (dictionaries)
@@ -232,8 +232,10 @@ export function outfitMysticality(): void {
 // This one gets to have an override for cloake saber cheese purposes
 export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("vampire", "hold");
-    // Make KGB give hot resistance
-    if (!checkKGB("Hot Resistance")) cliExecute("briefcase enchantment hot");
+    // Make KGB give hot resistance in the event of no DSH buff
+    if (!checkKGB("Hot Resistance") && !have($effect`Gull-Wing Moustache`)) {
+        cliExecute("briefcase enchantment hot");
+    }
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],

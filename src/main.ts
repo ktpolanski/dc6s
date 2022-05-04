@@ -3,7 +3,15 @@ import { CommunityService, get } from "libram";
 import { assertTest, damageTests, freeKillsLeft, PropertyManager, weightTests } from "./lib";
 import level from "./level";
 import runstart from "./runstart";
-import { coilWirePrep, hpPrep, itemPrep, moxiePrep, musclePrep, mysticalityPrep } from "./tests";
+import {
+    coilWirePrep,
+    hotResPrep,
+    hpPrep,
+    itemPrep,
+    moxiePrep,
+    musclePrep,
+    mysticalityPrep,
+} from "./tests";
 
 // Do this try/finally syntax to be able to undo autoattack/CCS/recovery settings
 try {
@@ -24,6 +32,8 @@ try {
     assertTest(CommunityService.HP, hpPrep, 1);
     assertTest(CommunityService.Muscle, musclePrep, 1);
     assertTest(CommunityService.Mysticality, mysticalityPrep, 1);
+    // Do hot resistance test as there's a DSH buff that helps with that
+    assertTest(CommunityService.HotRes, hotResPrep, 1);
     // Test order depends on hardcore/softcore
     if (inHardcore()) {
         // In hardcore, familiar weight buffs are all popped during levelling

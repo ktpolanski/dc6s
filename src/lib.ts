@@ -70,7 +70,7 @@ import {
     SourceTerminal,
     Witchess,
 } from "libram";
-import { famWeightPrep, hotResPrep, noncombatPrep, spellPrep, weaponPrep } from "./tests";
+import { famWeightPrep, noncombatPrep, spellPrep, weaponPrep } from "./tests";
 import { outfit, outfitFamWeight, outfitGhost } from "./outfit";
 import Macro from "./combat";
 
@@ -405,7 +405,8 @@ export function assertTest(test: CommunityService, prep: () => number | void, tu
 
 // Perform familiar weight block of tests
 export function weightTests(): void {
-    assertTest(CommunityService.HotRes, hotResPrep, 1);
+    // Hot resistance is technically a famweight test
+    // But doing it earlier saves some KGE clicks
     assertTest(CommunityService.Noncombat, noncombatPrep, 1);
     assertTest(CommunityService.FamiliarWeight, famWeightPrep, 25);
 }
