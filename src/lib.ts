@@ -532,6 +532,8 @@ export function nightcap(pyjamas: boolean): void {
         set("harvestGardenSoftcore", "cornucopia (3)");
         useFamiliar($familiar`Trick-or-Treating Tot`);
         foldIfNotHave($item`stinky cheese diaper`);
+        // Do a refresh as otherwise sometimes the maximizer hangs on stuff like the cleaver
+        cliExecute("refresh all");
         // There are a lot of 6-adventure accessories
         // Go for the ones with relevant rollover buffs
         cliExecute("maximize adventures +equip Spacegate scientist's insignia +equip Sasq™ watch");
