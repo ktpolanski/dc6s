@@ -326,7 +326,12 @@ export default function level(): void {
             outfitFamWeight();
             // Sprinkle dog needs to be 140lb fat to guarantee enough sprinkles for stuff
             // But 20lb of that can come from a meteor shower, so aim for 120lb in gear
-            if (familiarWeight($familiar`Chocolate Lab`) + weightAdjustment() < 120) {
+            // Mafia currently does not seem to track Fidoxene correctly
+            // Correct for it via a ternary (one-line if/else sorta thing)
+            const baseWeight = have($effect`Fidoxene`)
+                ? 20
+                : familiarWeight($familiar`Chocolate Lab`);
+            if (baseWeight + weightAdjustment() < 120) {
                 throw "Didn't get Sprinkle Dog to 120 pounds!";
             }
             // Ok, if we're here, we're good
