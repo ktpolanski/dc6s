@@ -328,10 +328,10 @@ export default function level(): void {
             // But 20lb of that can come from a meteor shower, so aim for 120lb in gear
             // Mafia currently does not seem to track Fidoxene correctly
             // Correct for it via a ternary (one-line if/else sorta thing)
-            const baseWeight = have($effect`Fidoxene`)
-                ? 20
-                : familiarWeight($familiar`Chocolate Lab`);
-            if (baseWeight + weightAdjustment() < 120) {
+            const dogWeight = have($effect`Fidoxene`)
+                ? 20 + weightAdjustment()
+                : familiarWeight($familiar`Chocolate Lab`) + weightAdjustment();
+            if (dogWeight < 120) {
                 throw "Didn't get Sprinkle Dog to 120 pounds!";
             }
             // Ok, if we're here, we're good
@@ -340,10 +340,7 @@ export default function level(): void {
                 $location`Gingerbread Upscale Retail District`,
                 Macro.if_($monster`gingerbread gentrifier`, Macro.trySkill($skill`Macrometeorite`))
                     .setup()
-                    .externalIf(
-                        familiarWeight($familiar`Chocolate Lab`) + weightAdjustment() < 140,
-                        Macro.trySkill($skill`Meteor Shower`)
-                    )
+                    .externalIf(dogWeight < 140, Macro.trySkill($skill`Meteor Shower`))
                     .freeKill()
             );
             heal();
