@@ -512,6 +512,11 @@ export function garbo(ascend: boolean): void {
 // Overdrink, and possibly set up for rollover with pyjamas
 export function nightcap(pyjamas: boolean): void {
     if (myAdventures() === 0 && myInebriety() <= inebrietyLimit()) {
+        // Sometimes there are random songs that stop Ode from going on
+        // Garbo really likes this one and it's disposable
+        if (have($effect`Power Ballad of the Arrowsmith`)) {
+            cliExecute("uneffect Power Ballad of the Arrowsmith");
+        }
         // A little extra liver is good, I hear
         useFamiliar($familiar`Stooper`);
         cliExecute("CONSUME NIGHTCAP VALUE 4000");
