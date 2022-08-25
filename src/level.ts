@@ -13,6 +13,7 @@ import {
     setAutoAttack,
     totalFreeRests,
     use,
+    useFamiliar,
     useSkill,
     visitUrl,
     weightAdjustment,
@@ -161,7 +162,7 @@ export default function level(): void {
     // Can't use the carol ghost for stats in softcore
     // However, Baconstoned can be popped early as spell damage comes quickly
     if (inHardcore() && !have($effect`Holiday Yoked`)) {
-        familiarWithGear($familiar`Ghost of Crimbo Carols`);
+        useFamiliar($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
         // Use a reflex hammer to get out
         outfit($items`Lil' Doctor™ bag`);

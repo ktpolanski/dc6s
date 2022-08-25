@@ -272,7 +272,7 @@ export function weaponPrep(): void {
     getInnerElf();
     // Get carol ghost buff
     if (!have($effect`Do You Crush What I Crush?`)) {
-        familiarWithGear($familiar`Ghost of Crimbo Carols`);
+        useFamiliar($familiar`Ghost of Crimbo Carols`);
         // Use a latte throw to get out
         equip($item`latte lovers member's mug`);
         // The Dire Warren has a beast, and just a beast - how fortunate for us!
