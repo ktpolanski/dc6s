@@ -101,10 +101,12 @@ export function heal(thresh = 0.6): void {
     }
 }
 
-// Use a familiar and put miniature crystal ball on it
-export function familiarWithOrb(familiar: Familiar): void {
+// Use a familiar and put the standard gear on it
+export function familiarWithGear(familiar: Familiar): void {
     useFamiliar(familiar);
-    equip($item`miniature crystal ball`);
+    // The current choice of gear is the tiny stillsuit
+    // Orb's stat gain is extremely tiny, and this revs up the Stooper filler for later
+    equip($item`tiny stillsuit`);
 }
 
 // Pull the camel out and set it up for use
@@ -126,16 +128,16 @@ export function hardcoreFamiliar(canAttack = true): void {
     // So that sprinkle dog can be 140lb in time for his moment
     if (!have($item`short stack of pancakes`) && !have($effect`Shortly Stacked`) && canAttack) {
         // Check the attack clause just in case, e.g. for ninja free kill
-        familiarWithOrb($familiar`Shorter-Order Cook`);
+        familiarWithGear($familiar`Shorter-Order Cook`);
     } else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
-        familiarWithOrb($familiar`Garbage Fire`);
+        familiarWithGear($familiar`Garbage Fire`);
     } else if (get("camelSpit") < 100) {
         // The camel takes up most of the turns in the middle of the run
         camel();
     } else {
         // We're in the NEP and fishing for kramcos
         // Fish for hipster fights too while we're at it
-        familiarWithOrb($familiar`Artistic Goth Kid`);
+        familiarWithGear($familiar`Artistic Goth Kid`);
     }
 }
 
@@ -151,13 +153,13 @@ export function softcoreFamiliar(canAttack = true): void {
         canAttack
     ) {
         // Check the attack clause just in case, e.g. for ninja free kill
-        familiarWithOrb($familiar`Shorter-Order Cook`);
+        familiarWithGear($familiar`Shorter-Order Cook`);
     } else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
-        familiarWithOrb($familiar`Garbage Fire`);
+        familiarWithGear($familiar`Garbage Fire`);
     } else {
         // We're in the NEP and fishing for kramcos
         // Fish for hipster fights too while we're at it
-        familiarWithOrb($familiar`Artistic Goth Kid`);
+        familiarWithGear($familiar`Artistic Goth Kid`);
     }
 }
 
@@ -222,7 +224,7 @@ export function holidayCheck(): void {
     // This lists today's wanderers - if it's non-empty, there are wanderers
     if (getTodaysHolidayWanderers().length > 0) {
         // Use the boots as they don't require Ode, just go and run, nothing fancy
-        familiarWithOrb($familiar`Pair of Stomping Boots`);
+        familiarWithGear($familiar`Pair of Stomping Boots`);
         outfitFamWeight();
         adventureMacro($location`Noob Cave`, Macro.freeRun());
     }
@@ -264,11 +266,11 @@ export function scavenge(): void {
 export function gingerbreadBanderway(location: Location): void {
     // We need Ode to banderway
     getBuffs($effects`Ode to Booze`);
-    familiarWithOrb($familiar`Frumious Bandersnatch`);
+    familiarWithGear($familiar`Frumious Bandersnatch`);
     foldIfNotHave($item`tinsel tights`);
-    // This is an easy opportunity to get some scraps
+    // This is an easy opportunity to get some scraps and sweat
     // As bander provides one start of combat and one on skill use
-    outfitFamWeight($items`familiar scrapbook`);
+    outfitFamWeight($items`designer sweatpants, familiar scrapbook`);
     adventureMacro(location, Macro.trySkill($skill`Micrometeorite`).freeRun());
     heal();
 }
@@ -277,11 +279,13 @@ export function gingerbreadBanderway(location: Location): void {
 export function getInnerElf(): void {
     // This only works once level 13
     if (myLevel() >= 13 && !have($effect`Inner Elf`)) {
-        useFamiliar($familiar`Machine Elf`);
+        familiarWithGear($familiar`Machine Elf`);
         Clan.join("Beldungeon");
         // Put on the KGB and make sure Blood Bubble is live to not get melted
         equip($item`Kremlin's Greatest Briefcase`);
         getBuffs($effects`Blood Bubble`);
+        // Free sweat
+        equip($item`designer sweatpants`);
         setChoice(326, 1);
         // Only some free banishers work here because of reasons
         adventureMacro(
@@ -519,6 +523,14 @@ export function nightcap(pyjamas: boolean): void {
         }
         // A little extra liver is good, I hear
         useFamiliar($familiar`Stooper`);
+        // Chug the stillsuit distillate as a filler if it's charged up enough
+        // The distillate gives 7 turns, equivalent to an Oded filler, at 108 charge
+        // (the ~~ turns a string to int, with a default of 0)
+        if (myInebriety() < inebrietyLimit() && ~~get("familiarSweat") >= 108) {
+            // At the time of writing, this requires visitUrls to do
+            visitUrl("inventory.php?action=distill&pwd", true);
+            visitUrl("choice.php?pwd&whichchoice=1476&option=1", true);
+        }
         cliExecute("CONSUME NIGHTCAP VALUE 4000");
     }
     if (pyjamas) {

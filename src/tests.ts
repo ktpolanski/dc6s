@@ -42,6 +42,7 @@ import {
     bu,
     bustGhost,
     castLibrams,
+    familiarWithGear,
     foldIfNotHave,
     getBuffs,
     getInnerElf,
@@ -74,7 +75,7 @@ export function coilWirePrep(): void {
     getBuffs($effects`Inscrutable Gaze, Feeling Excited`);
     // Go rip a shrub red ray real quick
     if (!have($effect`Everything Looks Red`)) {
-        useFamiliar($familiar`Crimbo Shrub`);
+        familiarWithGear($familiar`Crimbo Shrub`);
         // Decorate Crimbo Shrub with LED Mandala, Jack-O-Lantern Lights, Popcorn Strands, and Big Red-Wrapped Presents
         if (!get("_shrubDecorated")) {
             const decorations = toInt($item`box of old Crimbo decorations`);
@@ -271,7 +272,7 @@ export function weaponPrep(): void {
     getInnerElf();
     // Get carol ghost buff
     if (!have($effect`Do You Crush What I Crush?`)) {
-        useFamiliar($familiar`Ghost of Crimbo Carols`);
+        familiarWithGear($familiar`Ghost of Crimbo Carols`);
         // Use a latte throw to get out
         equip($item`latte lovers member's mug`);
         // The Dire Warren has a beast, and just a beast - how fortunate for us!
@@ -364,7 +365,7 @@ export function spellPrep(): number {
     // Two birds with one stone - meteor shower and mini-adventurer buff
     if (!have($effect`Meteor Showered`) && get("_meteorShowerUses") < 5) {
         if (!have($effect`Saucefingers`)) {
-            useFamiliar($familiar`Mini-Adventurer`);
+            familiarWithGear($familiar`Mini-Adventurer`);
             if (get("miniAdvClass") === 0) {
                 // Get the mini-adventurer to become a sauceror for subsequent buffing
                 setChoice(768, 4);

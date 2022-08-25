@@ -121,7 +121,7 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`familiar scrapbook`],
-        [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
+        [$slot`pants`, $items`tinsel tights, designer sweatpants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`meteorite necklace, Retrospecs`],
         [$slot`acc2`, $items`battle broom, Eight Days a Week Pill Keeper`],
         [$slot`acc3`, $items`your cowboy boots`],

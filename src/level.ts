@@ -13,7 +13,6 @@ import {
     setAutoAttack,
     totalFreeRests,
     use,
-    useFamiliar,
     useSkill,
     visitUrl,
     weightAdjustment,
@@ -40,7 +39,7 @@ import {
     bu,
     bustGhost,
     castLibrams,
-    familiarWithOrb,
+    familiarWithGear,
     fightWitchessRoyalty,
     foldIfNotHave,
     freeKillsLeft,
@@ -142,7 +141,7 @@ export default function level(): void {
     if (get("_banderRunaways") < 2) holidayCheck();
     // Collect familiar runaway buffs
     if (!have($effect`Nanobrainy`)) {
-        useFamiliar($familiar`Nanorhino`);
+        familiarWithGear($familiar`Nanorhino`);
         foldIfNotHave($item`tinsel tights`);
         outfit();
         if (!get("_gingerbreadClockAdvanced")) {
@@ -162,7 +161,7 @@ export default function level(): void {
     // Can't use the carol ghost for stats in softcore
     // However, Baconstoned can be popped early as spell damage comes quickly
     if (inHardcore() && !have($effect`Holiday Yoked`)) {
-        useFamiliar($familiar`Ghost of Crimbo Carols`);
+        familiarWithGear($familiar`Ghost of Crimbo Carols`);
         foldIfNotHave($item`tinsel tights`);
         // Use a reflex hammer to get out
         outfit($items`Lil' Doctor™ bag`);
@@ -321,7 +320,7 @@ export default function level(): void {
         if (inHardcore()) getBuffs($effects`Shortly Stacked, Heart of Green`);
         // Get some sprinkles with sprinkle dog
         if (!have($item`sprinkles`)) {
-            familiarWithOrb($familiar`Chocolate Lab`);
+            familiarWithGear($familiar`Chocolate Lab`);
             foldIfNotHave($item`makeshift garbage shirt`);
             outfitFamWeight();
             // Sprinkle dog needs to be 140lb fat to guarantee enough sprinkles for stuff
@@ -386,7 +385,7 @@ export default function level(): void {
     // DMT time
     while (get("_machineTunnelsAdv") < 5) {
         getInnerElf();
-        familiarWithOrb($familiar`Machine Elf`);
+        familiarWithGear($familiar`Machine Elf`);
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit($items`unbreakable umbrella`);
         // Chuck our second bowlo here for 7
