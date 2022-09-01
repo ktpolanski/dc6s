@@ -65,7 +65,8 @@ export default function runstart(): void {
     if (!get("backupCameraReverserEnabled")) cliExecute("backupcamera reverser on");
     // Early turn generation - numberology and borrowed time
     if (myLevel() === 1 && !mySpleenUse()) {
-        while (get("_universeCalculated") < get("skillLevel144")) {
+        // Numberology is capped at 3 in run
+        while (get("_universeCalculated") < 3) {
             cliExecute("numberology 69");
         }
     }
