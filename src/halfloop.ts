@@ -1,6 +1,6 @@
 import { cliExecute, myDaycount } from "kolmafia";
 import { get } from "libram";
-import { breakfast, cleanup, garbo, gashHop, nightcap, postrun } from "./lib";
+import { breakfast, cleanup, garbo, gashHop, nightcap, postrun, pvp } from "./lib";
 
 // Wrap the half-loop into a main() function, calling the script will find and run it
 // It's necessary as this way I can return easily to combat garbo heisenbugs
@@ -17,6 +17,7 @@ export function main(arg = ""): void {
         garbo(true);
         nightcap(false);
         garbo(true);
+        pvp();
         // This will internally parse the various possible input options
         gashHop(arg);
     }
@@ -32,6 +33,7 @@ export function main(arg = ""): void {
         postrun();
         breakfast();
         garbo(false);
+        pvp();
         cleanup();
         nightcap(true);
     }

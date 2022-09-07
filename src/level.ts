@@ -362,7 +362,8 @@ export default function level(): void {
     // Turn cigarettes into familiar charge
     while (have($item`gingerbread cigarette`)) {
         useDefaultFamiliar();
-        foldIfNotHave($item`tinsel tights`);
+        // We don't want either of our standard tote items here, fold into junk
+        foldIfNotHave($item`deceased crimbo tree`);
         outfit();
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good

@@ -12,6 +12,7 @@ import {
     Familiar,
     getWorkshed,
     handlingChoice,
+    hippyStoneBroken,
     inebrietyLimit,
     inHardcore,
     Item,
@@ -557,6 +558,12 @@ export function nightcap(pyjamas: boolean): void {
     }
 }
 
+// Do PvP stuff
+export function pvp(): void {
+    // Just call Pantocyclus's smart PvP thing that learns what to do as it goes
+    cliExecute("PVP_MAB.ash");
+}
+
 // Prepare for ascension, and possibly ascend depending on the argument if specified:
 // - noascend prepares for ascension but leaves the user in front of the gash
 // - hardcore does HCCS (the default is SCCS)
@@ -640,6 +647,8 @@ export function postrun(): void {
         setAutoAttack(0);
         adv1($location`The Deep Machine Tunnels`);
     }
+    // Break the hippy stone for PvP fight accumulation and use
+    if (!hippyStoneBroken()) visitUrl("peevpee.php?action=smashstone&confirm=on");
     // That's it! Celebrate with a drink, as garbo won't down pilsners
     if (have($item`astral pilsner`)) {
         getBuffs($effects`Ode to Booze`);
