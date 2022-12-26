@@ -2,6 +2,7 @@ import {
     autosell,
     cliExecute,
     create,
+    getWorkshed,
     inHardcore,
     myLevel,
     mySpleenUse,
@@ -63,6 +64,10 @@ export default function runstart(): void {
     }
     // Flip the reverser as this thing is funny exactly once
     if (!get("backupCameraReverserEnabled")) cliExecute("backupcamera reverser on");
+    // Stick the Asdon in the workshed
+    if (getWorkshed() === $item`none`) {
+        use(1, $item`Asdon Martin keyfob`);
+    }
     // Early turn generation - numberology and borrowed time
     if (myLevel() === 1 && !mySpleenUse()) {
         // Numberology is capped at 3 in run
