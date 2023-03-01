@@ -19,6 +19,7 @@ This offers a few commands accessible from Mafia's CLI:
 -   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. Accepts the following optional arguments:
     -   `hardcore` will ascend HCCS rather than the default SCCS
     -   `noascend` will deposit the user in front of the gash in an ascension-ready state; useful for perming skills
+    -   `nopvp` skips PvP, if not provided uses [`PVP_MAB.ash`](https://kolmafia.us/threads/a-multi-armed-bandit-pvp-script.27391/)
 
 ## Run Setup
 

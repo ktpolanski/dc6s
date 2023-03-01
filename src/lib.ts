@@ -558,10 +558,12 @@ export function nightcap(pyjamas: boolean): void {
     }
 }
 
-// Do PvP stuff
-export function pvp(): void {
-    // Just call Pantocyclus's smart PvP thing that learns what to do as it goes
-    cliExecute("PVP_MAB.ash");
+// Do PvP stuff, unless the arg states not to via including nopvp
+export function pvp(arg = ""): void {
+    if (!arg.includes("nopvp")) {
+        // Just call Pantocyclus's smart PvP thing that learns what to do as it goes
+        cliExecute("PVP_MAB.ash");
+    }
 }
 
 // Prepare for ascension, and possibly ascend depending on the argument if specified:

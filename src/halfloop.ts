@@ -8,6 +8,7 @@ import { breakfast, cleanup, garbo, gashHop, nightcap, postrun, pvp } from "./li
 // Accept an optional argument after the script name:
 // - noascend prepares for ascension but leaves the user in front of the gash
 // - hardcore does HCCS (the default is SCCS)
+// - nopvp skips PvP
 export function main(arg = ""): void {
     // Pre-ascension garbo leg
     // garbo() true means ascending
@@ -17,7 +18,7 @@ export function main(arg = ""): void {
         garbo(true);
         nightcap(false);
         garbo(true);
-        pvp();
+        pvp(arg);
         // This will internally parse the various possible input options
         gashHop(arg);
     }
@@ -33,7 +34,7 @@ export function main(arg = ""): void {
         postrun();
         breakfast();
         garbo(false);
-        pvp();
+        pvp(arg);
         cleanup();
         nightcap(true);
     }
