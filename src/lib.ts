@@ -508,7 +508,9 @@ export function garbo(ascend: boolean): void {
         mallPrice($item`Extrovermectin™`);
         set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
-        const garboCall = ascend ? "garbo ascend" : "garbo";
+        const garboCall = ascend
+            ? "garbo yachtzeechain ascend workshed=mts"
+            : "garbo yachtzeechain";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
     }
