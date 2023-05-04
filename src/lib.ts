@@ -52,6 +52,7 @@ import {
     $items,
     $location,
     $monster,
+    $path,
     $skill,
     $slot,
     ascend,
@@ -64,7 +65,6 @@ import {
     have,
     haveInCampground,
     Lifestyle,
-    Paths,
     prepareAscension,
     PropertiesManager,
     set,
@@ -575,7 +575,6 @@ export function gashHop(arg = ""): void {
         // Set up the various options
         // (the {} stuff allows for named argument passing)
         prepareAscension({
-            workshed: "Asdon Martin keyfob",
             garden: "Peppermint Pip Packet",
             eudora: "Our Daily Candles™ order form",
             chateau: {
@@ -595,7 +594,7 @@ export function gashHop(arg = ""): void {
             const lifestyle = arg.includes("hardcore") ? Lifestyle.hardcore : Lifestyle.softcore;
             // Ascend with the expected configuration of stuff
             ascend(
-                Paths.CommunityService,
+                $path`Community Service`,
                 $class`Pastamancer`,
                 lifestyle,
                 "wallaby",
