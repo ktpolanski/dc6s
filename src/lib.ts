@@ -23,6 +23,7 @@ import {
     Monster,
     myAdventures,
     myAscensions,
+    myFamiliar,
     myGardenType,
     myHp,
     myInebriety,
@@ -130,14 +131,21 @@ function camel(): void {
     if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
 }
 
+// Pull the cook out, but pull out the bander before so cook's bonus xp trickles down
+function cook(): void {
+    if (myFamiliar() !== $familiar`Shorter-Order Cook`)
+        useFamiliar($familiar`Frumious Bandersnatch`);
+    familiarWithGear($familiar`Shorter-Order Cook`);
+}
+
 // Pick what familiar to use, hardcore edition
 export function hardcoreFamiliar(canAttack = true): void {
     // Need to prioritise garbage fire and shorty to get famweight drops
     // So that sprinkle dog can be 140lb in time for his moment
     if (!have($item`short stack of pancakes`) && !have($effect`Shortly Stacked`) && canAttack) {
         // Check the attack clause just in case, e.g. for ninja free kill
-        familiarWithGear($familiar`Shorter-Order Cook`);
-    } else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+        cook();
+    } else if (get("_garbageFireDrops") < 1 && get("_garbageFireDropsCrown") < 2) {
         familiarWithGear($familiar`Garbage Fire`);
     } else if (get("camelSpit") < 100) {
         // The camel takes up most of the turns in the middle of the run
@@ -161,8 +169,8 @@ export function softcoreFamiliar(canAttack = true): void {
         canAttack
     ) {
         // Check the attack clause just in case, e.g. for ninja free kill
-        familiarWithGear($familiar`Shorter-Order Cook`);
-    } else if (!have($item`burning newspaper`) && !have($item`burning paper crane`)) {
+        cook();
+    } else if (get("_garbageFireDrops") < 1 && get("_garbageFireDropsCrown") < 2) {
         familiarWithGear($familiar`Garbage Fire`);
     } else {
         // We're in the NEP and fishing for kramcos

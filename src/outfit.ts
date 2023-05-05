@@ -162,7 +162,8 @@ export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     setParka("spikolodon");
     // Fold the burning newspaper into the crane if need be
-    if (have($item`burning newspaper`)) create(1, $item`burning paper crane`);
+    if (have($item`burning newspaper`) && !have($item`burning paper crane`))
+        create(1, $item`burning paper crane`);
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
