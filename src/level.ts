@@ -372,7 +372,9 @@ export default function level(): void {
         useDefaultFamiliar();
         // We don't want either of our standard tote items here, fold into junk
         foldIfNotHave($item`deceased crimbo tree`);
-        outfit();
+        // May as well try to catch garbage fire bjorn drops
+        outfit($items`Buddy Bjorn`);
+        bjornify($familiar`Garbage Fire`);
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good
         adventureMacro(
@@ -414,7 +416,7 @@ export default function level(): void {
         getInnerElf();
         useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
+        outfit($items`unbreakable umbrella`);
         // olivers() has all the desired extra combat stuff
         adventureMacro($location`An Unusually Quiet Barroom Brawl`, Macro.olivers().kill());
         heal();
@@ -424,7 +426,7 @@ export default function level(): void {
         getInnerElf();
         useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
-        outfit();
+        outfit($items`unbreakable umbrella`);
         adventureMacro($location`An Unusually Quiet Barroom Brawl`, Macro.kill());
         heal();
     }
