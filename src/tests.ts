@@ -43,6 +43,7 @@ import {
     bu,
     bustGhost,
     castLibrams,
+    familiarJacks,
     familiarWithGear,
     foldIfNotHave,
     getBuffs,
@@ -243,17 +244,15 @@ export function famWeightPrep(): void {
         $effect`You Can Really Taste the Dormouse`,
     ]);
     outfitFamWeight();
-    if (inHardcore()) {
-        // Use the BBB and its free +10lb equip
-        useFamiliar($familiar`Baby Bugged Bugbear`);
-        if (!have($item`bugged beanie`)) {
-            visitUrl("arena.php");
-            equip($item`bugged beanie`);
-        }
-    } else {
-        // Softcore means Doppelshifter meme time
-        useFamiliar($familiar`Doppelshifter`);
-        equip($item`tiny costume wardrobe`);
+    // Time for comma cheese
+    if (get("commaFamiliar") !== $familiar`Homemade Robot`) {
+        // Get the homemade robot's equip for transformation purposes
+        familiarJacks($familiar`Homemade Robot`);
+        useFamiliar($familiar`Comma Chameleon`);
+        // Need to put the gear into the comma, unfortunately via URL
+        visitUrl("inv_equip.php?which=2&action=equip&whichitem=6102&pwd");
+        // And then revisit the character pane as that's important for this to register
+        visitUrl("charpane.php");
     }
 }
 
