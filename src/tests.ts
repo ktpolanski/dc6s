@@ -51,6 +51,7 @@ import {
     holidayCheck,
     saberCheese,
     setChoice,
+    setParka,
     useIfHave,
 } from "./lib";
 import Macro from "./combat";
@@ -350,7 +351,7 @@ export function spellPrep(): number {
         create(1, $item`cordial of concentration`);
     }
     // There may be a resolution. But there also may not
-    useIfHave($item``);
+    useIfHave($item`resolution: be feistier`);
     // Now that that's done, other stuff! A LOT of it!
     getBuffs([
         $effect`Spirit of Garlic`,
@@ -405,6 +406,22 @@ export function itemPrep(): void {
     // Fuel up asdon for buffing purposes
     if (!have($effect`Driving Observantly`)) {
         if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!";
+    }
+    // Pop a free kill in the toxic teacups for a tiny bit of toxic vengeance
+    // Which should be enough to push out a turn save from the spare change
+    if (!have($effect`Toxic Vengeance`)) {
+        useFamiliar($familiar`none`);
+        // Parka free kill specifically
+        equip($item`Jurassic Parka`);
+        setParka("dilophosaur");
+        adventureMacro($location`The Toxic Teacups`, Macro.trySkill($skill`Spit jurassic acid`));
+        // The above will catch the opening NC, go again
+        if (!have($effect`Toxic Vengeance`)) {
+            adventureMacro(
+                $location`The Toxic Teacups`,
+                Macro.trySkill($skill`Spit jurassic acid`)
+            );
+        }
     }
     // Get the sparkler for the outfit
     retrieveItem(1, $item`oversized sparkler`);
