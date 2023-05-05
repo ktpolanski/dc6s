@@ -10,7 +10,7 @@ import {
     useFamiliar,
 } from "kolmafia";
 import { $effect, $familiar, $item, $items, $slot, get, have } from "libram";
-import { checkKGB, foldIfNotHave, setRetroCape } from "./lib";
+import { checkKGB, foldIfNotHave, setParka, setRetroCape } from "./lib";
 
 // Outfits are defined as maps (dictionaries)
 // Where the keys are slots and the values are an array of items
@@ -57,10 +57,11 @@ function applyChanges(outfit: Map<Slot, Item[]>, changes: (Item | [Slot, Item])[
 // The pre-coil outfit where stats are tiny, so go for flat boosts
 export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
+    setParka("spikolodon");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`weeping willow wand, familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
@@ -78,10 +79,11 @@ export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
 // Fine to skip saber as the ghost will get busted
 export function outfitGhost(): void {
     setRetroCape("heck", "thrill");
+    setParka("spikolodon");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`protonic accelerator pack`],
-        [$slot`shirt`, $items`fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`weeping willow wand`],
         [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
@@ -95,10 +97,11 @@ export function outfitGhost(): void {
 // The coil outfit aims to maximise MP for subsequent buffing kickstarting
 export function outfitCoilWire(): void {
     setRetroCape("heck", "thrill");
+    setParka("ghostasaurus");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Iunion Crown`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`weeping willow wand`],
         [$slot`offhand`, $items`Abracandalabra`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
@@ -115,10 +118,11 @@ export function outfitCoilWire(): void {
 // The off-hand becomes an unbreakable umbrella for uncapped scalers
 export function outfit(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
+    setParka("spikolodon");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`astral chapeau, Daylight Shavings Helmet`],
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`makeshift garbage shirt, Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`familiar scrapbook`],
         [$slot`pants`, $items`tinsel tights, designer sweatpants, Cargo Cultist Shorts`],
@@ -134,13 +138,14 @@ export function outfit(changes: (Item | [Slot, Item])[] = []): void {
 // Use with the .saucestorm() macro!
 export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
+    setParka("spikolodon");
     // The ML forms are only used here, so no helper functions
     if (get("backupCameraMode") !== "ml") cliExecute("backupcamera ml");
     if (!checkKGB("Monster Level")) cliExecute("briefcase enchantment ml");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`weeping willow wand, Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`tinsel tights, pantogram pants, Cargo Cultist Shorts`],
@@ -155,12 +160,13 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
 // Familiar weight stuff, useful both in run and for the test
 export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
+    setParka("spikolodon");
     // Fold the burning newspaper into the crane if need be
     if (have($item`burning newspaper`)) create(1, $item`burning paper crane`);
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`makeshift garbage shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`makeshift garbage shirt, Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`burning paper crane, familiar scrapbook`],
         [$slot`pants`, $items`repaid diaper, tinsel tights, pantogram pants, Cargo Cultist Shorts`],
@@ -175,10 +181,11 @@ export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
 // Moxie test outfit
 export function outfitMoxie(): void {
     setRetroCape("robot", "thrill");
+    setParka("spikolodon");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`very pointy crown`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
@@ -194,10 +201,11 @@ export function outfitMoxie(): void {
 export function outfitMuscle(): void {
     foldIfNotHave($item`wad of used tape`);
     setRetroCape("vampire", "thrill");
+    setParka("kachungasaur");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`wad of used tape`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`dented scepter`],
         [$slot`pants`, $items`Cargo Cultist Shorts`],
@@ -213,10 +221,11 @@ export function outfitMuscle(): void {
 export function outfitMysticality(): void {
     foldIfNotHave($item`wad of used tape`);
     setRetroCape("heck", "thrill");
+    setParka("spikolodon");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`astral chapeau, wad of used tape`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
@@ -232,6 +241,7 @@ export function outfitMysticality(): void {
 // This one gets to have an override for cloake saber cheese purposes
 export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("vampire", "hold");
+    setParka("pterodactyl");
     // Make KGB give hot resistance in the event of no DSH buff
     if (!checkKGB("Hot Resistance") && !have($effect`Gull-Wing Moustache`)) {
         cliExecute("briefcase enchantment hot");
@@ -239,7 +249,7 @@ export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
         [$slot`back`, $items`unwrapped knock-off retro superhero cape`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`industrial fire extinguisher`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
@@ -255,11 +265,12 @@ export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
 // Noncombat test outfit
 // Put on the powerful glove to cast a cheat code later
 export function outfitNoncombat(): void {
+    setParka("pterodactyl");
     if (get("umbrellaState") !== "cocoon") cliExecute("umbrella nc");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`very pointy crown`],
         [$slot`back`, $items`protonic accelerator pack`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
@@ -274,11 +285,12 @@ export function outfitNoncombat(): void {
 // Weapon damage test outfit
 export function outfitWeapon(): void {
     foldIfNotHave($item`broken champagne bottle`);
+    setParka("spikolodon");
     if (!checkKGB("Weapon Damage")) cliExecute("briefcase enchantment weapon");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`very pointy crown`],
         [$slot`back`, $items`protonic accelerator pack`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`dented scepter`],
         [$slot`offhand`, $items`broken champagne bottle`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
@@ -296,13 +308,14 @@ export function outfitWeapon(): void {
 // Spell damage test outfit
 export function outfitSpell(): void {
     foldIfNotHave($item`broken champagne bottle`);
+    setParka("spikolodon");
     // Only need to reconfigure the KGB if in hardcore
     // In softcore just wear the meteorite necklace and all is well
     if (!checkKGB("Spell Damage") && inHardcore()) cliExecute("briefcase enchantment spell");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`astral chapeau`],
         [$slot`back`, $items`protonic accelerator pack`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Staff of the Roaring Hearth, weeping willow wand`],
         [$slot`offhand`, $items`Abracandalabra`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
@@ -320,11 +333,12 @@ export function outfitSpell(): void {
 // Item test outfit
 export function outfitItem(): void {
     foldIfNotHave($item`wad of used tape`);
+    setParka("spikolodon");
     if (get("umbrellaState") !== "bucket style") cliExecute("umbrella item");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`wad of used tape`],
         [$slot`back`, $items`vampyric cloake`],
-        [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
+        [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`oversized sparkler`],
         [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],

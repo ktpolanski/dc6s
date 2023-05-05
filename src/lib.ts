@@ -10,6 +10,7 @@ import {
     equippedItem,
     eudora,
     Familiar,
+    familiarEquipment,
     getWorkshed,
     handlingChoice,
     hippyStoneBroken,
@@ -110,14 +111,20 @@ export function familiarWithGear(familiar: Familiar): void {
     equip($item`tiny stillsuit`);
 }
 
+// Get a familiar's equipment via familiar jacks
+export function familiarJacks(familiar: Familiar): void {
+    if (!have(familiarEquipment(familiar))) {
+        useFamiliar(familiar);
+        if (!have($item`box of Familiar Jacks`)) create(1, $item`box of Familiar Jacks`);
+        use(1, $item`box of Familiar Jacks`);
+    }
+}
+
 // Pull the camel out and set it up for use
 function camel(): void {
     useFamiliar($familiar`Melodramedary`);
     // Pick up the gear and stick it on
-    if (!have($item`dromedary drinking helmet`)) {
-        if (!have($item`box of Familiar Jacks`)) create(1, $item`box of Familiar Jacks`);
-        use(1, $item`box of Familiar Jacks`);
-    }
+    familiarJacks($familiar`Melodramedary`);
     equip($item`dromedary drinking helmet`);
     // Seeing how this buddy is around the longest, add mumming trunk myst gains
     if (!get("_mummeryMods").includes("Melodramedary")) cliExecute("mummery myst");
@@ -363,6 +370,11 @@ export function setRetroCape(hero: string, mode: string): void {
     if (get("retroCapeSuperhero") !== hero || get("retroCapeWashingInstructions") !== mode) {
         cliExecute(`retrocape ${hero} ${mode}`);
     }
+}
+
+// Reconfigure the parka if not already set up this way
+export function setParka(mode: string): void {
+    if (get("parkaMode") !== mode) cliExecute(`parka ${mode}`);
 }
 
 // Use an item if you have it
