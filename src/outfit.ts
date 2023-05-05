@@ -325,12 +325,12 @@ export function outfitItem(): void {
         [$slot`hat`, $items`wad of used tape`],
         [$slot`back`, $items`vampyric cloake`],
         [$slot`shirt`, $items`shoe ad T-shirt, fresh coat of paint`],
-        [$slot`weapon`, $items`weeping willow wand`],
+        [$slot`weapon`, $items`oversized sparkler`],
         [$slot`offhand`, $items`unbreakable umbrella`],
         [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`your cowboy boots`],
         [$slot`acc2`, $items`Guzzlr tablet`],
-        [$slot`acc3`, $items`gold detective badge`],
+        [$slot`acc3`, $items`Cincho de Mayo`],
     ]);
     dressUp(outfit);
     useFamiliar($familiar`Trick-or-Treating Tot`);

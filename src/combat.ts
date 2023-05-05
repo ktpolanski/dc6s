@@ -96,6 +96,16 @@ export default class Macro extends StrictMacro {
         return new Macro().ghost();
     }
 
+    // Oliver's Place wants to use a combo of Feel Nostalgic, Feel Envy and Portscan
+    olivers(): Macro {
+        return this.trySkill($skill`Feel Nostalgic`)
+            .trySkill($skill`Feel Envy`)
+            .trySkill($skill`Portscan`);
+    }
+    static olivers(): Macro {
+        return new Macro().olivers();
+    }
+
     // The late scalers want to make use of Feel Pride and bowling sideways
     // But the former under a pretty restrictive set of conditions
     // For which there's a helper function earlier in the file

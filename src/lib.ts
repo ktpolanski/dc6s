@@ -625,10 +625,6 @@ export function postrun(): void {
     }
     // Switch Chateau to skylight
     ChateauMantegna.changeCeiling("artificial skylight");
-    // Get beach access - might have bus pass from a fumbled run
-    if (!have($item`bitchin' meatcar`) && !have($item`Desert Bus pass`)) {
-        retrieveItem(1, $item`bitchin' meatcar`);
-    }
     // Switch eudora to New-You Club for free money
     if (eudora() !== "New-You Club") eudora("New-You Club");
     // Lose undesirable effects

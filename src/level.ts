@@ -8,6 +8,7 @@ import {
     inHardcore,
     itemAmount,
     myMeat,
+    retrieveItem,
     runChoice,
     runCombat,
     setAutoAttack,
@@ -178,6 +179,8 @@ export default function level(): void {
         $effect`Leash of Linguini`,
         $effect`Empathy`,
     ]);
+    // Pop the MayDay package as there's a little stuff in there too
+    useIfHave($item`MayDay™ supply package`);
     // This won't last long enough in softcore
     if (inHardcore()) getBuffs($effects`Billiards Belligerence`);
     // Add a bit of ML
@@ -198,7 +201,7 @@ export default function level(): void {
         // This will put on the shorty for the first time in run
         // As a lot of the early stuff is no-attack or one-shots
         useDefaultFamiliar();
-        foldIfNotHave($item`makeshift garbage shirt`);
+        foldIfNotHave($item`tinsel tights`);
         outfit($items`protonic accelerator pack`);
         // The autoattack macro will work fine
         Macro.kill().setAutoAttack();
@@ -322,7 +325,7 @@ export default function level(): void {
         // Get some sprinkles with sprinkle dog
         if (!have($item`sprinkles`)) {
             familiarWithGear($familiar`Chocolate Lab`);
-            foldIfNotHave($item`makeshift garbage shirt`);
+            foldIfNotHave($item`tinsel tights`);
             outfitFamWeight();
             // Sprinkle dog needs to be 140lb fat to guarantee enough sprinkles for stuff
             // But 20lb of that can come from a meteor shower, so aim for 120lb in gear
@@ -382,6 +385,42 @@ export default function level(): void {
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit();
         globMacro(Macro.kill());
+        heal();
+    }
+    // Oliver's Place time, this requires a different protocol for each fight
+    if (get("_speakeasyFreeFights") === 0) {
+        // Map a goblin flapper for the sdmg potion, also pop a Portscan
+        getInnerElf();
+        // The monster is small, disable attack just in case so the Portscan goes off
+        useDefaultFamiliar(false);
+        foldIfNotHave($item`tinsel tights`);
+        outfitML();
+        // Do a regular kill, but with Portscan so an agent appears
+        mapMacro(
+            $location`An Unusually Quiet Barroom Brawl`,
+            $monster`goblin flapper`,
+            Macro.kill($skill`Portscan`)
+        );
+        // Heal up properly just in case as we'll be popping some extra skills
+        heal(0.9);
+    }
+    if (get("_speakeasyFreeFights") === 1) {
+        // Agent time, this one with Feel Nostalgic + Feel Envy (and a second Portscan)
+        getInnerElf();
+        useDefaultFamiliar();
+        foldIfNotHave($item`makeshift garbage shirt`);
+        outfit();
+        // olivers() has all the desired extra combat stuff
+        adventureMacro($location`An Unusually Quiet Barroom Brawl`, Macro.olivers().kill());
+        heal();
+    }
+    if (get("_speakeasyFreeFights") === 2) {
+        // Agent time, this one without any extra frills, just kill
+        getInnerElf();
+        useDefaultFamiliar();
+        foldIfNotHave($item`makeshift garbage shirt`);
+        outfit();
+        adventureMacro($location`An Unusually Quiet Barroom Brawl`, Macro.kill());
         heal();
     }
     // DMT time
@@ -455,6 +494,19 @@ export default function level(): void {
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
         }
+    }
+    // Acquire the anticheese now, while still in the correct moon sign
+    if (get("lastAnticheeseDay") < 1) {
+        // Get beach access - might have bus pass from a fumbled run
+        if (!have($item`bitchin' meatcar`) && !have($item`Desert Bus pass`)) {
+            retrieveItem(1, $item`bitchin' meatcar`);
+        }
+        // Give cheese
+        visitUrl("place.php?whichplace=desertbeach&action=db_nukehouse");
+    }
+    // Become government
+    if (!have($item`government`) && !have($effect`I See Everything Thrice!`)) {
+        create(1, $item`government`);
     }
     // And so ends levelling. Celebrate with a drink, and onward to tests!
     useIfHave($item`astral six-pack`);

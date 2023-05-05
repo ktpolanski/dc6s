@@ -65,7 +65,6 @@ import {
     outfitSpell,
     outfitWeapon,
 } from "./outfit";
-import { performSynth } from "./synth";
 
 // Prepare for coil wire, i.e. do early run stuff
 export function coilWirePrep(): void {
@@ -265,6 +264,7 @@ export function weaponPrep(): void {
         $effect`Blessing of the Bird`,
         $effect`The Power of LOV`,
         $effect`Frenzied, Bloody`,
+        $effect`Imported Strength`,
     ]);
     // These two can be skipped due to Stick-Knife in softcore
     if (inHardcore()) getBuffs($effects`Lack of Body-Building, Billiards Belligerence`);
@@ -359,6 +359,7 @@ export function spellPrep(): number {
         $effect`Baconstoned`,
         $effect`Pisces in the Skyces`,
         $effect`Grumpy and Ornery`,
+        $effect`Imported Strength`,
     ]);
     // Traditionally Inner Elf
     getInnerElf();
@@ -399,14 +400,20 @@ export function itemPrep(): void {
     if (!have($effect`Driving Observantly`)) {
         if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!";
     }
+    // Get the sparkler for the outfit
+    if (!have($item`oversized sparkler`)) buy(1, $item`oversized sparkler`);
     // Item buff time
     getBuffs([
         $effect`Fat Leon's Phat Loot Lyric`,
         $effect`Singer's Faithful Ocelot`,
         $effect`Driving Observantly`,
         $effect`Pork Barrel`,
+        $effect`The Spirit of Taking`,
+        $effect`Glowing Hands`,
+        $effect`Crunching Leaves`,
+        $effect`I See Everything Thrice!`,
     ]);
-    if (!have($effect`Synthesis: Collection`)) performSynth("item");
+    // if (!have($effect`Synthesis: Collection`)) performSynth("item");
     // Get bowlo buff and batform in a single runaway
     if (!have($effect`Cosmic Ball in the Air`)) {
         useFamiliar($familiar`none`);

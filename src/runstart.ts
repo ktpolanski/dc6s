@@ -11,7 +11,7 @@ import {
     use,
     visitUrl,
 } from "kolmafia";
-import { $item, get, have, SongBoom } from "libram";
+import { $item, $location, $skill, AutumnAton, get, have, SongBoom, SourceTerminal } from "libram";
 import { useIfHave } from "./lib";
 
 // Turn zero stuff
@@ -68,6 +68,12 @@ export default function runstart(): void {
     if (getWorkshed() === $item`none`) {
         use(1, $item`Asdon Martin keyfob`);
     }
+    // Go autumnaton go, make me an item potion
+    if (get("_autumnatonQuests") === 0) {
+        AutumnAton.sendTo($location`The Sleazy Back Alley`);
+    }
+    // Learn portscan for later
+    SourceTerminal.educate($skill`Portscan`);
     // Early turn generation - numberology and borrowed time
     if (myLevel() === 1 && !mySpleenUse()) {
         // Numberology is capped at 3 in run
