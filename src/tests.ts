@@ -289,8 +289,9 @@ export function weaponPrep(): void {
         outfitFamWeight();
         getBuffs($effects`Elemental Saucesphere, Astral Shell`);
         // Just in case, to avoid disappointment
-        if (elementalResistance($element`spooky`) < 10)
+        if (elementalResistance($element`spooky`) < 10) {
             throw "Can't get enough spooky resistance for DDV!";
+        }
         // DDV needs 500 HP minimum
         if (myMaxhp() < 500 && !have($effect`Song of Starch`)) useSkill(1, $skill`Song of Starch`);
         // This thing slaps the HP hard
@@ -345,6 +346,9 @@ export function spellPrep(): number {
         // Parka free kill specifically
         equip($item`Jurassic Parka`);
         setParka("dilophosaur");
+        // May as well hope for a garbage fire bjorn drop
+        if (have($item`Buddy Bjorn`)) equip($item`Buddy Bjorn`);
+        bjornify($familiar`Garbage Fire`);
         adventureMacro($location`The Toxic Teacups`, Macro.trySkill($skill`Spit jurassic acid`));
         // The above will catch the opening NC, go again
         if (!have($effect`Toxic Vengeance`)) {
