@@ -38,11 +38,6 @@ export class SynthesisPlanner {
         this.getCandy();
         this.addPecans();
 
-        // So these two outcomes are really common in the plans
-        set("_dc6s_item_candy", [this.mod0.shift(), $item`peppermint twist`]); // 0+1
-        // But what if this ate a good this.mod0.shift() and then gets overwritten?
-        // In 3 barks, mod0 is 100% peppermint sprouts so it doesn't matter
-
         // Do a 2+4 myst candy. Can we use a candy heart for it?
         // One might have fallen out in the existing summons or something
         if (have($item`lavender candy heart`)) {
@@ -53,22 +48,15 @@ export class SynthesisPlanner {
             set("_dc6s_myst_candy", $items`Chubby and Plump bar, bag of many confections`); // 2+4
         }
 
-        // 3 barks, 2 fudge, 1 bark are all lit
-        if (itemAmount($item`Crimbo peppermint bark`) >= 3) {
-            set("_dc6s_exp_candy", [this.mod0.shift(), $item`Crimbo peppermint bark`]); // 0+3
-            // Common myst
-            set("_dc6s_item_candy", $items`Crimbo peppermint bark, Crimbo peppermint bark`); // 3+3
-        } else if (itemAmount($item`Crimbo fudge`) >= 2) {
+        // 2 fudge, 1 bark are all lit
+        if (itemAmount($item`Crimbo fudge`) >= 2) {
             set("_dc6s_exp_candy", $items`Crimbo fudge, Crimbo fudge`); // 4+4
-            // Common myst and item
         } else if (itemAmount($item`Crimbo peppermint bark`) >= 1) {
             set("_dc6s_exp_candy", [this.mod0.shift(), $item`Crimbo peppermint bark`]); // 0+3
-            // Common myst and item
         } else {
-            // 1 fudge requires candy heart luck, pecan yahtzee flat out doesn't work
-            // Just summon sugar and get it over with
-            set("_dc6s_exp_candy", [this.mod0.shift(), $item`sugar shield`]); // 0+3
-            // Common myst and item
+            // 1 fudge and pecan yahtzee are not great for piecing things together
+            // Just use peppermints and get it over with
+            set("_dc6s_exp_candy", [$item`peppermint twist`, $item`peppermint patty`]); // 1+2
         }
     }
 }
