@@ -114,8 +114,8 @@ export function familiarWithGear(familiar: Familiar): void {
 function camel(): void {
     useFamiliar($familiar`Melodramedary`);
     // Pick up the gear and stick it on
-    if (!have($item`box of Familiar Jacks`) && !have($item`dromedary drinking helmet`)) {
-        create(1, $item`box of Familiar Jacks`);
+    if (!have($item`dromedary drinking helmet`)) {
+        if (!have($item`box of Familiar Jacks`)) create(1, $item`box of Familiar Jacks`);
         use(1, $item`box of Familiar Jacks`);
     }
     equip($item`dromedary drinking helmet`);
