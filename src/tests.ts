@@ -338,6 +338,22 @@ export function weaponPrep(): void {
 export function spellPrep(): number {
     // Start off with Simmer so it doesn't muck anything up later
     getBuffs($effects`Simmering`);
+    // Pop a free kill in the toxic teacups for a tiny bit of toxic vengeance
+    // Which should be enough to push out a turn save from the spare change
+    if (!have($effect`Toxic Vengeance`)) {
+        useFamiliar($familiar`none`);
+        // Parka free kill specifically
+        equip($item`Jurassic Parka`);
+        setParka("dilophosaur");
+        adventureMacro($location`The Toxic Teacups`, Macro.trySkill($skill`Spit jurassic acid`));
+        // The above will catch the opening NC, go again
+        if (!have($effect`Toxic Vengeance`)) {
+            adventureMacro(
+                $location`The Toxic Teacups`,
+                Macro.trySkill($skill`Spit jurassic acid`)
+            );
+        }
+    }
     // Acquire some constituent pieces
     if (!have($effect`Sigils of Yeg`) && !have($item`Yeg's Motel hand soap`)) {
         cliExecute("cargo 177");
@@ -405,22 +421,6 @@ export function itemPrep(): void {
     // Fuel up asdon for buffing purposes
     if (!have($effect`Driving Observantly`)) {
         if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!";
-    }
-    // Pop a free kill in the toxic teacups for a tiny bit of toxic vengeance
-    // Which should be enough to push out a turn save from the spare change
-    if (!have($effect`Toxic Vengeance`)) {
-        useFamiliar($familiar`none`);
-        // Parka free kill specifically
-        equip($item`Jurassic Parka`);
-        setParka("dilophosaur");
-        adventureMacro($location`The Toxic Teacups`, Macro.trySkill($skill`Spit jurassic acid`));
-        // The above will catch the opening NC, go again
-        if (!have($effect`Toxic Vengeance`)) {
-            adventureMacro(
-                $location`The Toxic Teacups`,
-                Macro.trySkill($skill`Spit jurassic acid`)
-            );
-        }
     }
     // Get the sparkler for the outfit
     retrieveItem(1, $item`oversized sparkler`);
