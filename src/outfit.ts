@@ -3,6 +3,7 @@ import {
     cliExecute,
     create,
     equip,
+    Familiar,
     inHardcore,
     Item,
     Slot,
@@ -10,7 +11,7 @@ import {
     useFamiliar,
 } from "kolmafia";
 import { $effect, $familiar, $item, $items, $slot, get, have } from "libram";
-import { checkKGB, foldIfNotHave, setParka, setRetroCape } from "./lib";
+import { bjornify, checkKGB, foldIfNotHave, setParka, setRetroCape } from "./lib";
 
 // Outfits are defined as maps (dictionaries)
 // Where the keys are slots and the values are an array of items
@@ -158,15 +159,21 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
 }
 
 // Familiar weight stuff, useful both in run and for the test
-export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
+// Default to using the spooky pirate skeleton in the bjorn as a common +5lb one
+// But allow for an override to do garbage fire fishing during banderways
+export function outfitFamWeight(
+    changes: (Item | [Slot, Item])[] = [],
+    familiar: Familiar = $familiar`Spooky Pirate Skeleton`
+): void {
     setRetroCape("heck", "thrill");
     setParka("spikolodon");
     // Fold the burning newspaper into the crane if need be
-    if (have($item`burning newspaper`) && !have($item`burning paper crane`))
+    if (have($item`burning newspaper`) && !have($item`burning paper crane`)) {
         create(1, $item`burning paper crane`);
+    }
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`Daylight Shavings Helmet`],
-        [$slot`back`, $items`LOV Epaulettes, unwrapped knock-off retro superhero cape`],
+        [$slot`back`, $items`Buddy Bjorn, unwrapped knock-off retro superhero cape`],
         [$slot`shirt`, $items`makeshift garbage shirt, Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`burning paper crane, familiar scrapbook`],
@@ -177,6 +184,7 @@ export function outfitFamWeight(changes: (Item | [Slot, Item])[] = []): void {
     ]);
     applyChanges(outfit, changes);
     dressUp(outfit);
+    bjornify(familiar);
 }
 
 // Moxie test outfit
@@ -310,16 +318,20 @@ export function outfitWeapon(): void {
 export function outfitSpell(): void {
     foldIfNotHave($item`broken champagne bottle`);
     setParka("spikolodon");
+    // Fold the burning newspaper into the jorts if need be
+    if (have($item`burning newspaper`) && !have($item`burning paper jorts`)) {
+        create(1, $item`burning paper jorts`);
+    }
     // Only need to reconfigure the KGB if in hardcore
     // In softcore just wear the meteorite necklace and all is well
     if (!checkKGB("Spell Damage") && inHardcore()) cliExecute("briefcase enchantment spell");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`astral chapeau`],
-        [$slot`back`, $items`protonic accelerator pack`],
+        [$slot`back`, $items`Buddy Bjorn, protonic accelerator pack`],
         [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Staff of the Roaring Hearth, weeping willow wand`],
         [$slot`offhand`, $items`Abracandalabra`],
-        [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
+        [$slot`pants`, $items`burning paper jorts, pantogram pants, Cargo Cultist Shorts`],
         [$slot`acc1`, $items`battle broom`],
         [$slot`acc2`, $items`meteorite necklace, Kremlin's Greatest Briefcase`],
         [$slot`acc3`, $items`Powerful Glove`],
@@ -329,6 +341,7 @@ export function outfitSpell(): void {
         useFamiliar($familiar`Disembodied Hand`);
         equip($slot`familiar`, $item`Stick-Knife of Loathing`);
     }
+    bjornify($familiar`Mechanical Songbird`);
 }
 
 // Item test outfit

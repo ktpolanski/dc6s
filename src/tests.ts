@@ -39,6 +39,7 @@ import {
 } from "libram";
 import {
     adventureMacro,
+    bjornify,
     bu,
     bustGhost,
     castLibrams,
@@ -83,8 +84,10 @@ export function coilWirePrep(): void {
         }
         foldIfNotHave($item`tinsel tights`);
         // Put on the scrapbook to get a scrap off the shrub doing stuff
+        // The bjorn to try to chance a garbage fire drop
         // And the doc bag to run away with a reflex hammer
-        outfitEarly($items`familiar scrapbook, Lil' Doctor™ bag`);
+        outfitEarly($items`familiar scrapbook, Buddy Bjorn, Lil' Doctor™ bag`);
+        bjornify($familiar`Garbage Fire`);
         // 100% spooky zone, shrub tuned to spooky, monsters won't die
         adventureMacro(
             $location`The Skeleton Store`,
@@ -273,6 +276,9 @@ export function weaponPrep(): void {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
         // Use a latte throw to get out
         equip($item`latte lovers member's mug`);
+        // May as well hope for a garbage fire bjorn drop
+        if (have($item`Buddy Bjorn`)) equip($item`Buddy Bjorn`);
+        bjornify($familiar`Garbage Fire`);
         // The Dire Warren has a beast, and just a beast - how fortunate for us!
         adventureMacro($location`The Dire Warren`, Macro.freeRun());
     }

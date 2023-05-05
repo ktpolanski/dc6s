@@ -32,7 +32,7 @@ The script is written to operate as a Pastamancer, with the following pre-run se
 
 ## Run Plan
 
-A pair of spreadsheets showing the run plan and buff setup for non-stat tests can be accessed [here](https://docs.google.com/spreadsheets/d/1uJ1DOd12r0VuOmfv0_FZXPMmtZ0Ln2FJUenFkhsFRHk/edit#gid=1299653939). Some notes:
+A pair of spreadsheets showing the run plan and buff setup for non-stat tests can be accessed [here](https://docs.google.com/spreadsheets/d/1uJ1DOd12r0VuOmfv0_FZXPMmtZ0Ln2FJUenFkhsFRHk/edit#gid=1823036652). Some notes:
 
 -   This is a standard coil wire into level into do tests sort of thing, following the bean test model. Do stat tests early as you're buffed from levelling. Do the familiar weight block (hot resistance and noncombat both benefit from it) afterward to be able to use familiar weight buffs for levelling. Do weapon/spell damage due to shared buffs. Finish with item so that Feel Lost can be used.
 -   The run makes use of a few outfits: the expected mysticality% to maximise scaler returns, a flat mysticality+ for some early fights, a ML option for maximising gains from non-scaling fights, and familiar weight for Sprinkle Dog and bander runaways.

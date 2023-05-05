@@ -38,6 +38,7 @@ import {
 } from "libram";
 import {
     adventureMacro,
+    bjornify,
     bu,
     bustGhost,
     castLibrams,
@@ -145,7 +146,9 @@ export default function level(): void {
     if (!have($effect`Nanobrainy`)) {
         familiarWithGear($familiar`Nanorhino`);
         foldIfNotHave($item`tinsel tights`);
-        outfit();
+        // Override outfit with bjorn to try to catch garbage fire drops
+        outfit($items`Buddy Bjorn`);
+        bjornify($familiar`Garbage Fire`);
         if (!get("_gingerbreadClockAdvanced")) {
             // Advance the clock to make gingercity go quicker
             setChoice(1215, 1);
@@ -154,6 +157,7 @@ export default function level(): void {
             adv1($location`Gingerbread Civic Center`);
         }
         // Get the buff (by casting noodles) and get bowlo counting down for its 9+11 NEP appearance later
+        // Can't stall for time for garbage fire drops as nanorhino is an attack familiar
         adventureMacro(
             $location`Gingerbread Civic Center`,
             Macro.trySkill($skill`Entangling Noodles`).trySkill($skill`Bowl a Curveball`)
@@ -326,7 +330,8 @@ export default function level(): void {
         if (!have($item`sprinkles`)) {
             familiarWithGear($familiar`Chocolate Lab`);
             foldIfNotHave($item`tinsel tights`);
-            outfitFamWeight();
+            // Override the bjorn with LOV Epaulettes, as we're going to gain stats
+            outfitFamWeight($items`LOV Epaulettes`);
             // Sprinkle dog needs to be 140lb fat to guarantee enough sprinkles for stuff
             // But 20lb of that can come from a meteor shower, so aim for 120lb in gear
             // Mafia currently does not seem to track Fidoxene correctly

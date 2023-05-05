@@ -1,6 +1,7 @@
 import {
     adv1,
     autosell,
+    bjornifyFamiliar,
     buy,
     cliExecute,
     create,
@@ -13,6 +14,7 @@ import {
     familiarEquipment,
     getWorkshed,
     handlingChoice,
+    haveEquipped,
     hippyStoneBroken,
     inebrietyLimit,
     inHardcore,
@@ -133,8 +135,9 @@ function camel(): void {
 
 // Pull the cook out, but pull out the bander before so cook's bonus xp trickles down
 function cook(): void {
-    if (myFamiliar() !== $familiar`Shorter-Order Cook`)
+    if (myFamiliar() !== $familiar`Shorter-Order Cook`) {
         useFamiliar($familiar`Frumious Bandersnatch`);
+    }
     familiarWithGear($familiar`Shorter-Order Cook`);
 }
 
@@ -241,7 +244,8 @@ export function holidayCheck(): void {
     if (getTodaysHolidayWanderers().length > 0) {
         // Use the boots as they don't require Ode, just go and run, nothing fancy
         familiarWithGear($familiar`Pair of Stomping Boots`);
-        outfitFamWeight();
+        // Try to catch a garbage fire drop, you never know
+        outfitFamWeight([], $familiar`Garbage Fire`);
         adventureMacro($location`Noob Cave`, Macro.freeRun());
     }
 }
@@ -284,10 +288,12 @@ export function gingerbreadBanderway(location: Location): void {
     getBuffs($effects`Ode to Booze`);
     familiarWithGear($familiar`Frumious Bandersnatch`);
     foldIfNotHave($item`tinsel tights`);
-    // This is an easy opportunity to get some scraps and sweat
+    // This is an easy opportunity to get some scraps
     // As bander provides one start of combat and one on skill use
-    outfitFamWeight($items`designer sweatpants, familiar scrapbook`);
-    adventureMacro(location, Macro.trySkill($skill`Micrometeorite`).freeRun());
+    // Also fish for some sweat and some garbage fire bjorn drops
+    outfitFamWeight($items`designer sweatpants, familiar scrapbook`, $familiar`Garbage Fire`);
+    // Use the full delevel setup here to stall for time for the garbage fire bjorn
+    adventureMacro(location, Macro.delevel().freeRun());
     heal();
 }
 
@@ -302,6 +308,9 @@ export function getInnerElf(): void {
         getBuffs($effects`Blood Bubble`);
         // Free sweat
         equip($item`designer sweatpants`);
+        // Free garbage fire bjorn chance, I guess
+        if (have($item`Buddy Bjorn`)) equip($item`Buddy Bjorn`);
+        bjornify($familiar`Garbage Fire`);
         setChoice(326, 1);
         // Only some free banishers work here because of reasons
         adventureMacro(
@@ -415,6 +424,12 @@ export function checkKGB(enchant: string): boolean {
     const briefcase = visitUrl("desc_item.php?whichitem=311743898");
     if (briefcase.includes(enchant)) return true;
     else return false;
+}
+
+// Put a specified familiar in the bjorn, if we're wearing the bjorn
+export function bjornify(familiar: Familiar): void {
+    // No point bjornifying if there's no bjorn in place
+    if (haveEquipped($item`Buddy Bjorn`)) bjornifyFamiliar(familiar);
 }
 
 // Try to run a test and see what happens

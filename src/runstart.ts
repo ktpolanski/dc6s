@@ -106,7 +106,7 @@ export default function runstart(): void {
             $item`Staff of the Roaring Hearth`,
             $item`repaid diaper`,
             $item`meteorite necklace`,
-            $item`tiny costume wardrobe`,
+            $item`Buddy Bjorn`,
             $item`Stick-Knife of Loathing`,
         ]) {
             if (!have(pull)) takeStorage(1, pull);
