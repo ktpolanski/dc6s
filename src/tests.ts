@@ -51,6 +51,7 @@ import {
     holidayCheck,
     saberCheese,
     setChoice,
+    useIfHave,
 } from "./lib";
 import Macro from "./combat";
 import {
@@ -234,7 +235,6 @@ export function famWeightPrep(): void {
         $effect`Leash of Linguini`,
         $effect`Empathy`,
         $effect`Blood Bond`,
-        $effect`Heart of Green`,
         $effect`Robot Friends`,
         $effect`Billiards Belligerence`,
         $effect`Shortly Stacked`,
@@ -349,6 +349,8 @@ export function spellPrep(): number {
     if (!have($effect`Concentration`) && !have($item`cordial of concentration`)) {
         create(1, $item`cordial of concentration`);
     }
+    // There may be a resolution. But there also may not
+    useIfHave($item``);
     // Now that that's done, other stuff! A LOT of it!
     getBuffs([
         $effect`Spirit of Garlic`,
