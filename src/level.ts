@@ -177,7 +177,6 @@ export default function level(): void {
     } else getBuffs($effects`Baconstoned`);
     // Pump up familiar weight now that there's no accidental KO danger
     getBuffs([
-        $effect`Fidoxene`,
         $effect`Puzzle Champ`,
         $effect`Blood Bond`,
         $effect`Leash of Linguini`,
