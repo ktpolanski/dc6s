@@ -48,7 +48,7 @@ export class SynthesisPlanner {
             set("_dc6s_myst_candy", $items`Chubby and Plump bar, bag of many confections`); // 2+4
         }
 
-        // 2 fudge, 1 bark are all lit
+        // 2 fudge, 1 bark are both lit
         if (itemAmount($item`Crimbo fudge`) >= 2) {
             set("_dc6s_exp_candy", $items`Crimbo fudge, Crimbo fudge`); // 4+4
         } else if (itemAmount($item`Crimbo peppermint bark`) >= 1) {

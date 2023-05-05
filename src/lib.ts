@@ -372,7 +372,7 @@ export function useIfHave(item: Item): void {
 
 // Buy and use item; named bu after common chat macro
 export function bu(item: Item): void {
-    if (!have(item)) buy(1, item);
+    retrieveItem(1, item);
     use(1, item);
 }
 

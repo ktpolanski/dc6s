@@ -1,6 +1,5 @@
 import {
     adv1,
-    buy,
     changeMcd,
     cliExecute,
     create,
@@ -11,6 +10,7 @@ import {
     myHp,
     myMaxhp,
     myThrall,
+    retrieveItem,
     runChoice,
     runCombat,
     setAutoAttack,
@@ -101,12 +101,10 @@ export function coilWirePrep(): void {
         if (myHp() < 0.5 * myMaxhp()) cliExecute("hottub");
     }
     // Set up MCD on 10 now that shrub has provided us with some funds
-    if (!have($item`detuned radio`)) buy(1, $item`detuned radio`);
+    retrieveItem(1, $item`detuned radio`);
     changeMcd(10);
     // Get an accordion and sewer items
-    if (!have($item`toy accordion`)) {
-        buy(1, $item`toy accordion`);
-    }
+    retrieveItem(1, $item`toy accordion`);
     while (!have($item`turtle totem`)) {
         bu($item`chewing gum on a string`);
     }
@@ -226,7 +224,7 @@ export function famWeightPrep(): void {
     if (!have($effect`You Can Really Taste the Dormouse`)) {
         // Get the drink me potion, and the magical hat
         visitUrl("clan_viplounge.php?action=lookingglass&whichfloor=2");
-        if (!have($item`sombrero-mounted sparkler`)) buy(1, $item`sombrero-mounted sparkler`);
+        retrieveItem(1, $item`sombrero-mounted sparkler`);
     }
     // Most buffs should be on from levelling, as they get used early to make familiar go brrr
     getBuffs([
@@ -401,7 +399,7 @@ export function itemPrep(): void {
         if (!AsdonMartin.fillWithInventoryTo(37)) throw "Breadcar refuses to charge to 37!";
     }
     // Get the sparkler for the outfit
-    if (!have($item`oversized sparkler`)) buy(1, $item`oversized sparkler`);
+    retrieveItem(1, $item`oversized sparkler`);
     // Item buff time
     getBuffs([
         $effect`Fat Leon's Phat Loot Lyric`,
@@ -413,7 +411,6 @@ export function itemPrep(): void {
         $effect`Crunching Leaves`,
         $effect`I See Everything Thrice!`,
     ]);
-    // if (!have($effect`Synthesis: Collection`)) performSynth("item");
     // Get bowlo buff and batform in a single runaway
     if (!have($effect`Cosmic Ball in the Air`)) {
         useFamiliar($familiar`none`);
