@@ -258,7 +258,7 @@ export default function level(): void {
         libramFishBrickoFights(1000);
     }
     // At this point we hit up the residual non-scaling fights
-    // They're not gonna get any better, and it improves chateau yields
+    // They're not gonna get any better, and it improves later scaler yields
     if (get("_snojoFreeFights") < 10) {
         // Set the snojo if unset
         if (get("snojoSetting") === null) {

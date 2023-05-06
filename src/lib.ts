@@ -142,7 +142,7 @@ function cook(): void {
 }
 
 // Pick what familiar to use, hardcore edition
-export function hardcoreFamiliar(canAttack = true): void {
+export function hardcoreFamiliar(canAttack = true, canCamel = true): void {
     // Need to prioritise garbage fire and shorty to get famweight drops
     // So that sprinkle dog can be 140lb in time for his moment
     if (!have($item`short stack of pancakes`) && !have($effect`Shortly Stacked`) && canAttack) {
@@ -150,8 +150,9 @@ export function hardcoreFamiliar(canAttack = true): void {
         cook();
     } else if (get("_garbageFireDrops") < 1 && get("_garbageFireDropsCrown") < 2) {
         familiarWithGear($familiar`Garbage Fire`);
-    } else if (get("camelSpit") < 100) {
+    } else if (get("camelSpit") < 100 && canCamel) {
         // The camel takes up most of the turns in the middle of the run
+        // The camel clause is exclusively against the witchess queen
         camel();
     } else {
         // We're in the NEP and fishing for kramcos
@@ -161,10 +162,11 @@ export function hardcoreFamiliar(canAttack = true): void {
 }
 
 // Pick what familiar to use, softcore edition
-export function softcoreFamiliar(canAttack = true): void {
+export function softcoreFamiliar(canAttack = true, canCamel = true): void {
     // Repaid diaper brings sprinkle dog up fat enough to not need to rush famweight drops
     // Do camel charging first and spit upon yourself to aid with levelling
-    if (!have($effect`Spit Upon`)) {
+    if (!have($effect`Spit Upon`) && canCamel) {
+        // The camel clause is exclusively against the witchess queen
         camel();
     } else if (
         !have($item`short stack of pancakes`) &&
@@ -183,11 +185,13 @@ export function softcoreFamiliar(canAttack = true): void {
 }
 
 // Pick what familiar to use
-export function useDefaultFamiliar(canAttack = true): void {
+// Allow control over whether the familiar can attack (low HP enemies)
+// And whether the camel is allowed (the witchess queen blocks skills)
+export function useDefaultFamiliar(canAttack = true, canCamel = true): void {
     // If in hardcore, prioritise the famweight drops
     // If in softcore, prioritise the camel and get spat on
-    if (inHardcore()) hardcoreFamiliar(canAttack);
-    else softcoreFamiliar(canAttack);
+    if (inHardcore()) hardcoreFamiliar(canAttack, canCamel);
+    else softcoreFamiliar(canAttack, canCamel);
 }
 
 // Add auto-attack to the passed macro and hit up the specified location once
@@ -386,13 +390,11 @@ export function getInnerElf(): void {
 export function fightWitchessRoyalty(royalty: Monster): void {
     // On the off-chance we're level 13 already
     getInnerElf();
-    // If we're about to go up against a queen, and we're in softcore
-    // Then if we have a spit-ready camel, it won't be able to spit
-    // A workaround is to use hardcore familiar prioritising no matter what
-    // If hardcore, this is fine, that's what we're after
-    // If softcore, it will prioritise charging up familiar weight drop familiars
-    if (royalty === $monster`Witchess Queen`) hardcoreFamiliar();
-    else useDefaultFamiliar();
+    // If we're about to go up against a queen, and we have a spit-ready camel
+    // The skill won't go off. Tell it to not use the camel
+    if (royalty === $monster`Witchess Queen` && get("camelSpit") === 100) {
+        useDefaultFamiliar(true, false);
+    } else useDefaultFamiliar();
     foldIfNotHave($item`makeshift garbage shirt`);
     outfit($items`unbreakable umbrella`);
     // Witchess royalty allows for no combat finesse
