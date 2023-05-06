@@ -64,7 +64,9 @@ import {
     ChateauMantegna,
     Clan,
     CommunityService,
+    CrownOfThrones,
     get,
+    getSaleValue,
     getTodaysHolidayWanderers,
     have,
     haveInCampground,
@@ -73,6 +75,8 @@ import {
     PropertiesManager,
     set,
     SourceTerminal,
+    sum,
+    sumNumbers,
     Witchess,
 } from "libram";
 import { famWeightPrep, noncombatPrep, spellPrep, weaponPrep } from "./tests";
@@ -84,6 +88,17 @@ export const PropertyManager = new PropertiesManager();
 export function setChoice(adv: number, choice: number | string): void {
     PropertyManager.setChoices({ [adv]: choice });
 }
+
+// This thing calibrates the bjorn libram code to get me familiars based on drops
+// Thanks phred!
+CrownOfThrones.createRiderMode("Free Runs", {
+    dropsValueFunction: function (drops: Item[] | Map<Item, number>): number {
+        return Array.isArray(drops)
+            ? getSaleValue(...drops)
+            : sum([...drops.entries()], ([item, quantity]) => quantity * getSaleValue(item)) /
+                  sumNumbers([...drops.values()]);
+    },
+});
 
 // Get a provided list of buffs
 export function getBuffs(buffs: Effect[]): void {
@@ -492,16 +507,13 @@ export function bjornFamiliar(): Familiar {
     if (get("_garbageFireDropsCrown") < 2) {
         // Our main priority is the garbage fire
         return $familiar`Garbage Fire`;
-    } else if (get("_grimFairyTaleDropsCrown") < 2) {
-        // Harvest limited per day stuff for value
-        return $familiar`Grim Brother`;
-    } else if (get("_grimstoneMaskDropsCrown") < 1) {
-        // This too
-        return $familiar`Grimstone Golem`;
     } else {
-        // Out of interesting limited things, go for something generically okay
-        // TODO: this could be smarter and more useful
-        return $familiar`BRICKO chick`;
+        // Phred helped me set up libram's bjorn support to spit out the best drop familiar!
+        const rider = CrownOfThrones.pickRider("Free Runs");
+        // This might technically be null, though it shouldn't
+        if (rider !== null) {
+            return rider.familiar;
+        } else return $familiar`BRICKO chick`;
     }
 }
 
