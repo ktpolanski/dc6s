@@ -1,6 +1,6 @@
 # DC6S
 
-The repository houses an operational CS script that does 1/89 SC and 1/105 HC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
+The repository houses an operational CS script that does 1/74SC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
 
 ## Setup
 
@@ -17,7 +17,7 @@ This offers a few commands accessible from Mafia's CLI:
 
 -   `dc6s` performs the CS run.
 -   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. Accepts the following optional arguments:
-    -   `hardcore` will ascend HCCS rather than the default SCCS
+    -   `hardcore` will ascend HCCS rather than the default SCCS, but this hasn't been used in ages and is likely to misbehave in some way
     -   `noascend` will deposit the user in front of the gash in an ascension-ready state; useful for perming skills
     -   `nopvp` skips PvP, if not provided uses [`PVP_MAB.ash`](https://kolmafia.us/threads/a-multi-armed-bandit-pvp-script.27391/)
 
@@ -26,7 +26,7 @@ This offers a few commands accessible from Mafia's CLI:
 The script is written to operate as a Pastamancer, with the following pre-run setup:
 
 -   Wallaby moon sign, astral chapeau, astral six-pack
--   Asdon Martin in the workshed, peppermint garden, Our Daily Candles eudora
+-   peppermint garden, Our Daily Candles eudora
 -   Chateau: foreign language tapes, ceiling fan, continental juice bar
 -   Cowboy boots: nicksilver spurs, frontwinder skin
 
@@ -34,12 +34,12 @@ The script is written to operate as a Pastamancer, with the following pre-run se
 
 A pair of spreadsheets showing the run plan and buff setup for non-stat tests can be accessed [here](https://docs.google.com/spreadsheets/d/1uJ1DOd12r0VuOmfv0_FZXPMmtZ0Ln2FJUenFkhsFRHk/edit#gid=1823036652). Some notes:
 
--   This is a standard coil wire into level into do tests sort of thing, following the bean test model. Do stat tests early as you're buffed from levelling. Do the familiar weight block (hot resistance and noncombat both benefit from it) afterward to be able to use familiar weight buffs for levelling. Do weapon/spell damage due to shared buffs. Finish with item so that Feel Lost can be used.
+-   This is a standard coil wire into level into do tests sort of thing. Do stat tests early as you're buffed from levelling. Do hot resistance to make use of a Daylight Shavings Helmet buff that showed up during levelling. Do weapon/spell damage due to shared buffs. Do the familiar weight block (noncombat also benefits from it) afterward, allowing for some limited buffs to overrun into farming. Finish with item so that Feel Lost can be used.
 -   The run makes use of a few outfits: the expected mysticality% to maximise scaler returns, a flat mysticality+ for some early fights, a ML option for maximising gains from non-scaling fights, and familiar weight for Sprinkle Dog and bander runaways.
 -   The Chateau rests are delayed until all non-scaling fights are picked up, which should maximise their returns.
--   Getting the Sprinkle Dog to 140 pounds before going into the Retail District guarantees that any non-gentrifier will drop 55 sprinkles, which is sufficient for a latte and cigarettes. As such, the familiar weight drop familiars are routed early to assist with this.
--   Due to the large number of various combats in the NEP, the cosmic bowling ball is consciously used earlier in a fashion that allows for 9+11 turn bowling sideways. Once the camelcalf is charged, hipster fights are pursued. At some point the familiar scrapbook is worn for a few combats to maximise Feel Pride returns.
--   In softcore, the familiar weight pressure is considerably alleviated by a repaid diaper. Also, the various spell damage pulls shorten that test considerably. As a result, the camel is charged first and the spit is used during levelling for a further boost, and the damage tests are done ahead of the familiar weight ones.
+-   When not using bespoke familiars, the camelcalf is charged first to be able to get the spit buff for an extra bit of edge in levelling. Then the shorter-order cook is ran for the weight potion, and then the garbage fire is queued up if not enough burning newspapers dropped from the bjorn during incidental runaways. Once these familiars are exhausted, the script defaults to the goth kid for extra free fights on a non-attacking familiar. Some adjustments to this order are made against low-HP monsters that would be susceptible to attack damage, and the Witchess Queen blocking skill use.
+-   Getting the Sprinkle Dog to 120 pounds (when combined with a Meteor Shower) before going into the Retail District guarantees that any non-gentrifier will drop 55 sprinkles, which is sufficient for a latte and cigarettes. Softcore largely trivialises this, but the old hardcore routing had the familiar order reversed to get the familiar weight drops early to push Sprinkle Dog over the edge, avoided getting the spit buff during levelling, and reversed the familiar weight and damage test blocks to account for buff presence.
+-   Due to the large number of various combats in the NEP, the cosmic bowling ball is consciously used earlier in a fashion that allows for 9+11 turn bowling sideways.
 
 ## Credits
 

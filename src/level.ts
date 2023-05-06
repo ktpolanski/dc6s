@@ -295,7 +295,7 @@ export default function level(): void {
     scavenge();
     // Rest in the chateau, making and fighting oysters as quickly as we have them
     while (totalFreeRests() > get("timesRested")) {
-        // Fish for a green candy heart, then for brickos
+        // Fish for brickos, then for a spell damage resolution
         castLibrams();
         // Build and fight all the oysters you can, up to three total
         if (get("_brickoFights") < 3) {
