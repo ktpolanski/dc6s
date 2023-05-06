@@ -7,6 +7,7 @@ import {
     familiarWeight,
     inHardcore,
     itemAmount,
+    myLevel,
     myMeat,
     retrieveItem,
     runChoice,
@@ -321,7 +322,7 @@ export default function level(): void {
             if (dogWeight < 120) {
                 throw "Didn't get Sprinkle Dog to 120 pounds!";
             }
-            // Ok, if we're here, we're good
+            // Ok, if we're here, we're good, do a shattering punch
             // Any non-gentrifier will get us our desired 55 sprinkles
             adventureMacro(
                 $location`Gingerbread Upscale Retail District`,
@@ -454,9 +455,10 @@ export default function level(): void {
                 // Popping confetti has a similar list of checks as feel pride
                 // Although tuned to the fact there will be nine of them
                 // In hardcore, the disposable accessory is the default acc1
-                // In softcore, acc3 is comparably the weakest at this point
-                if (inHardcore()) outfit($items`unbreakable umbrella, Cincho de Mayo`);
-                else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Cincho de Mayo`]]);
+                // In softcore, acc3 becomes the weakest once the necklace goes on
+                if (inHardcore() || myLevel() < 15) {
+                    outfit($items`unbreakable umbrella, Cincho de Mayo`);
+                } else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Cincho de Mayo`]]);
             } else outfit($items`unbreakable umbrella`);
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
@@ -468,7 +470,7 @@ export default function level(): void {
             heal();
             libramFishBrickoFights();
         }
-        // On to the X-rays
+        // On to the X-rays, two of them
         while (get("_chestXRayUsed") < 3) {
             // Doctor bag may try to give a quest if there's hipster fight overload, skip it
             setChoice(1340, 3);
@@ -485,7 +487,7 @@ export default function level(): void {
         // Prepare the missile launcher
         // Just pre-fuel the thing all the way to avoid moon tuning surprises
         if (!AsdonMartin.fillWithInventoryTo(174)) throw "Breadcar refuses to charge to 174!";
-        // Do non-X-ray free kills
+        // Do non-X-ray free kills - two shattering punches, mob hit, asdon missile
         while (freeKillsLeft() > 0) {
             getInnerElf();
             useDefaultFamiliar();
