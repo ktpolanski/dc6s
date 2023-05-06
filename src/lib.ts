@@ -455,12 +455,10 @@ export function canCincho(): boolean {
     const confettis = get("_cinchUsed", 0) / 5;
     // We can only do this nine times
     if (confettis > 8) return false;
-    // Condition one, the dream - meteorite necklace on, bowling sideways active
-    // Also formally inner elf but that should be in place with the necklace on
+    // Condition one, the dream - level 15 for necklace, bowling sideways active
+    // Also formally inner elf but that should be in place at 15 already
     const cond1 =
-        haveEquipped($item`meteorite necklace`) &&
-        get("cosmicBowlingBallReturnCombats") > 0 &&
-        have($effect`Inner Elf`);
+        myLevel() >= 15 && get("cosmicBowlingBallReturnCombats") > 0 && have($effect`Inner Elf`);
     // Panic button conditions - about to run out of garbage shirt charges
     // Need to "waste" two on doc bag kills when the cincho won't be on
     const cond2 = get("garbageShirtCharge") < 13 - confettis;
