@@ -12,8 +12,6 @@ import {
     runChoice,
     runCombat,
     setAutoAttack,
-    totalFreeRests,
-    use,
     useFamiliar,
     useSkill,
     visitUrl,
@@ -52,6 +50,7 @@ import {
     globMacro,
     heal,
     holidayCheck,
+    libramFishBrickoFights,
     mapMacro,
     scavenge,
     setChoice,
@@ -255,6 +254,8 @@ export default function level(): void {
         // This should take care of possible tentacle boss combat
         // As it just sets your HP to 0
         heal();
+        // The snojo can be a bit of a nuisance MP wise, leave a buffer of 1000 just in case
+        libramFishBrickoFights(1000);
     }
     // At this point we hit up the residual non-scaling fights
     // They're not gonna get any better, and it improves chateau yields
@@ -275,6 +276,8 @@ export default function level(): void {
             adventureMacro($location`The X-32-F Combat Training Snowman`, Macro.saucestorm());
             // This bugger can hurt! Heal with a way lower tolerance threshold
             heal(0.9);
+            // The snojo can be a bit of a nuisance MP wise, leave a buffer of 1000 just in case
+            libramFishBrickoFights(1000);
         }
         // The snowman can apply various weird debuffs
         // The easiest way out is to just do a quick soak afterward
@@ -290,36 +293,12 @@ export default function level(): void {
         outfitML($items`Lil' Doctor™ bag`);
         mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.setup().freeKill());
         heal();
+        // Go down to default 300 MP buffer going forward
+        libramFishBrickoFights();
     }
     // Do a scavenge for some stat pocket change
     scavenge();
-    // Rest in the chateau, making and fighting oysters as quickly as we have them
-    while (totalFreeRests() > get("timesRested")) {
-        // Fish for brickos, then for a spell damage resolution
-        castLibrams();
-        // Build and fight all the oysters you can, up to three total
-        if (get("_brickoFights") < 3) {
-            // Do we have oyster ingredients?
-            while (have($item`BRICKO eye brick`) && itemAmount($item`BRICKO brick`) > 7) {
-                //Create the oyster
-                use(8, $item`BRICKO brick`);
-                useDefaultFamiliar();
-                foldIfNotHave($item`tinsel tights`);
-                // Garbo doesn't currently use otoscope, and this caps the pearls
-                outfitML($items`Lil' Doctor™ bag`);
-                // Don't forget the saucestorm because of no saber in the ML outfit
-                Macro.saucestorm($skill`Otoscope`).setAutoAttack();
-                use(1, $item`BRICKO oyster`);
-                runCombat(Macro.saucestorm($skill`Otoscope`).toString());
-                heal();
-                // Flip the pearls
-                autosell(1, $item`BRICKO pearl`);
-            }
-        }
-        // Finally, a chateau rest!
-        outfit();
-        visitUrl("place.php?whichplace=chateau&action=chateau_restbox");
-    }
+    // There used to be Chateau rests here, but then cinch happened
     // Hit up gingerbread city for the latte
     if (!have($item`gingerbread spice latte`) && !have($effect`Whole Latte Love`)) {
         // Pop a bunch of acquired familiar weight support
@@ -351,6 +330,7 @@ export default function level(): void {
                     .freeKill()
             );
             heal();
+            libramFishBrickoFights();
         }
         // Rip banderways in search of the NC, where we'll buy latte
         setChoice(1208, 3);
@@ -392,6 +372,7 @@ export default function level(): void {
         outfit();
         globMacro(Macro.kill());
         heal();
+        libramFishBrickoFights();
     }
     // Oliver's Place time, this requires a different protocol for each fight
     if (get("_speakeasyFreeFights") === 0) {
@@ -409,6 +390,7 @@ export default function level(): void {
         );
         // Heal up properly just in case as we'll be popping some extra skills
         heal(0.9);
+        libramFishBrickoFights();
     }
     if (get("_speakeasyFreeFights") === 1) {
         // Agent time, this one with Feel Nostalgic + Feel Envy (and a second Portscan)
@@ -428,6 +410,7 @@ export default function level(): void {
         outfit($items`unbreakable umbrella`);
         adventureMacro($location`An Unusually Quiet Barroom Brawl`, Macro.kill());
         heal();
+        libramFishBrickoFights();
     }
     // DMT time
     while (get("_machineTunnelsAdv") < 5) {
@@ -441,6 +424,7 @@ export default function level(): void {
             Macro.trySkill($skill`Bowl Sideways`).kill()
         );
         heal();
+        libramFishBrickoFights();
     }
     // Sort out the rest of the witchess royalty while we wait for bowlo to return
     // The queen is the best stats of them all, so kill her twice
@@ -470,6 +454,7 @@ export default function level(): void {
             // And tries to rip Feel Pride when the stars align... or if it's late
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().kill());
             heal();
+            libramFishBrickoFights();
         }
         // On to the X-rays
         while (get("_chestXRayUsed") < 3) {
@@ -484,6 +469,7 @@ export default function level(): void {
             else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
+            libramFishBrickoFights();
         }
         // Prepare the missile launcher
         // Just pre-fuel the thing all the way to avoid moon tuning surprises
@@ -499,6 +485,7 @@ export default function level(): void {
             outfit($items`unbreakable umbrella`);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
+            libramFishBrickoFights();
         }
     }
     // Acquire the anticheese now, while still in the correct moon sign

@@ -76,7 +76,7 @@ import {
     Witchess,
 } from "libram";
 import { famWeightPrep, noncombatPrep, spellPrep, weaponPrep } from "./tests";
-import { outfit, outfitFamWeight, outfitGhost } from "./outfit";
+import { outfit, outfitFamWeight, outfitGhost, outfitML } from "./outfit";
 import Macro from "./combat";
 
 // This thing allows controlling properties and choice options. Neat!
@@ -267,6 +267,66 @@ export function bustGhost(): void {
     }
 }
 
+// Check if you have enough mana to cast a libram summon
+// Leave buffer mana behind for combat and stuff
+export function canCastLibrams(buffer = 0): boolean {
+    const summonNumber = 1 + get("libramSummons");
+    const cost = 1 + (summonNumber * (summonNumber - 1)) / 2;
+    return myMp() >= cost + buffer;
+}
+
+// Helper function to check if we've made enough bricko bricks yet
+function brickoBrickCheck(): boolean {
+    // We only fight oysters, so each fight that happened is eight bricks less we need
+    const brickTarget = 24 - 8 * get("_brickoFights");
+    return itemAmount($item`BRICKO brick`) < brickTarget;
+}
+
+// Burn mana working toward libram goals
+// Leave buffer mana behind for combat and stuff
+export function castLibrams(buffer = 0): void {
+    // Keep casting while possible
+    while (canCastLibrams(buffer)) {
+        if (get("_brickoEyeSummons") < 3 || brickoBrickCheck()) {
+            // Get building pieces for three oysters
+            useSkill(1, $skill`Summon BRICKOs`);
+        } else if (!have($item`resolution: be feistier`) && !have($effect`Destructive Resolve`)) {
+            // Fish for a spell damage resolution
+            useSkill(1, $skill`Summon Resolutions`);
+        } else {
+            // If we're here, we've ran out of goals
+            // Add more?
+            break;
+        }
+    }
+}
+
+// Burn MP on librams and then try to fight all the brickos you can
+// Leave buffer mana behind for combat and stuff
+export function libramFishBrickoFights(buffer = 300): void {
+    // Fish for brickos, then for a spell damage resolution
+    castLibrams(buffer);
+    // Build and fight all the oysters you can, up to three total
+    if (get("_brickoFights") < 3) {
+        // Do we have oyster ingredients?
+        while (have($item`BRICKO eye brick`) && itemAmount($item`BRICKO brick`) > 7) {
+            //Create the oyster
+            use(8, $item`BRICKO brick`);
+            useDefaultFamiliar();
+            foldIfNotHave($item`tinsel tights`);
+            // Garbo doesn't currently use otoscope, and this caps the pearls
+            outfitML($items`Lil' Doctor™ bag`);
+            // Don't forget the saucestorm because of no saber in the ML outfit
+            Macro.saucestorm($skill`Otoscope`).setAutoAttack();
+            use(1, $item`BRICKO oyster`);
+            runCombat(Macro.saucestorm($skill`Otoscope`).toString());
+            heal();
+            // Flip the pearls
+            autosell(1, $item`BRICKO pearl`);
+        }
+    }
+}
+
 // Do a daycare scavenge
 export function scavenge(): void {
     if (get("_daycareGymScavenges") === 0) {
@@ -340,40 +400,7 @@ export function fightWitchessRoyalty(royalty: Monster): void {
     Macro.camel().attack().repeat().setAutoAttack();
     Witchess.fightPiece(royalty);
     heal();
-}
-
-// Check if you have enough mana to cast a libram summon
-// Leave buffer mana behind for combat and stuff
-export function canCastLibrams(buffer = 0): boolean {
-    const summonNumber = 1 + get("libramSummons");
-    const cost = 1 + (summonNumber * (summonNumber - 1)) / 2;
-    return myMp() >= cost + buffer;
-}
-
-// Helper function to check if we've made enough bricko bricks yet
-function brickoBrickCheck(): boolean {
-    // We only fight oysters, so each fight that happened is eight bricks less we need
-    const brickTarget = 24 - 8 * get("_brickoFights");
-    return itemAmount($item`BRICKO brick`) < brickTarget;
-}
-
-// Burn mana working toward libram goals
-// Leave buffer mana behind for combat and stuff
-export function castLibrams(buffer = 0): void {
-    // Keep casting while possible
-    while (canCastLibrams(buffer)) {
-        if (get("_brickoEyeSummons") < 3 || brickoBrickCheck()) {
-            // Get building pieces for three oysters
-            useSkill(1, $skill`Summon BRICKOs`);
-        } else if (!have($item`resolution: be feistier`) && !have($effect`Destructive Resolve`)) {
-            // Fish for a spell damage resolution
-            useSkill(1, $skill`Summon Resolutions`);
-        } else {
-            // If we're here, we've ran out of goals
-            // Add more?
-            break;
-        }
-    }
+    libramFishBrickoFights();
 }
 
 // fold() won't work if you have the exact item equipped
