@@ -338,6 +338,9 @@ export function weaponPrep(): void {
 
 // Prepare for spell damage test
 export function spellPrep(): number {
+    // The previous test made a broken champagne bottle and equipped it
+    // Fold the tote into junk to avoid wasting charges
+    foldIfNotHave($item`deceased crimbo tree`);
     // Start off with Simmer so it doesn't muck anything up later
     getBuffs($effects`Simmering`);
     // Pop a free kill in the toxic teacups for a tiny bit of toxic vengeance
