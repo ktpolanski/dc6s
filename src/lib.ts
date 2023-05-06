@@ -248,8 +248,8 @@ export function holidayCheck(): void {
     if (getTodaysHolidayWanderers().length > 0) {
         // Use the boots as they don't require Ode, just go and run, nothing fancy
         familiarWithGear($familiar`Pair of Stomping Boots`);
-        // Try to catch a garbage fire drop, you never know
-        outfitFamWeight([], $familiar`Garbage Fire`);
+        // Try to catch a bjorn drop, you never know
+        outfitFamWeight([], bjornFamiliar());
         adventureMacro($location`Noob Cave`, Macro.freeRun());
     }
 }
@@ -354,9 +354,9 @@ export function gingerbreadBanderway(location: Location): void {
     foldIfNotHave($item`tinsel tights`);
     // This is an easy opportunity to get some scraps
     // As bander provides one start of combat and one on skill use
-    // Also fish for some sweat and some garbage fire bjorn drops
-    outfitFamWeight($items`designer sweatpants, familiar scrapbook`, $familiar`Garbage Fire`);
-    // Use the full delevel setup here to stall for time for the garbage fire bjorn
+    // Also fish for some sweat and some bjorn drops
+    outfitFamWeight($items`designer sweatpants, familiar scrapbook`, bjornFamiliar());
+    // Use the full delevel setup here to stall for time for the bjorn
     adventureMacro(location, Macro.delevel().freeRun());
     heal();
 }
@@ -372,9 +372,9 @@ export function getInnerElf(): void {
         getBuffs($effects`Blood Bubble`);
         // Free sweat
         equip($item`designer sweatpants`);
-        // Free garbage fire bjorn chance, I guess
+        // Free bjorn chance, I guess
         if (have($item`Buddy Bjorn`)) equip($item`Buddy Bjorn`);
-        bjornify($familiar`Garbage Fire`);
+        bjornify(bjornFamiliar());
         setChoice(326, 1);
         // Only some free banishers work here because of reasons
         adventureMacro(
@@ -485,6 +485,24 @@ export function checkKGB(enchant: string): boolean {
     const briefcase = visitUrl("desc_item.php?whichitem=311743898");
     if (briefcase.includes(enchant)) return true;
     else return false;
+}
+
+// Determine what familiar to park in the bjorn
+export function bjornFamiliar(): Familiar {
+    if (get("_garbageFireDropsCrown") < 2) {
+        // Our main priority is the garbage fire
+        return $familiar`Garbage Fire`;
+    } else if (get("_grimFairyTaleDropsCrown") < 2) {
+        // Harvest limited per day stuff for value
+        return $familiar`Grim Brother`;
+    } else if (get("_grimstoneMaskDropsCrown") < 1) {
+        // This too
+        return $familiar`Grimstone Golem`;
+    } else {
+        // Out of interesting limited things, go for something generically okay
+        // TODO: this could be smarter and more useful
+        return $familiar`BRICKO chick`;
+    }
 }
 
 // Put a specified familiar in the bjorn, if we're wearing the bjorn

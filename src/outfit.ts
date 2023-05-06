@@ -160,7 +160,7 @@ export function outfitML(changes: (Item | [Slot, Item])[] = []): void {
 
 // Familiar weight stuff, useful both in run and for the test
 // Default to using the spooky pirate skeleton in the bjorn as a common +5lb one
-// But allow for an override to do garbage fire fishing during banderways
+// But allow for an override to do bjorn drop fishing during banderways
 export function outfitFamWeight(
     changes: (Item | [Slot, Item])[] = [],
     familiar: Familiar = $familiar`Spooky Pirate Skeleton`

@@ -35,6 +35,7 @@ import {
 } from "libram";
 import {
     adventureMacro,
+    bjornFamiliar,
     bjornify,
     bu,
     bustGhost,
@@ -146,9 +147,9 @@ export default function level(): void {
     if (!have($effect`Nanobrainy`)) {
         familiarWithGear($familiar`Nanorhino`);
         foldIfNotHave($item`tinsel tights`);
-        // Override outfit with bjorn to try to catch garbage fire drops
+        // Override outfit with bjorn to try to catch drops
         outfit($items`Buddy Bjorn`);
-        bjornify($familiar`Garbage Fire`);
+        bjornify(bjornFamiliar());
         if (!get("_gingerbreadClockAdvanced")) {
             // Advance the clock to make gingercity go quicker
             setChoice(1215, 1);
@@ -157,7 +158,7 @@ export default function level(): void {
             adv1($location`Gingerbread Civic Center`);
         }
         // Get the buff (by casting noodles) and get bowlo counting down for its 9+11 NEP appearance later
-        // Can't stall for time for garbage fire drops as nanorhino is an attack familiar
+        // Can't stall for time for bjorn drops as nanorhino is an attack familiar
         adventureMacro(
             $location`Gingerbread Civic Center`,
             Macro.trySkill($skill`Entangling Noodles`).trySkill($skill`Bowl a Curveball`)
@@ -352,9 +353,9 @@ export default function level(): void {
         useDefaultFamiliar();
         // We don't want either of our standard tote items here, fold into junk
         foldIfNotHave($item`deceased crimbo tree`);
-        // May as well try to catch garbage fire bjorn drops
+        // May as well try to catch bjorn drops
         outfit($items`Buddy Bjorn`);
-        bjornify($familiar`Garbage Fire`);
+        bjornify(bjornFamiliar());
         // WARNING! This yields nothing! No stats, no meat, nothing!
         // But it charges the familiar so that's good
         adventureMacro(

@@ -39,6 +39,7 @@ import {
 } from "libram";
 import {
     adventureMacro,
+    bjornFamiliar,
     bjornify,
     bu,
     bustGhost,
@@ -87,10 +88,10 @@ export function coilWirePrep(): void {
         }
         foldIfNotHave($item`tinsel tights`);
         // Put on the scrapbook to get a scrap off the shrub doing stuff
-        // The bjorn to try to chance a garbage fire drop
+        // The bjorn to try to chance a drop
         // And the doc bag to run away with a reflex hammer
         outfitEarly($items`familiar scrapbook, Buddy Bjorn, Lil' Doctor™ bag`);
-        bjornify($familiar`Garbage Fire`);
+        bjornify(bjornFamiliar());
         // 100% spooky zone, shrub tuned to spooky, monsters won't die
         adventureMacro(
             $location`The Skeleton Store`,
@@ -276,9 +277,9 @@ export function weaponPrep(): void {
         useFamiliar($familiar`Ghost of Crimbo Carols`);
         // Use a latte throw to get out
         equip($item`latte lovers member's mug`);
-        // May as well hope for a garbage fire bjorn drop
+        // May as well hope for a bjorn drop
         if (have($item`Buddy Bjorn`)) equip($item`Buddy Bjorn`);
-        bjornify($familiar`Garbage Fire`);
+        bjornify(bjornFamiliar());
         // The Dire Warren has a beast, and just a beast - how fortunate for us!
         adventureMacro($location`The Dire Warren`, Macro.freeRun());
     }
@@ -346,9 +347,9 @@ export function spellPrep(): number {
         // Parka free kill specifically
         equip($item`Jurassic Parka`);
         setParka("dilophosaur");
-        // May as well hope for a garbage fire bjorn drop
+        // May as well hope for a bjorn drop
         if (have($item`Buddy Bjorn`)) equip($item`Buddy Bjorn`);
-        bjornify($familiar`Garbage Fire`);
+        bjornify(bjornFamiliar());
         adventureMacro($location`The Toxic Teacups`, Macro.trySkill($skill`Spit jurassic acid`));
         // The above will catch the opening NC, go again
         if (!have($effect`Toxic Vengeance`)) {
