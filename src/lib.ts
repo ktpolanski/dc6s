@@ -820,12 +820,13 @@ export function cleanup(): void {
     // This junk we want to keep one of
     useOrAutosell($items`cheap sunglasses, bag of park garbage`, 1);
     // Mall some stuff that flips easy
-    shopIt($item`battery (AAA)`, 10500);
-    shopIt($item`11-leaf clover`, 22900);
-    shopIt($item`frost-rimed desk bell`, 43000);
-    shopIt($item`greasy desk bell`, 43000);
-    shopIt($item`nasty desk bell`, 43000);
-    shopIt($item`sizzling desk bell`, 43000);
-    shopIt($item`uncanny desk bell`, 43000);
-    shopIt($item`cornucopia`, 28900);
+    // Potentially control prices via prefs
+    shopIt($item`battery (AAA)`, get("dc6s_battery_price", 10500));
+    shopIt($item`11-leaf clover`, get("dc6s_clover_price", 22900));
+    shopIt($item`frost-rimed desk bell`, get("dc6s_bell_price", 43000));
+    shopIt($item`greasy desk bell`, get("dc6s_bell_price", 43000));
+    shopIt($item`nasty desk bell`, get("dc6s_bell_price", 43000));
+    shopIt($item`sizzling desk bell`, get("dc6s_bell_price", 43000));
+    shopIt($item`uncanny desk bell`, get("dc6s_bell_price", 43000));
+    shopIt($item`cornucopia`, get("dc6s_cornucopia_price", 28900));
 }
