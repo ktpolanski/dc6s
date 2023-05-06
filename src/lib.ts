@@ -470,6 +470,16 @@ export function canCincho(): boolean {
     return cond1 || cond2 || cond3;
 }
 
+// Put the specified accessory in the weakest accessory slot of the base outfit
+// Also include the unbreakable umbrella
+export function umbrellaOutfitWithAcc(acc: Item): void {
+    // In hardcore, the disposable accessory is the default acc1
+    // In softcore, acc3 becomes the weakest once the necklace goes on
+    if (inHardcore() || myLevel() < 15) {
+        outfit([$item`unbreakable umbrella`, acc]);
+    } else outfit([$item`unbreakable umbrella`, [$slot`acc3`, acc]]);
+}
+
 // Does KGB have a given enchantment?
 // Warning - case sensitive! Enchants need to be written as on the KGB itself!
 export function checkKGB(enchant: string): boolean {

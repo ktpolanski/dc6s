@@ -7,7 +7,6 @@ import {
     familiarWeight,
     inHardcore,
     itemAmount,
-    myLevel,
     myMeat,
     retrieveItem,
     runChoice,
@@ -27,7 +26,6 @@ import {
     $location,
     $monster,
     $skill,
-    $slot,
     AsdonMartin,
     Clan,
     get,
@@ -56,6 +54,7 @@ import {
     mapMacro,
     scavenge,
     setChoice,
+    umbrellaOutfitWithAcc,
     useDefaultFamiliar,
     useIfHave,
 } from "./lib";
@@ -454,11 +453,8 @@ export default function level(): void {
             else if (canCincho()) {
                 // Popping confetti has a similar list of checks as feel pride
                 // Although tuned to the fact there will be nine of them
-                // In hardcore, the disposable accessory is the default acc1
-                // In softcore, acc3 becomes the weakest once the necklace goes on
-                if (inHardcore() || myLevel() < 15) {
-                    outfit($items`unbreakable umbrella, Cincho de Mayo`);
-                } else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Cincho de Mayo`]]);
+                // Use a helper function to park it in the most open acc slot
+                umbrellaOutfitWithAcc($item`Cincho de Mayo`);
             } else outfit($items`unbreakable umbrella`);
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
@@ -478,8 +474,7 @@ export default function level(): void {
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
             // No cincho consideration when the doc bag is active
-            if (inHardcore()) outfit($items`unbreakable umbrella, Lil' Doctor™ bag`);
-            else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
+            umbrellaOutfitWithAcc($item`Lil' Doctor™ bag`);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
             heal();
             libramFishBrickoFights();
@@ -495,10 +490,8 @@ export default function level(): void {
             if (get("garbageShirtCharge") > 0) {
                 foldIfNotHave($item`makeshift garbage shirt`);
             } else foldIfNotHave($item`tinsel tights`);
-            if (canCincho()) {
-                if (inHardcore()) outfit($items`unbreakable umbrella, Cincho de Mayo`);
-                else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Cincho de Mayo`]]);
-            } else outfit($items`unbreakable umbrella`);
+            if (canCincho()) umbrellaOutfitWithAcc($item`Cincho de Mayo`);
+            else outfit($items`unbreakable umbrella`);
             adventureMacro(
                 $location`The Neverending Party`,
                 Macro.bowloPride()
