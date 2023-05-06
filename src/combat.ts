@@ -6,16 +6,18 @@ import { freeKillsLeft } from "./lib";
 function canFeelPride(): boolean {
     // Do we even have a Feel Pride to cast?
     if (get("_feelPrideUsed") >= 3) return false;
-    // Preferred condition - rocking a familiar scrapbook, bowled sideways and have inner elf
+    // Preferred condition - rocking the cincho and meteorite necklace
+    // Have bowled sideways and have inner elf
     // (if the preference is 0, then the ball will return upon entering combat)
     const cond1 =
-        haveEquipped($item`familiar scrapbook`) &&
+        haveEquipped($item`Cincho de Mayo`) &&
+        haveEquipped($item`meteorite necklace`) &&
         get("cosmicBowlingBallReturnCombats") > 0 &&
         have($effect`Inner Elf`);
     // Panic button conditions - about to run out of garbage shirt charges
-    const cond2 = get("garbageShirtCharge") < 5;
+    const cond2 = get("garbageShirtCharge") < 5 - get("_feelPrideUsed");
     // The final NEP turns are free kills, let's not run out of those either
-    const cond3 = freeKillsLeft() < 5;
+    const cond3 = freeKillsLeft() < 5 - get("_feelPrideUsed");
     return cond1 || cond2 || cond3;
 }
 

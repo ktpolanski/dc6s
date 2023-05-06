@@ -448,6 +448,28 @@ export function freeKillsLeft(): number {
     return xrays + punches + mobhit + missile;
 }
 
+// Should we be putting the cincho on?
+export function canCincho(): boolean {
+    // How many shots of confetti have we done already?
+    // Need the get([...], 0) so that it gets turned to a number
+    const confettis = get("_cinchUsed", 0) / 5;
+    // We can only do this nine times
+    if (confettis > 8) return false;
+    // Condition one, the dream - meteorite necklace on, bowling sideways active
+    // Also formally inner elf but that should be in place with the necklace on
+    const cond1 =
+        haveEquipped($item`meteorite necklace`) &&
+        get("cosmicBowlingBallReturnCombats") > 0 &&
+        have($effect`Inner Elf`);
+    // Panic button conditions - about to run out of garbage shirt charges
+    // Need to "waste" two on doc bag kills when the cincho won't be on
+    const cond2 = get("garbageShirtCharge") < 13 - confettis;
+    // About to run out of NEP turns/free kills
+    // As previously, "waste" two on doc bag
+    const cond3 = freeKillsLeft() + get("_neverendingPartyFreeTurns") < 13 - confettis;
+    return cond1 || cond2 || cond3;
+}
+
 // Does KGB have a given enchantment?
 // Warning - case sensitive! Enchants need to be written as on the KGB itself!
 export function checkKGB(enchant: string): boolean {

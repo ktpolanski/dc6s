@@ -39,6 +39,7 @@ import {
     bjornify,
     bu,
     bustGhost,
+    canCincho,
     castLibrams,
     familiarWithGear,
     fightWitchessRoyalty,
@@ -394,7 +395,7 @@ export default function level(): void {
     }
     if (get("_speakeasyFreeFights") === 1) {
         // Agent time, this one with Feel Nostalgic + Feel Envy (and a second Portscan)
-        getInnerElf();
+        // No inner elf here check here to avoid ruining nostalgia
         useDefaultFamiliar();
         foldIfNotHave($item`makeshift garbage shirt`);
         outfit($items`unbreakable umbrella`);
@@ -449,10 +450,21 @@ export default function level(): void {
             foldIfNotHave($item`makeshift garbage shirt`);
             // Catch a kramco if one's up
             if (get("_sausageFights") < 2) outfit($items`Kramco Sausage-o-Matic™`);
-            else outfit($items`unbreakable umbrella`);
+            else if (canCincho()) {
+                // Popping confetti has a similar list of checks as feel pride
+                // Although tuned to the fact there will be nine of them
+                // In hardcore, the disposable accessory is the default acc1
+                // In softcore, acc3 is comparably the weakest at this point
+                if (inHardcore()) outfit($items`unbreakable umbrella, Cincho de Mayo`);
+                else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Cincho de Mayo`]]);
+            } else outfit($items`unbreakable umbrella`);
             // The .bowloPride() handles bowling sideways
             // And tries to rip Feel Pride when the stars align... or if it's late
-            adventureMacro($location`The Neverending Party`, Macro.bowloPride().kill());
+            // Can add the confetti to the macro, it won't happen without the cincho on
+            adventureMacro(
+                $location`The Neverending Party`,
+                Macro.bowloPride().kill($skill`Cincho: Confetti Extravaganza`)
+            );
             heal();
             libramFishBrickoFights();
         }
@@ -463,8 +475,7 @@ export default function level(): void {
             getInnerElf();
             useDefaultFamiliar();
             foldIfNotHave($item`makeshift garbage shirt`);
-            // In hardcore, the disposable accessory is the default acc1
-            // In softcore, acc3 is comparably the weakest at this point
+            // No cincho consideration when the doc bag is active
             if (inHardcore()) outfit($items`unbreakable umbrella, Lil' Doctor™ bag`);
             else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Lil' Doctor™ bag`]]);
             adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
@@ -482,8 +493,16 @@ export default function level(): void {
             if (get("garbageShirtCharge") > 0) {
                 foldIfNotHave($item`makeshift garbage shirt`);
             } else foldIfNotHave($item`tinsel tights`);
-            outfit($items`unbreakable umbrella`);
-            adventureMacro($location`The Neverending Party`, Macro.bowloPride().setup().freeKill());
+            if (canCincho()) {
+                if (inHardcore()) outfit($items`unbreakable umbrella, Cincho de Mayo`);
+                else outfit([$item`unbreakable umbrella`, [$slot`acc3`, $item`Cincho de Mayo`]]);
+            } else outfit($items`unbreakable umbrella`);
+            adventureMacro(
+                $location`The Neverending Party`,
+                Macro.bowloPride()
+                    .setup($skill`Cincho: Confetti Extravaganza`)
+                    .freeKill()
+            );
             heal();
             libramFishBrickoFights();
         }
