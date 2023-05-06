@@ -1,6 +1,6 @@
 # DC6S
 
-The repository houses an operational CS script that does 1/74SC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
+The repository houses an operational CS script that does 1/74 SC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
 
 ## Setup
 
