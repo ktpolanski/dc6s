@@ -466,6 +466,9 @@ export default function level(): void {
             );
             heal();
             libramFishBrickoFights();
+            // Confetti cinch is currently not properly tracked by mafia
+            // Hit up the item description to fix it
+            visitUrl("desc_item.php?whichitem=408302806");
         }
         // On to the X-rays, two of them
         while (get("_chestXRayUsed") < 3) {
@@ -501,6 +504,7 @@ export default function level(): void {
             );
             heal();
             libramFishBrickoFights();
+            visitUrl("desc_item.php?whichitem=408302806");
         }
     }
     // Acquire the anticheese now, while still in the correct moon sign

@@ -479,7 +479,7 @@ export function canCincho(): boolean {
     const cond2 = get("garbageShirtCharge") < 13 - confettis;
     // About to run out of NEP turns/free kills
     // As previously, "waste" two on doc bag
-    const cond3 = freeKillsLeft() + get("_neverendingPartyFreeTurns") < 13 - confettis;
+    const cond3 = freeKillsLeft() + 10 - get("_neverendingPartyFreeTurns") < 13 - confettis;
     return cond1 || cond2 || cond3;
 }
 
