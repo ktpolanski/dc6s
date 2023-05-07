@@ -306,12 +306,12 @@ function brickoBrickCheck(): boolean {
 export function castLibrams(buffer = 0): void {
     // Keep casting while possible
     while (canCastLibrams(buffer)) {
-        if (get("_brickoEyeSummons") < 3 || brickoBrickCheck()) {
-            // Get building pieces for three oysters
-            useSkill(1, $skill`Summon BRICKOs`);
-        } else if (!have($item`resolution: be feistier`) && !have($effect`Destructive Resolve`)) {
+        if (!have($item`resolution: be feistier`) && !have($effect`Destructive Resolve`)) {
             // Fish for a spell damage resolution
             useSkill(1, $skill`Summon Resolutions`);
+        } else if (get("_brickoEyeSummons") < 3 || brickoBrickCheck()) {
+            // Get building pieces for three oysters
+            useSkill(1, $skill`Summon BRICKOs`);
         } else {
             // If we're here, we've ran out of goals
             // Add more?
@@ -323,7 +323,7 @@ export function castLibrams(buffer = 0): void {
 // Burn MP on librams and then try to fight all the brickos you can
 // Leave buffer mana behind for combat and stuff
 export function libramFishBrickoFights(buffer = 300): void {
-    // Fish for brickos, then for a spell damage resolution
+    // Fish for a spell damage resolution, then for brickos
     castLibrams(buffer);
     // Build and fight all the oysters you can, up to three total
     if (get("_brickoFights") < 3) {
