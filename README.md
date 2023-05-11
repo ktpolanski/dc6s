@@ -15,8 +15,9 @@ ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 
 This offers a few commands accessible from Mafia's CLI:
 
--   `dc6s` performs the CS run.
--   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. Accepts the following optional arguments:
+-   `dc6s` performs the CS run. Accepts the following optional argument:
+    -   `70` adds a bit of financially inefficient buffing to hit a 1/70
+-   `dc6s_halfloop` adds some basic breakfast tasks, garbo legs and automatic ascension. Accepts the following optional arguments, in addition to forwarding `70` to `dc6s` if passed:
     -   `hardcore` will ascend HCCS rather than the default SCCS, but this hasn't been used in ages and is likely to misbehave in some way
     -   `noascend` will deposit the user in front of the gash in an ascension-ready state; useful for perming skills
     -   `nopvp` skips PvP, if not provided uses [`PVP_MAB.ash`](https://kolmafia.us/threads/a-multi-armed-bandit-pvp-script.27391/)

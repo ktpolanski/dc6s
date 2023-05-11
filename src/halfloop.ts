@@ -24,7 +24,9 @@ export function main(arg = ""): void {
     }
     // Run DC6S proper
     if (!get("kingLiberated")) {
-        if (!cliExecute("dc6s")) throw "DC6S errored out";
+        // Are we going for a 1/70?
+        const dc6sCall = arg.includes("70") ? "dc6s 70" : "dc6s";
+        if (!cliExecute(dc6sCall)) throw "DC6S errored out";
         // If I go straight into garbo from here
         // Sometimes it doesn't use organ cleaners correctly
         // If that starts happening again, add a return here

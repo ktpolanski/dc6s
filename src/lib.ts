@@ -667,6 +667,8 @@ export function nightcap(pyjamas: boolean): void {
         Clan.join("Alliance from Hobopolis");
         // Catches the potted meat plant, maybe some others
         cliExecute("breakfast");
+        // Switch Chateau to skylight
+        ChateauMantegna.changeCeiling("artificial skylight");
         // Switch to Thanksgarden and prime for three cornucopias tomorrow
         if (myGardenType() !== "thanksgarden") {
             // The garden needs to be tall grass for the fertilizer to work
@@ -749,8 +751,6 @@ export function postrun(): void {
         AsdonMartin.drive($effect`Driving Observantly`, 1100);
         use($item`cold medicine cabinet`);
     }
-    // Switch Chateau to skylight
-    ChateauMantegna.changeCeiling("artificial skylight");
     // Switch eudora to New-You Club for free money
     if (eudora() !== "New-You Club") eudora("New-You Club");
     // Lose undesirable effects

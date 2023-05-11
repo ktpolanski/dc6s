@@ -341,8 +341,23 @@ export function spellPrep(): number {
     // The previous test made a broken champagne bottle and equipped it
     // Fold the tote into junk to avoid wasting charges
     foldIfNotHave($item`deceased crimbo tree`);
-    // Start off with Simmer so it doesn't muck anything up later
-    getBuffs($effects`Simmering`);
+    // Are we doing a 1/70?
+    if (get("_dc6s_70", false)) {
+        // Obtain 250% spell damage via inefficient means
+        // Wish for a 200% buff - wishes turn out cheaper than monkey paw charges
+        if (!have($effect`Sparkly!`)) cliExecute("genie effect sparkly!");
+        // This leaves 50%, a gap that can be closed via a single battery
+        if (!have($effect`AAA-Charged`) && !have($item`battery (AAA)`)) {
+            // Manually pull a single battery off the tree
+            visitUrl("inv_use.php?pwd&whichitem=10738");
+            visitUrl("choice.php?pwd&whichchoice=1448&option=1&pp=1");
+        }
+        getBuffs($effects`AAA-Charged`);
+    } else {
+        // Can't do Simmer in a 1/70 as it takes a turn to cast
+        // Get it out of the way now so it doesn't muck anything up later
+        getBuffs($effects`Simmering`);
+    }
     // Pop a free kill in the toxic teacups for a tiny bit of toxic vengeance
     // Which should be enough to push out a turn save from the spare change
     if (!have($effect`Toxic Vengeance`)) {
