@@ -322,7 +322,8 @@ export function castLibrams(buffer = 0): void {
 
 // Burn MP on librams and then try to fight all the brickos you can
 // Leave buffer mana behind for combat and stuff
-export function libramFishBrickoFights(buffer = 300): void {
+// 500 is a reasonable default for test buffing
+export function libramFishBrickoFights(buffer = 500): void {
     // Fish for a spell damage resolution, then for brickos
     castLibrams(buffer);
     // Build and fight all the oysters you can, up to three total

@@ -295,7 +295,7 @@ export default function level(): void {
         outfitML($items`Lil' Doctor™ bag`);
         mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.setup().freeKill());
         heal();
-        // Go down to default 300 MP buffer going forward
+        // Go down to default MP buffer going forward
         libramFishBrickoFights();
     }
     // Do a scavenge for some stat pocket change
