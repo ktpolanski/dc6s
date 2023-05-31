@@ -261,10 +261,10 @@ export function outfitHotRes(changes: (Item | [Slot, Item])[] = []): void {
         [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`Fourth of May Cosplay Saber`],
         [$slot`offhand`, $items`industrial fire extinguisher`],
-        [$slot`pants`, $items`pantogram pants, Cargo Cultist Shorts`],
+        [$slot`pants`, $items`designer sweatpants`],
         [$slot`acc1`, $items`Kremlin's Greatest Briefcase`],
-        [$slot`acc2`, $items`Brutal brogues`],
-        [$slot`acc3`, $items`Beach Comb`],
+        [$slot`acc2`, $items`cursed monkey's paw`],
+        [$slot`acc3`, $items`Brutal brogues`],
     ]);
     applyChanges(outfit, changes);
     dressUp(outfit);

@@ -4,6 +4,8 @@ import {
     cliExecute,
     create,
     drink,
+    eat,
+    equip,
     familiarWeight,
     inHardcore,
     itemAmount,
@@ -59,7 +61,7 @@ import {
     useDefaultFamiliar,
     useIfHave,
 } from "./lib";
-import { outfit, outfitFamWeight, outfitML } from "./outfit";
+import { outfit, outfitCoilWire, outfitFamWeight, outfitML } from "./outfit";
 import Macro from "./combat";
 import { performSynth, retrieveSynth, SynthesisPlanner } from "./synth";
 
@@ -88,21 +90,6 @@ export default function level(): void {
     }
     // The default usage for glittery mascara is 5, we just need one
     if (!have($effect`Glittering Eyelashes`)) bu($item`glittery mascara`);
-    // Cook the myst potion! Get some ingredients for said potions first!
-    if (!get("hasRange")) {
-        // Sell off a pork gem if there's not enough meat to pull this off
-        if (myMeat() < 950) {
-            if (have($item`baconstone`)) autosell(1, $item`baconstone`);
-            else if (have($item`hamethyst`)) autosell(1, $item`hamethyst`);
-            else autosell(1, $item`porquoise`);
-        }
-        bu($item`Dramatic™ range`);
-    }
-    if (get("reagentSummons") === 0) useSkill(1, $skill`Advanced Saucecrafting`);
-    if (!get("_preventScurvy")) useSkill(1, $skill`Prevent Scurvy and Sobriety`);
-    if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
-        create(1, $item`ointment of the occult`);
-    }
     // Join AfHk for VIP power
     Clan.join("Alliance from Heck");
     // Alright, let 'er rip!
@@ -121,25 +108,55 @@ export default function level(): void {
         $effect`Confidence of the Votive`,
         $effect`Broad-Spectrum Vaccine`,
         $effect`Total Protonic Reversal`,
-        $effect`Mystically Oiled`,
         $effect`Stevedave's Shanty of Superiority`,
     ]);
     // The glove needs to be on to do its stat buff
+    // Briefly stick it on and then reapply the MP maximising outfit
     if (!have($effect`Triple-Sized`)) {
-        outfit($items`Powerful Glove`);
+        equip($item`Powerful Glove`);
         getBuffs($effects`Triple-Sized`);
+        outfitCoilWire();
     }
     // The three Carols to hit harder (and get a smidge more stats)
     getBuffs($effects`Carol of the Bulls, Carol of the Hells, Carol of the Thrills`);
-    // Stuff from the beach heads
+    // Flip the umbrella to ML mode, just in case
+    // This doesn't live inside the outfit function as the umbrella is not the default
+    if (get("umbrellaState") !== "broken") cliExecute("umbrella ml");
+    // Prepare ingredients for the myst potion!
+    if (!get("hasRange")) {
+        // Sell off a pork gem if there's not enough meat to pull this off
+        // Where "this" includes shortly making a magical sausage
+        if (myMeat() < 1100) {
+            if (have($item`baconstone`)) autosell(1, $item`baconstone`);
+            else if (have($item`hamethyst`)) autosell(1, $item`hamethyst`);
+            else autosell(1, $item`porquoise`);
+        }
+        bu($item`Dramatic™ range`);
+    }
+    if (get("reagentSummons") === 0) useSkill(1, $skill`Advanced Saucecrafting`);
+    if (!get("_preventScurvy")) useSkill(1, $skill`Prevent Scurvy and Sobriety`);
+    // Consume a sausage - getting some buffs and doing free fights needs an adventure
+    // Not that it will be used, it just needs to be there
+    // Drain MP on librams beforehand as 999 MP coming in hot from the sausage
+    // Then burn down to 250 MP as the gear will change soon and the MP pool will fall
+    // 250 MP should be sufficient for the various upcoming straggler buffs
+    // TODO: it is likely optimal to do this after the early stat items?
+    if (get("_sausagesEaten") === 0) {
+        castLibrams();
+        eat($item`magical sausage`);
+        castLibrams(250);
+    }
+    // Can now cook the myst potion
+    if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
+        create(1, $item`ointment of the occult`);
+    }
+    // Stuff from the beach heads, and the myst potion
     getBuffs([
+        $effect`Mystically Oiled`,
         $effect`We're All Made of Starfish`,
         $effect`Do I Know You From Somewhere?`,
         $effect`You Learned Something Maybe!`,
     ]);
-    // Flip the umbrella to ML mode, just in case
-    // This doesn't live inside the outfit function as the umbrella is not the default
-    if (get("umbrellaState") !== "broken") cliExecute("umbrella ml");
     // Buffs done, time to start doing stuff with combats!
     // Bail from a holiday wanderer if needed, banderway #2 if so
     if (get("_banderRunaways") < 2) holidayCheck();

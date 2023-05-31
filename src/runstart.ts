@@ -4,8 +4,6 @@ import {
     create,
     getWorkshed,
     inHardcore,
-    myLevel,
-    mySpleenUse,
     runChoice,
     takeStorage,
     use,
@@ -74,13 +72,8 @@ export default function runstart(): void {
     }
     // Learn portscan for later
     SourceTerminal.educate($skill`Portscan`);
-    // Early turn generation - numberology and borrowed time
-    if (myLevel() === 1 && !mySpleenUse()) {
-        // Numberology is capped at 3 in run
-        while (get("_universeCalculated") < 3) {
-            cliExecute("numberology 69");
-        }
-    }
+    // Early turn generation via borrowed time
+    // Numberology is saved for aftercore as in-run use caps it at 3 shots
     if (!get("_borrowedTimeUsed")) {
         if (!have($item`borrowed time`)) {
             create(1, $item`borrowed time`);
