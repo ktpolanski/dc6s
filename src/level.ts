@@ -69,6 +69,8 @@ import { performSynth, retrieveSynth, SynthesisPlanner } from "./synth";
 export default function level(): void {
     // We're about to start casting stuff. Let's reduce cost via magick candle
     useIfHave($item`natural magick candle`);
+    // WARNING: tried to remove synth by just cutting this and got mauled by witchess witch
+    // Might work better if there's some +myst% released in the future?
     // Get the exp synth buff online
     if (!have($effect`Synthesis: Learning`)) {
         // Park synth predictions into preferences
