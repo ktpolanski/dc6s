@@ -541,7 +541,7 @@ export default function level(): void {
     }
     // And so ends levelling. Celebrate with a drink, and onward to tests!
     useIfHave($item`astral six-pack`);
-    if (itemAmount($item`astral pilsner`) === 6) {
+    if (itemAmount($item`astral pilsner`) > 3) {
         getBuffs($effects`Ode to Booze`);
         drink(3, $item`astral pilsner`);
     }

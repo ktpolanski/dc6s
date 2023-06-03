@@ -22,6 +22,7 @@ import {
     itemAmount,
     Location,
     mallPrice,
+    mallPrices,
     Monster,
     myAdventures,
     myAscensions,
@@ -631,8 +632,8 @@ export function breakfast(): void {
 // Call garbo, either in ascend or not ascend mode based on the argument
 export function garbo(ascend: boolean): void {
     if (myAdventures() > 0) {
-        // Refresh horse paste price for optimal garbo dieting
-        mallPrice($item`Extrovermectin™`);
+        // Refresh all prices for safety and optimal dieting
+        mallPrices("allitems");
         set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
         const garboCall = ascend
