@@ -695,6 +695,8 @@ export function pvp(arg = ""): void {
     if (!arg.includes("nopvp")) {
         // Just call Pantocyclus's smart PvP thing that learns what to do as it goes
         cliExecute("PVP_MAB.ash");
+        // Make sure logging is verbose in case the above hiccups
+        set("logPreferenceChange", true);
     }
 }
 
