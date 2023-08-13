@@ -706,6 +706,9 @@ export function pvp(arg = ""): void {
 export function gashHop(arg = ""): void {
     // Only prep for ascension once out of adventures and overdrunk
     if (myAdventures() === 0 && myInebriety() > inebrietyLimit()) {
+        // Re-visit the council to get the thwaitgold statuette
+        // Needs to be done this way since the 1/day ascension limit
+        visitUrl("council.php");
         // Set up the various options
         // (the {} stuff allows for named argument passing)
         prepareAscension({
