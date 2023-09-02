@@ -680,7 +680,10 @@ export function nightcap(pyjamas: boolean): void {
         }
         // Just so it doesn't auto-pick if re-logging into mafia later in the day
         set("harvestGardenSoftcore", "cornucopia (3)");
-        useFamiliar($familiar`Trick-or-Treating Tot`);
+        // Prepare for Offhand Remarkable doubling some Lavaco lamps over rollover
+        // The maximiser understands the effect, need to get it and the familiar in place
+        useFamiliar($familiar`Left-Hand Man`);
+        getBuffs($effects`Offhand Remarkable`);
         foldIfNotHave($item`stinky cheese diaper`);
         // Do a refresh as otherwise sometimes the maximizer hangs on stuff like the cleaver
         cliExecute("refresh all");

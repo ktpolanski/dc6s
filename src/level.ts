@@ -312,7 +312,13 @@ export default function level(): void {
         foldIfNotHave($item`tinsel tights`);
         // Doc bag for x-ray
         outfitML($items`Lil' Doctor™ bag`);
-        mapMacro($location`The Haiku Dungeon`, $monster`amateur ninja`, Macro.setup().freeKill());
+        // Use Circadian Rhythms here to get charges from all future dudes
+        // Which will be plentiful, e.g. NEP, gingerbread, witchess royalty
+        mapMacro(
+            $location`The Haiku Dungeon`,
+            $monster`amateur ninja`,
+            Macro.setup($skill`Recall Facts: %phylum Circadian Rhythms`).freeKill()
+        );
         heal();
         // Go down to default MP buffer going forward
         libramFishBrickoFights();
