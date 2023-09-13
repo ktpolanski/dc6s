@@ -580,6 +580,9 @@ export function breakfast(): void {
     if (!get("_aprilShower")) cliExecute("shower cold");
     if (!get("_detectiveCasesCompleted")) cliExecute("detective solver");
     scavenge();
+    // Break the hippy stone for PvP fight accumulation and use
+    // Part of breakfast as it might have healed overnight between seasons
+    if (!hippyStoneBroken()) visitUrl("peevpee.php?action=smashstone&confirm=on");
     // Do the volcano quest by hand to avoid any occasional garbo weirdness
     if (!get("_volcanoItemRedeemed")) {
         // Get the quest items for the day
@@ -696,6 +699,8 @@ export function nightcap(pyjamas: boolean): void {
 // Do PvP stuff, unless the arg states not to via including nopvp
 export function pvp(arg = ""): void {
     if (!arg.includes("nopvp")) {
+        // Pop the hard knocks diploma for extra fights
+        use(1, $item`School of Hard Knocks Diploma`);
         // Just call Pantocyclus's smart PvP thing that learns what to do as it goes
         cliExecute("PVP_MAB.ash");
         // Make sure logging is verbose in case the above hiccups
@@ -782,8 +787,6 @@ export function postrun(): void {
         setAutoAttack(0);
         adv1($location`The Deep Machine Tunnels`);
     }
-    // Break the hippy stone for PvP fight accumulation and use
-    if (!hippyStoneBroken()) visitUrl("peevpee.php?action=smashstone&confirm=on");
     // That's it! Celebrate with a drink, as garbo won't down pilsners
     if (have($item`astral pilsner`)) {
         getBuffs($effects`Ode to Booze`);
