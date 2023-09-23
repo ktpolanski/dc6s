@@ -351,7 +351,7 @@ export function outfitItem(): void {
     if (get("umbrellaState") !== "bucket style") cliExecute("umbrella item");
     const outfit = new Map<Slot, Item[]>([
         [$slot`hat`, $items`wad of used tape`],
-        [$slot`back`, $items`vampyric cloake`],
+        [$slot`back`, $items`Buddy Bjorn, vampyric cloake`],
         [$slot`shirt`, $items`Jurassic Parka`],
         [$slot`weapon`, $items`oversized sparkler`],
         [$slot`offhand`, $items`unbreakable umbrella`],
@@ -361,6 +361,7 @@ export function outfitItem(): void {
         [$slot`acc3`, $items`Cincho de Mayo`],
     ]);
     dressUp(outfit);
+    bjornify($familiar`Party Mouse`);
     useFamiliar($familiar`Trick-or-Treating Tot`);
     equip($item`li'l ninja costume`);
 }
