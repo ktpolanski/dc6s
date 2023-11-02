@@ -640,8 +640,8 @@ export function garbo(ascend: boolean): void {
         set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
         const garboCall = ascend
-            ? "garbo yachtzeechain ascend workshed=mts"
-            : "garbo yachtzeechain";
+            ? "garbo ascend workshed=mts"
+            : "garbo";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
     }
@@ -702,7 +702,7 @@ export function pvp(arg = ""): void {
         // Pop the hard knocks diploma for extra fights
         use(1, $item`School of Hard Knocks Diploma`);
         // Just call Pantocyclus's smart PvP thing that learns what to do as it goes
-        cliExecute("PVP_MAB.ash");
+        cliExecute("PVP_MAB");
         // Make sure logging is verbose in case the above hiccups
         set("logPreferenceChange", true);
     }
