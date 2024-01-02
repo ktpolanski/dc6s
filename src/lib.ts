@@ -23,7 +23,6 @@ import {
     itemAmount,
     Location,
     mallPrice,
-    mallPrices,
     Monster,
     myAdventures,
     myAscensions,
@@ -572,7 +571,7 @@ function shopIt(item: Item, price: number): void {
 // Go down a lit of monsters to acquire via faxbots and stuff into the locket
 export function locko(): void {
     if (!get("_photocopyUsed") && !have($item`photocopied monster`)) {
-        // Here are the monsters we're interested in
+        // Here are the monsters we're interested in - no-wish event stuff
         const wantlist = [
             $monster`monkey wrenchin' elf`,
             $monster`bolt-cuttin' elf`,
@@ -590,6 +589,11 @@ export function locko(): void {
             $monster`spirit pea`,
             $monster`spirit faucet`,
             $monster`Warbear Foot Soldier`,
+            $monster`Possessed Can of Linguine-Os`,
+            $monster`Frozen Bag of Tortellini`,
+            $monster`Possessed Jar of Alphredo™`,
+            $monster`Box of Crafty Dinner`,
+            $monster`Possessed Can of Creepy Pasta`,
             $monster`Warbear Officer`,
             $monster`High-Ranking Warbear Officer`,
             $monster`exo-suited miner`,
