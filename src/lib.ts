@@ -12,6 +12,7 @@ import {
     eudora,
     Familiar,
     familiarEquipment,
+    faxbot,
     getWorkshed,
     handlingChoice,
     haveEquipped,
@@ -64,6 +65,7 @@ import {
     AsdonMartin,
     ChateauMantegna,
     Clan,
+    CombatLoversLocket,
     CommunityService,
     CrownOfThrones,
     get,
@@ -567,6 +569,78 @@ function shopIt(item: Item, price: number): void {
     putShop(price, 0, itemAmount(item), item);
 }
 
+// Go down a lit of monsters to acquire via faxbots and stuff into the locket
+export function locko(): void {
+    if (!get("_photocopyUsed") && !have($item`photocopied monster`)) {
+        // Here are the monsters we're interested in
+        const wantlist = [
+            $monster`monkey wrenchin' elf`,
+            $monster`bolt-cuttin' elf`,
+            $monster`propaganda-spewin' elf`,
+            $monster`Mesmerizing Penguin`,
+            $monster`Undercover Penguin`,
+            $monster`Black-and-White-Ops Penguin`,
+            $monster`Cement Cobbler Penguin`,
+            $monster`sexy sorority ghost`,
+            $monster`sexy sorority skeleton`,
+            $monster`sexy sorority vampire`,
+            $monster`sexy sorority zombie`,
+            $monster`sexy sorority werewolf`,
+            $monster`spirit bedbug`,
+            $monster`spirit pea`,
+            $monster`spirit faucet`,
+            $monster`Warbear Foot Soldier`,
+            $monster`Warbear Officer`,
+            $monster`High-Ranking Warbear Officer`,
+            $monster`exo-suited miner`,
+            $monster`semi-autonomous drill unit`,
+            $monster`ambulatory robo-minecart`,
+            $monster`Cinco de Mayo reveler`,
+            $monster`voiceless whisper`,
+            $monster`silent scream`,
+            $monster`mouthless murmur`,
+            $monster`cheerless mime functionary`,
+            $monster`cheerless mime scientist`,
+            $monster`cheerless mime soldier`,
+            $monster`cheerless mime vizier`,
+            $monster`cheerless mime executive`,
+            $monster`Brake-Operating Trainbot`,
+            $monster`Track-Switching Trainbot`,
+            $monster`Ping-Pong-Playing Trainbot`,
+            $monster`Drink-Delivery Trainbot`,
+            $monster`Luggage-Handling Trainbot`,
+            $monster`Ticket-Checking Trainbot`,
+            $monster`Table-Waiting Trainbot`,
+            $monster`Wine-Pairing Trainbot`,
+            $monster`Table-Bussing Trainbot`,
+            $monster`Coal-Shoveling Trainbot`,
+            $monster`Slag-Processing Trainbot`,
+            $monster`Steam-Routing Trainbot`,
+            $monster`wardrobe robot`,
+            $monster`space beast`,
+            $monster`Richard X`,
+        ];
+        // This is what we've got in the locko
+        const locketed = CombatLoversLocket.unlockedLocketMonsters();
+        // This is the first monster from the list not in locko
+        const found = wantlist.find((x) => !locketed.includes(x));
+        // Is there anything we actually need to locko? We may run out
+        if (found !== undefined) {
+            // Acquire fax of the monster
+            Clan.join("Alliance from Heck");
+            faxbot(found);
+            // Put on locko and prepare a navelway
+            equip($item`combat lover's locket`, $slot`acc1`);
+            equip($item`navel ring of navel gazing`, $slot`acc2`);
+            const macro = Macro.runaway();
+            macro.setAutoAttack();
+            // Combat time!
+            use(1, $item`photocopied monster`);
+            runCombat(macro.toString());
+        }
+    }
+}
+
 // Simple breakfasty start of day stuff
 export function breakfast(): void {
     // Pick up an Embezzler fax from a backup clan
@@ -635,13 +709,9 @@ export function breakfast(): void {
 // Call garbo, either in ascend or not ascend mode based on the argument
 export function garbo(ascend: boolean): void {
     if (myAdventures() > 0) {
-        // Refresh all prices for safety and optimal dieting
-        mallPrices("allitems");
         set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
-        const garboCall = ascend
-            ? "garbo ascend workshed=mts"
-            : "garbo";
+        const garboCall = ascend ? "garbo ascend workshed=mts" : "garbo";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
     }

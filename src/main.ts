@@ -14,6 +14,7 @@ import {
 } from "./tests";
 
 // Needs to be wrapped up in a function so that arguments can be passed
+// So far there's one argument - 70 if going for a 1/70
 export function main(arg = ""): void {
     // Do this try/finally syntax to be able to undo autoattack/CCS/recovery settings
     try {

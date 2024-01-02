@@ -1,11 +1,12 @@
 import { cliExecute, myDaycount } from "kolmafia";
 import { get } from "libram";
-import { breakfast, cleanup, garbo, gashHop, nightcap, postrun, pvp } from "./lib";
+import { breakfast, cleanup, garbo, gashHop, locko, nightcap, postrun, pvp } from "./lib";
 
 // Wrap the half-loop into a main() function, calling the script will find and run it
 // It's necessary as this way I can return easily to combat garbo heisenbugs
 
 // Accept an optional argument after the script name:
+// - 70 is a dc6s argument and is passed to it
 // - noascend prepares for ascension but leaves the user in front of the gash
 // - hardcore does HCCS (the default is SCCS)
 // - nopvp skips PvP
@@ -14,6 +15,7 @@ export function main(arg = ""): void {
     // garbo() true means ascending
     // nightcap() true means done for the day, put pyjamas on
     if (myDaycount() > 1) {
+        locko();
         breakfast();
         garbo(true);
         nightcap(false);
@@ -34,6 +36,7 @@ export function main(arg = ""): void {
     // Post-ascension garbo leg
     if (myDaycount() === 1) {
         postrun();
+        locko();
         breakfast();
         garbo(false);
         pvp(arg);
