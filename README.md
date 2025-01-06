@@ -20,6 +20,7 @@ This offers a few commands accessible from Mafia's CLI:
 -   `dc6s_halfloop` adds some basic breakfast tasks, [garbo](https://github.com/loathers/garbage-collector) legs and automatic ascension. Accepts the following optional arguments, in addition to forwarding `70` to `dc6s` if passed:
     -   `hardcore` will ascend HCCS rather than the default SCCS, but this hasn't been used in ages and is likely to misbehave in some way
     -   `noascend` will deposit the user in front of the gash in an ascension-ready state; useful for perming skills
+    -   `postrun` will do the breakfast aftercore leg, ascend, do CS, do some basic post-run prep, and deposit the user for manual aftercore
     -   `nopvp` skips PvP, if not provided uses [`PVP_MAB`](https://github.com/Pantocyclus/PVP_MAB)
 
 ## Run Setup

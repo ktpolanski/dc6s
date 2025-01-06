@@ -1,4 +1,4 @@
-import { cliExecute, myDaycount } from "kolmafia";
+import { cliExecute, myDaycount, print } from "kolmafia";
 import { get } from "libram";
 import { breakfast, cleanup, garbo, gashHop, locko, nightcap, postrun, pvp } from "./lib";
 
@@ -8,6 +8,7 @@ import { breakfast, cleanup, garbo, gashHop, locko, nightcap, postrun, pvp } fro
 // Accept an optional argument after the script name:
 // - 70 is a dc6s argument and is passed to it
 // - noascend prepares for ascension but leaves the user in front of the gash
+// - postrun ascends, does dc6s, postrun prep, and deposits the user for aftercore
 // - hardcore does HCCS (the default is SCCS)
 // - nopvp skips PvP
 export function main(arg = ""): void {
@@ -38,9 +39,11 @@ export function main(arg = ""): void {
         postrun();
         locko();
         breakfast();
-        garbo(false);
-        pvp(arg);
-        cleanup();
-        nightcap(true);
+        if (!arg.includes("postrun")) {
+            garbo(false);
+            pvp(arg);
+            cleanup();
+            nightcap(true);
+        } else print("In post-run aftercore!", "blue");
     }
 }
