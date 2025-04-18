@@ -13,6 +13,18 @@ ln -s $PWD/KoLmafia/scripts/dc6s/ ~/Library/Application\ Support/KoLmafia/script
 ln -s $PWD/KoLmafia/ccs/dc6s.ccs ~/Library/Application\ Support/KoLmafia/ccs/
 ```
 
+**25/04/18 note (mafia 28502, possibly earlier)**
+
+Seeing how the package versions are locked into a somewhat antiquated state due to my ancient node.js from 2022, as well as my general unwillingness to keep up with Libram developments, a breaking change happened Mafia-side in how combat rate is tracked and I can't sidestep it easily using existing versions of stuff. To get an operational `dc6s`, open up `KoLmafia/scripts/dc6s.js` post-compilation and search for Combat Rate. This will find two things to do:
+
+-   Add `"Raw Combat Rate"` to `modifierTypes_numericModifiers`
+-   Change the Noncombat code snippet to the following:
+```javascript
+CommunityService_defineProperty(CommunityService, "Noncombat", new CommunityService(8, "Non-Combat", "Be a Living Statue", () => {
+  return 60 - 3 * Math.floor(-1 * modifier_get("Raw Combat Rate")/ 5);
+}, new Requirement(["-combat"], {})));
+```
+
 This offers a few commands accessible from Mafia's CLI:
 
 -   `dc6s` performs the CS run. Accepts the following optional argument:
