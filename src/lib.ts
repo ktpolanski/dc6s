@@ -819,13 +819,14 @@ export function gashHop(arg = ""): void {
             // The absence of hardcore means we go softcore
             const lifestyle = arg.includes("hardcore") ? Lifestyle.hardcore : Lifestyle.softcore;
             // Ascend with the expected configuration of stuff
-            ascend(
-                $path`Community Service`,
-                $class`Pastamancer`,
-                lifestyle,
-                "wallaby",
-                $item`astral six-pack`,
-                $item`astral chapeau`
+            ascend({
+                path: $path`Community Service`,
+                playerClass: $class`Pastamancer`,
+                lifestyle: lifestyle,
+                moon: "wallaby",
+                consumable: $item`astral six-pack`,
+                pet: $item`astral chapeau`
+            }
             );
         } else print("All ready to ascend!", "blue");
     }
