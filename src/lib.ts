@@ -281,9 +281,12 @@ export function bustGhost(): void {
         // So just keep it low ML to avoid stun resistance
         foldIfNotHave($item`tinsel tights`);
         outfitGhost();
-        // No need to worry about entry noncombats
-        // As protopack ghosts override them in priority
+        // Stuff got changed KoL side and entry noncombats may jump us here
+        // If they do, the ghostLocation will remain unchanged
         adventureMacro(ghostLocation, Macro.ghost());
+        if (ghostLocation) {
+            adventureMacro(ghostLocation, Macro.ghost());
+        }
         heal();
     }
 }
@@ -629,7 +632,7 @@ export function locko(): void {
             $monster`Coal-Shoveling Trainbot`,
             $monster`Slag-Processing Trainbot`,
             $monster`Steam-Routing Trainbot`,
-            $monster`wardrobe robot`,
+            $monster`wardrobe robot`, // eslint-disable-line
             $monster`space beast`,
             $monster`Richard X`,
         ];

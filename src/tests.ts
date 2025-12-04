@@ -344,8 +344,8 @@ export function spellPrep(): number {
     // Are we doing a 1/70?
     if (get("_dc6s_70", false)) {
         // Obtain 250% spell damage via inefficient means
-        // Wish for a 200% buff - wishes turn out cheaper than monkey paw charges
-        if (!have($effect`Sparkly!`)) cliExecute("genie effect sparkly!");
+        // Wish for a 200% buff
+        if (!have($effect`Sparkly!`)) cliExecute("monkeypaw effect sparkly!");
         // This leaves 50%, a gap that can be closed via a single battery
         if (!have($effect`AAA-Charged`) && !have($item`battery (AAA)`)) {
             // Manually pull a single battery off the tree

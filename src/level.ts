@@ -390,6 +390,9 @@ export default function level(): void {
         heal();
     }
     // Beat up the witch as brooms are good for me
+    // There is a universe where the camel is not fully charged here
+    // In that universe, wish for a bit of myst to avoid getting blasted
+    if (!have($effect`Spit Upon`)) cliExecute("monkeypaw effect on the shoulders of giants");
     if (!have($item`battle broom`)) fightWitchessRoyalty($monster`Witchess Witch`);
     // God Lobster time
     while (get("_godLobsterFights") < 3) {

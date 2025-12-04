@@ -19,10 +19,21 @@ Seeing how the package versions are locked into a somewhat antiquated state due 
 
 -   Add `"Raw Combat Rate"` to `modifierTypes_numericModifiers`
 -   Change the Noncombat code snippet to the following:
+
 ```javascript
-CommunityService_defineProperty(CommunityService, "Noncombat", new CommunityService(8, "Non-Combat", "Be a Living Statue", () => {
-  return 60 - 3 * Math.floor(-1 * modifier_get("Raw Combat Rate")/ 5);
-}, new Requirement(["-combat"], {})));
+CommunityService_defineProperty(
+    CommunityService,
+    "Noncombat",
+    new CommunityService(
+        8,
+        "Non-Combat",
+        "Be a Living Statue",
+        () => {
+            return 60 - 3 * Math.floor((-1 * modifier_get("Raw Combat Rate")) / 5);
+        },
+        new Requirement(["-combat"], {})
+    )
+);
 ```
 
 ## Running the script
