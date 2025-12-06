@@ -282,9 +282,9 @@ export function bustGhost(): void {
         foldIfNotHave($item`tinsel tights`);
         outfitGhost();
         // Stuff got changed KoL side and entry noncombats may jump us here
-        // If they do, the ghostLocation will remain unchanged
+        // If they do, the ghostLocation will remain set
         adventureMacro(ghostLocation, Macro.ghost());
-        if (ghostLocation) {
+        if (get("ghostLocation")) {
             adventureMacro(ghostLocation, Macro.ghost());
         }
         heal();
