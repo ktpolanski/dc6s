@@ -1,4 +1,4 @@
-import { cliExecute, myDaycount, print } from "kolmafia";
+import { cliExecute, myDaycount, print, toItem } from "kolmafia";
 import { get } from "libram";
 import { breakfast, cleanup, garbo, gashHop, locko, nightcap, postrun, pvp } from "./lib";
 
@@ -46,4 +46,6 @@ export function main(arg = ""): void {
             nightcap(true);
         } else print("In post-run aftercore!", "blue");
     }
+    // Skeleton of Crimbo Past check
+    print(`Skeleton of Crimbo Past special: ${toItem(get("_crimboPastDailySpecialItem"))}`, "red");
 }
