@@ -727,7 +727,7 @@ export function garbo(ascend: boolean): void {
     if (myAdventures() > 0) {
         set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
-        const garboCall = ascend ? "garbo ascend workshed=mts" : "garbo";
+        const garboCall = ascend ? "garbo ascend target=cockroach workshed=mts" : "garbo target=cockroach";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
     }
