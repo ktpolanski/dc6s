@@ -213,6 +213,12 @@ export default function level(): void {
         $effect`Pride of the Puffin`,
         $effect`Lapdog`,
     ]);
+    // Some sort of rework of scalers in 2026 started getting me killed by the witch
+    // Add a paw wish for +200% myst as a lazy way around it
+    // This one even comes with extra mysticality gain!
+    // TODO: the quince can be farmed in literally two combats, do this early
+    // eslint-disable-next-line
+    if (!have($effect`Quincy`)) cliExecute("monkeypaw effect quincy");
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     useIfHave($item`a ten-percent bonus`);

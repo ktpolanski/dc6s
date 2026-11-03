@@ -667,6 +667,10 @@ export function breakfast(): void {
     // Break the hippy stone for PvP fight accumulation and use
     // Part of breakfast as it might have healed overnight between seasons
     if (!hippyStoneBroken()) visitUrl("peevpee.php?action=smashstone&confirm=on");
+    // Pick up extra turns from Hobo
+    Clan.join("Alliance from Hobopolis");
+    cliExecute("breakfast");
+    // Nab whatever Heck has that Hobo does not
     Clan.join("Alliance from Heck");
     cliExecute("breakfast");
     // These don't get used by garbo so we may as well go for it
@@ -727,7 +731,9 @@ export function garbo(ascend: boolean): void {
     if (myAdventures() > 0) {
         set("maximizerCombinationLimit", 100000);
         set("valueOfAdventure", 6000);
-        const garboCall = ascend ? "garbo ascend target=cockroach workshed=mts" : "garbo target=cockroach";
+        const garboCall = ascend
+            ? "garbo ascend target=cockroach workshed=mts"
+            : "garbo target=cockroach";
         // In case of garbo abort, abort the whole thing
         if (!cliExecute(garboCall)) throw "Garbo errored out";
     }
