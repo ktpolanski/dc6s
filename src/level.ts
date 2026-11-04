@@ -148,13 +148,19 @@ export default function level(): void {
         eat($item`magical sausage`);
         castLibrams(250);
     }
-    // Can now cook the myst potion
+    // Can now cook the myst potions
     if (!have($effect`Mystically Oiled`) && !have($item`ointment of the occult`)) {
         create(1, $item`ointment of the occult`);
     }
-    // Stuff from the beach heads, and the myst potion
+    /* eslint-disable libram/verify-constants */
+    if (!have($effect`Quincy`) && !have($item`quince quaff`)) {
+        create(1, $item`quince quaff`);
+    }
+    /* eslint-enable libram/verify-constants */
+    // Stuff from the beach heads, and the myst potions
     getBuffs([
         $effect`Mystically Oiled`,
+        $effect`Quincy`, // eslint-disable-line libram/verify-constants
         $effect`We're All Made of Starfish`,
         $effect`Do I Know You From Somewhere?`,
         $effect`You Learned Something Maybe!`,
@@ -213,12 +219,6 @@ export default function level(): void {
         $effect`Pride of the Puffin`,
         $effect`Lapdog`,
     ]);
-    // Some sort of rework of scalers in 2026 started getting me killed by the witch
-    // Add a paw wish for +200% myst as a lazy way around it
-    // This one even comes with extra mysticality gain!
-    // TODO: the quince can be farmed in literally two combats, do this early
-    // eslint-disable-next-line
-    if (!have($effect`Quincy`)) cliExecute("monkeypaw effect quincy");
     // Alright, we're out of prep to do. Rip the early stat items and go hit things!
     outfit();
     useIfHave($item`a ten-percent bonus`);

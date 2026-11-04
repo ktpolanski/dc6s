@@ -78,7 +78,7 @@ export function outfitEarly(changes: (Item | [Slot, Item])[] = []): void {
 // (so that they stay put during Shoot Ghost)
 // So just add all the +stat gain stuff that's on offer... which is not a lot
 // Fine to skip saber as the ghost will get busted
-export function outfitGhost(): void {
+export function outfitGhost(changes: (Item | [Slot, Item])[] = []): void {
     setRetroCape("heck", "thrill");
     setParka("spikolodon");
     const outfit = new Map<Slot, Item[]>([
@@ -92,6 +92,7 @@ export function outfitGhost(): void {
         [$slot`acc2`, $items`Eight Days a Week Pill Keeper`],
         [$slot`acc3`, $items`Kremlin's Greatest Briefcase`],
     ]);
+    applyChanges(outfit, changes);
     dressUp(outfit);
 }
 

@@ -1,6 +1,6 @@
 # DC6S
 
-The repository houses an operational CS script that does 1/74 SC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
+The repository houses an operational CS script that does 1/73 SC runs for me, DC6. It's unlikely to do so for others out of the box, but that's the case with most CS scripts. Hopefully the simple syntax and heavy commenting make it easier to extract any desired information from the code.
 
 ## Setup
 
@@ -64,5 +64,5 @@ DC6S was not created in a vacuum, and drew inspiration from a number of establis
 -   Manendra was very patient and helpful as I slowly learned the ropes, answering more idiotic questions than anybody should, and introduced me to the bean-derived test ordering via [manny-hccs](https://github.com/lewismd13/manny-hccs).
 -   phreddrickkv2's organisation of [phccs](https://github.com/horrible-little-slime/phccs) was very inspirational, a lot of the DC6S functionality is me trying to write takes on phred's ideas in syntax I can easily understand/debug as a newbie. Plus I'm pretty sure a lot of the libram functionality I used passed through his hands too.
 -   Katarn's fight routing was a major influence on what I ended up doing, and I picked up various relevant tidbits from conversations and looking at [seventy-hccs](https://github.com/s-k-z/seventy-hccs).
--   Seraphii has kept me in the loop about key developments to things as I hibernated after my 2022 activity spike. Thanks loads!
+-   Seraphiii has kept me in the loop about key developments to things as I hibernated after my 2022 activity spike. Thanks loads!
 -   Captain Scotch's [TS starter repository](https://github.com/docrostov/kol-ts-starter) and CS planning spreadsheet made the process a lot easier.

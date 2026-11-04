@@ -119,17 +119,23 @@ export function coilWirePrep(): void {
         bu($item`chewing gum on a string`);
     }
     // Catch a kramco with the mimic out, and a paranormal prediction to boot
+    // Take the chance to farm a quince via the laughing stock as well
     if (!have($item`bag of many confections`)) {
         useFamiliar($familiar`Stocking Mimic`);
         foldIfNotHave($item`tinsel tights`);
-        outfitEarly($items`protonic accelerator pack, Kramco Sausage-o-Matic™`);
+        outfitEarly([
+            $item`protonic accelerator pack`,
+            $item`Kramco Sausage-o-Matic™`,
+            [$slot`acc3`, $item`Portable Laughing Stock`], // eslint-disable-line libram/verify-constants
+        ]);
         adventureMacro($location`Noob Cave`, Macro.kill());
         heal();
         // Take the bag of many confections off
         equip($slot`familiar`, $item`none`);
     }
-    // We got a ghost to bust
-    bustGhost();
+    // We got a ghost to bust, finish farming the quince
+    // eslint-disable-next-line libram/verify-constants
+    bustGhost([[$slot`acc3`, $item`Portable Laughing Stock`]]);
     // Okay, that's it for the early stuff! Put on the outfit and go coil some wire!
     // The outfit maximises MP so as much of it is available after the test as possible
     outfitCoilWire();
@@ -346,8 +352,8 @@ export function spellPrep(): number {
         // Obtain 200% spell damage via a wish
         if (!have($effect`Sparkly!`)) cliExecute("monkeypaw effect sparkly!");
     }
-    // Simmer is now free! My libram is ancient, so skip linting
-    // eslint-disable-next-line
+    // Simmer is now free!
+    // eslint-disable-next-line libram/verify-constants
     equip($item`April Shower Thoughts shield`);
     getBuffs($effects`Simmering`);
     // Pop a free kill in the toxic teacups for a tiny bit of toxic vengeance

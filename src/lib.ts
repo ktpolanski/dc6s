@@ -41,6 +41,7 @@ import {
     runChoice,
     runCombat,
     setAutoAttack,
+    Slot,
     toInt,
     toUrl,
     use,
@@ -272,7 +273,8 @@ export function holidayCheck(): void {
 }
 
 // Hit up the protopack ghost
-export function bustGhost(): void {
+// Accept a potential ghost-busting outfit override
+export function bustGhost(changes: (Item | [Slot, Item])[] = []): void {
     const ghostLocation = get("ghostLocation");
     if (ghostLocation) {
         // Busting involves the ghost not getting munched by the familiar
@@ -280,7 +282,7 @@ export function bustGhost(): void {
         // A bit concerned about ML, as the ghosts hit hard if you let them
         // So just keep it low ML to avoid stun resistance
         foldIfNotHave($item`tinsel tights`);
-        outfitGhost();
+        outfitGhost(changes);
         // Stuff got changed KoL side and entry noncombats may jump us here
         // If they do, the ghostLocation will remain set
         adventureMacro(ghostLocation, Macro.ghost());
@@ -632,7 +634,7 @@ export function locko(): void {
             $monster`Coal-Shoveling Trainbot`,
             $monster`Slag-Processing Trainbot`,
             $monster`Steam-Routing Trainbot`,
-            $monster`wardrobe robot`, // eslint-disable-line
+            $monster`wardrobe robot`, // eslint-disable-line libram/verify-constants
             $monster`space beast`,
             $monster`Richard X`,
         ];
