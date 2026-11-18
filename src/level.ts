@@ -504,6 +504,15 @@ export default function level(): void {
             // Hit up the item description to fix it
             visitUrl("desc_item.php?whichitem=408302806");
         }
+        // Prepare the missile launcher
+        // Just pre-fuel the thing all the way to avoid moon tuning surprises
+        if (!AsdonMartin.fillWithInventoryTo(174)) throw "Breadcar refuses to charge to 174!";
+        // Time for some hot nonsense!
+        // Somehow my mafia keeps starting NEP quests despite being told not to
+        // They sometimes finish some time during the freekill portion
+        // Which we don't actually need to level up enough, so just don't do the freekills
+        // TODO: re-enable if it fixes itself at some point
+        /*
         // On to the X-rays, two of them
         while (get("_chestXRayUsed") < 3) {
             // Doctor bag may try to give a quest if there's hipster fight overload, skip it
@@ -517,9 +526,6 @@ export default function level(): void {
             heal();
             libramFishBrickoFights();
         }
-        // Prepare the missile launcher
-        // Just pre-fuel the thing all the way to avoid moon tuning surprises
-        if (!AsdonMartin.fillWithInventoryTo(174)) throw "Breadcar refuses to charge to 174!";
         // Do non-X-ray free kills - two shattering punches, mob hit, asdon missile
         while (freeKillsLeft() > 0) {
             getInnerElf();
@@ -540,6 +546,7 @@ export default function level(): void {
             libramFishBrickoFights();
             visitUrl("desc_item.php?whichitem=408302806");
         }
+        */
     }
     // Acquire the anticheese now, while still in the correct moon sign
     if (get("lastAnticheeseDay") < 1) {
